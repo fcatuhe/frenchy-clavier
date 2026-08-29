@@ -1,0 +1,5 @@
+require_relative "clavier/layout"
+require_relative "clavier/keyboard"
+require_relative "clavier/keysyms"
+require_relative "clavier/sheet"
+require_relative "clavier/xkb"

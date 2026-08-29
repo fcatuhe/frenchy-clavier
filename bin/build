@@ -1,0 +1,14 @@
+#!/usr/bin/env ruby
+require_relative "../lib/clavier"
+
+root = File.expand_path("..", __dir__)
+layout = Clavier::Layout.load(File.join(root, "layout.yml"))
+
+symbols = File.join(root, "out", layout.name)
+sheet = File.join(root, "out", "sheet.html")
+
+File.write(symbols, Clavier::Xkb.new(layout).to_s)
+File.write(sheet, Clavier::Sheet.new(layout).to_s)
+
+puts symbols
+puts sheet

@@ -1,0 +1,23 @@
+#!/usr/bin/env ruby
+require "fileutils"
+require_relative "../lib/clavier"
+
+root = File.expand_path("..", __dir__)
+layout = Clavier::Layout.load(File.join(root, "layout.yml"))
+
+system(File.join(root, "bin", "build"), out: File::NULL) or abort("build failed")
+
+target = File.expand_path("~/.config/xkb/symbols")
+FileUtils.mkdir_p(target)
+FileUtils.cp(File.join(root, "out", layout.name), target)
+
+check = %W[xkbcli compile-keymap --layout #{layout.name}]
+abort("xkbcli rejected the keymap, nothing applied") unless system(*check, out: File::NULL)
+
+puts "installed #{target}/#{layout.name}"
+
+if system("hyprctl", "keyword", "input:kb_layout", layout.name, out: File::NULL)
+  puts "live in hyprland, revert with: hyprctl keyword input:kb_layout us"
+else
+  warn "hyprctl unavailable, layout installed but not applied"
+end
