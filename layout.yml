@@ -5,19 +5,19 @@ subtitle: ThinkPad X1 Carbon Gen 6 - ANSI
 # Levels, in order: base, shift, altgr, altgr+shift.
 # "" means the level is free. <name> is a raw keysym (dead keys, space).
 keys:
-  TLDE: ["@", "²", "^", "<dead_caron>"]
+  TLDE: ["@", "²", "", ""]
   AE01: ["à", "1", "", "À"]
-  AE02: ["è", "2", "`", "È"]
+  AE02: ["è", "2", "", "È"]
   AE03: ["é", "3", "&", "É"]
   AE04: ["(", "4", "{", "«"]
   AE05: [")", "5", "}", "»"]
-  AE06: ["\"", "6", "", ""]
-  AE07: ["'", "7", "´", ""]
+  AE06: ["\"", "6", "´", "<dead_acute>"]
+  AE07: ["'", "7", "`", "<dead_grave>"]
   AE08: ["_", "8", "—", "–"]
   AE09: ["-", "9", "±", ""]
   AE10: ["+", "0", "÷", ""]
   AE11: ["*", "%", "×", ""]
-  AE12: ["~", "°", "", ""]
+  AE12: ["~", "°", "<dead_tilde>", ""]
 
   AD01: ["a", "A", "", ""]
   AD02: ["z", "Z", "", ""]
@@ -29,7 +29,7 @@ keys:
   AD08: ["i", "I", "", ""]
   AD09: ["o", "O", "œ", "Œ"]
   AD10: ["p", "P", "", ""]
-  AD11: ["<dead_circumflex>", "<dead_diaeresis>", "", ""]
+  AD11: ["<dead_circumflex>", "<dead_diaeresis>", "^", "¨"]
   AD12: ["#", "", "", ""]
   BKSL: ["\\", "|", "", ""]
 

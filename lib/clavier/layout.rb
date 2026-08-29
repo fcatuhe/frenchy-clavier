@@ -60,10 +60,13 @@ module Clavier
 
       private
 
+      DOTTED = "\u25CC"
+
       DISPLAY = {
-        "<dead_circumflex>" => "^", "<dead_diaeresis>" => "\u00A8",
-        "<dead_caron>" => "\u02C7", "<dead_grave>" => "`", "<dead_acute>" => "\u00B4",
-        "<dead_tilde>" => "~", "<dead_cedilla>" => "\u00B8",
+        "<dead_circumflex>" => "#{DOTTED}\u0302", "<dead_diaeresis>" => "#{DOTTED}\u0308",
+        "<dead_caron>" => "#{DOTTED}\u030C", "<dead_grave>" => "#{DOTTED}\u0300",
+        "<dead_acute>" => "#{DOTTED}\u0301", "<dead_tilde>" => "#{DOTTED}\u0303",
+        "<dead_cedilla>" => "#{DOTTED}\u0327",
         "<space>" => "", "<nobreakspace>" => "nbsp", "<U202F>" => "nnbsp"
       }.freeze
 

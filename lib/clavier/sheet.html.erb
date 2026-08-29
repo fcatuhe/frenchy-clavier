@@ -57,7 +57,7 @@
     display: grid;
     grid-template-columns: 1fr 1fr;
     grid-template-rows: 1fr 1fr;
-    padding: 3px 6px;
+    padding: 7px 6px 3px;
   }
 
   .row-fn .slot { height: calc((var(--pitch) - var(--gap)) * 0.667); }
@@ -97,6 +97,8 @@
 
   .q { font-family: var(--mono); font-size: 1.15rem; line-height: 1; }
 
+  .q.dead { line-height: 1.1; }
+
   .q.shift { grid-area: 1 / 1; }
   .q.base { grid-area: 2 / 1; align-self: end; }
   .q.altgr-shift { grid-area: 1 / 2; justify-self: end; }
@@ -105,7 +107,6 @@
   .q.altgr, .q.altgr-shift { color: var(--altgr); font-size: 0.95rem; }
 
   .q.dead { color: var(--dead); }
-  .q.dead::after { content: "\25CC"; font-size: 0.7em; vertical-align: super; }
 
   .q.word { font-size: 0.55rem; letter-spacing: 0.02em; }
 
@@ -166,7 +167,7 @@
       <% quadrants.each do |name, index| -%>
       <% glyph = key.glyph(index) -%>
       <% next if glyph.empty? -%>
-      <span class="q <%= name %><%= " dead" if key.dead?(index) %><%= " word" if glyph.size > 1 %>"><%= escape(glyph) %></span>
+      <span class="q <%= name %><%= " dead" if key.dead?(index) %><%= " word" if glyph.scan(/\X/).size > 1 %>"><%= escape(glyph) %></span>
       <% end -%>
     </div>
     <% end -%>
@@ -181,7 +182,7 @@
     <span><b>top left</b> Shift</span>
     <span class="swatch-altgr"><b>bottom right</b> AltGr</span>
     <span class="swatch-altgr"><b>top right</b> AltGr + Shift</span>
-    <span class="swatch-dead"><b>&#9676;</b> dead key</span>
+    <span class="swatch-dead"><b>&#9676;&#769;</b> dead key</span>
   </div>
 
   <h2>Free levels (<%= layout.free_levels.size %>)</h2>
