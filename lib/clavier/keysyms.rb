@@ -39,5 +39,13 @@ module Clavier
     def self.unicode(char)
       format("U%04X", char.codepoints.first)
     end
+
+    BY_NAME = NAMES.invert.freeze
+
+    def self.char(name)
+      return [Integer(name[1..], 16)].pack("U") if name.match?(/\AU[0-9A-Fa-f]{4,6}\z/)
+
+      BY_NAME[name] || (name if name.size == 1)
+    end
   end
 end

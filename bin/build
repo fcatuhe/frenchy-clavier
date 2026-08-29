@@ -8,7 +8,7 @@ symbols = File.join(root, "out", layout.name)
 sheet = File.join(root, "out", "sheet.html")
 
 File.write(symbols, Clavier::Xkb.new(layout).to_s)
-File.write(sheet, Clavier::Sheet.new(layout).to_s)
+File.write(sheet, Clavier::Sheet.new(layout, compose_path: File.join(root, "compose.yml")).to_s)
 
 puts symbols
 puts sheet

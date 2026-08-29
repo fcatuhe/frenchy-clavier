@@ -19,6 +19,16 @@ module Clavier
 
     def [](code) = @keys[code]
 
+    MODIFIERS = ["", "Shift ", "AltGr ", "AltGr Shift "].freeze
+
+    def keystroke(char)
+      @keys.each do |code, key|
+        index = key.levels.index(char) or next
+        return MODIFIERS[index] + (key.levels[0].empty? ? code : key.glyph(0))
+      end
+      nil
+    end
+
     def each_key(&) = @keys.each(&)
 
     def characters = @keys.each_value.flat_map(&:characters).to_set

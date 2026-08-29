@@ -110,6 +110,22 @@
 
   .q.word { font-size: 0.55rem; letter-spacing: 0.02em; }
 
+  .compose .slot { background: none; }
+
+  .compose .q { color: var(--dead); }
+
+  .compose .q.altgr, .compose .q.altgr-shift { color: var(--altgr); }
+
+  .seq { border-collapse: collapse; font-size: 0.78rem; margin-top: var(--step); }
+
+  .seq td, .seq th { padding: 2px 18px 2px 0; text-align: left; }
+
+  .seq th { font-weight: 400; font-size: 0.7rem; color: var(--ink-soft); }
+
+  .seq .keys { font-family: var(--mono); color: var(--ink-soft); }
+
+  .seq .out { font-family: var(--mono); font-size: 1rem; }
+
   footer { margin-top: calc(var(--step) * 5); max-width: calc(15 * var(--pitch)); }
 
   .legend { display: flex; flex-wrap: wrap; gap: calc(var(--step) * 3); font-size: 0.75rem; color: var(--ink-soft); }
@@ -175,6 +191,38 @@
   </div>
 <% end -%>
 </div>
+
+<% if compose -%>
+<h2>Compose (Caps Lock), then the same key twice</h2>
+
+<div class="board compose">
+<% rows.each_with_index do |row, row_index| -%>
+  <div class="row n<%= row.size %><%= " row-fn" if row_index.zero? %>">
+  <% row.each do |slot| -%>
+    <% if slot.code.nil? -%>
+    <div class="slot spacer <%= unit_class(slot.width) %>"></div>
+    <% else -%>
+    <div class="slot <%= unit_class(slot.width) %>">
+      <% [["base", 0], ["shift", 1], ["altgr", 2], ["altgr-shift", 3]].each do |name, index| -%>
+      <% glyph = composed(slot.code, index) -%>
+      <% next unless glyph -%>
+      <span class="q <%= name %>"><%= escape(glyph) %></span>
+      <% end -%>
+    </div>
+    <% end -%>
+  <% end -%>
+  </div>
+<% end -%>
+</div>
+
+<h2>Compose pairs worth knowing</h2>
+<table class="seq">
+  <tr><th class="out"></th><th class="keys">after Compose</th><th class="keys">on this layout</th></tr>
+  <% compose_table.each do |sequence, physical, output| -%>
+  <tr><td class="out"><%= escape(output) %></td><td class="keys"><%= escape(sequence) %></td><td class="keys"><%= escape(physical) %></td></tr>
+  <% end -%>
+</table>
+<% end -%>
 
 <footer>
   <div class="legend">
