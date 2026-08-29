@@ -24,9 +24,13 @@ module Clavier
       "œ" => "oe", "Œ" => "OE", "ß" => "ssharp"
     }.freeze
 
+    NAMED = /\A<[A-Za-z0-9_]+>\z/
+
+    def self.named?(value) = value.match?(NAMED)
+
     def self.of(char)
       return nil if char.nil? || char.empty?
-      return char[1..-2] if char.start_with?("<") && char.end_with?(">")
+      return char[1..-2] if named?(char)
 
       NAMES[char] || (char.size == 1 && char.ord < 128 ? char : unicode(char))
     end

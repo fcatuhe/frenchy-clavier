@@ -1,3 +1,4 @@
+require "set"
 require "yaml"
 require_relative "keysyms"
 
@@ -20,6 +21,8 @@ module Clavier
 
     def each_key(&) = @keys.each(&)
 
+    def characters = @keys.each_value.flat_map(&:characters).to_set
+
     def free_levels
       @keys.flat_map { |code, key|
         LEVELS.each_with_index.filter_map { |level, i| "#{code} #{level}" if key.levels[i].empty? }
@@ -35,10 +38,11 @@ module Clavier
 
       def keysyms = @levels.map { Keysyms.of(_1) || "NoSymbol" }
 
+      def characters = @levels.reject { _1.empty? || Keysyms.named?(_1) }
+
       def glyph(index)
         raw = @levels[index]
-        return "" if raw.empty?
-        return raw unless raw.start_with?("<")
+        return raw unless Keysyms.named?(raw)
 
         DISPLAY.fetch(raw, raw[1..-2])
       end

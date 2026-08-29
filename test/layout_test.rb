@@ -26,8 +26,15 @@ class LayoutTest < Minitest::Test
     ISO_ONLY.each { |code| assert_nil(@layout[code], "#{code} does not exist on ANSI hardware") }
   end
 
-  def test_ruby_block_pipe_is_reachable
-    assert_equal("bar", @layout["BKSL"].keysyms.first)
+  def test_every_ascii_printable_is_reachable
+    printable = (33..126).map(&:chr)
+
+    (printable - @layout.characters.to_a).then { assert_empty(it, "unreachable: #{it.join}") }
+  end
+
+  def test_a_literal_angle_bracket_is_not_read_as_a_keysym_name
+    assert_equal("less", Clavier::Keysyms.of("<"))
+    assert_equal("<", @layout["AC04"].glyph(2))
   end
 
   def test_letters_get_an_alphabetic_type_so_caps_lock_works
