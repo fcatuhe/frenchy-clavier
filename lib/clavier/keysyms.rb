@@ -17,6 +17,7 @@ module Clavier
       "£" => "sterling", "€" => "EuroSign", "§" => "section",
       "«" => "guillemotleft", "»" => "guillemotright",
       "¡" => "exclamdown", "¿" => "questiondown",
+      "—" => "emdash", "–" => "endash", "…" => "ellipsis", "·" => "periodcentered",
       "à" => "agrave", "À" => "Agrave", "â" => "acircumflex", "Â" => "Acircumflex",
       "ç" => "ccedilla", "Ç" => "Ccedilla", "é" => "eacute", "É" => "Eacute",
       "è" => "egrave", "È" => "Egrave", "ê" => "ecircumflex", "Ê" => "Ecircumflex",
