@@ -23,6 +23,10 @@ module Clavier
       }.join("\n      ")
     end
 
+    def slot_count_classes
+      Keyboard.rows.map(&:size).uniq.sort.map { ".n#{it} { --slots: #{it}; }" }.join("\n      ")
+    end
+
     def escape(text) = ERB::Util.html_escape(text)
   end
 end
