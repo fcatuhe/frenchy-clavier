@@ -16,6 +16,12 @@ class LayoutTest < Minitest::Test
     @layout.each_key { |code, _| assert_includes(board, code, "#{code} has no key on an ANSI X1 Carbon") }
   end
 
+  def test_every_row_spans_the_full_board
+    Clavier::Keyboard.rows.each_with_index do |row, index|
+      assert_in_delta(Clavier::Keyboard::ROW_UNITS, row.sum(&:width), 0.001, "row #{index} does not span the board")
+    end
+  end
+
   def test_no_iso_only_key_is_used
     ISO_ONLY.each { |code| assert_nil(@layout[code], "#{code} does not exist on ANSI hardware") }
   end

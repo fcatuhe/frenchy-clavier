@@ -36,9 +36,9 @@ This is close to AFNOR NF Z71-300 (`fr(afnor)` in xkeyboard-config), which was d
 
 ## The hardware
 
-The board drawn on the sheet is the X1 Carbon Gen 6: ANSI, no ISO key left of Shift, 11 keys on the home row, no Menu key, one Super. `test_every_key_lands_on_a_slot_of_the_ansi_board` is what keeps `layout.yml` honest about that.
+The board drawn on the sheet is the X1 Carbon Gen 6: ANSI, no ISO key left of Shift, 11 keys on the home row, no Menu key, one Super, `Home End Ins Del` closing the function row, `Fn` left of `Ctrl`, and PgUp/PgDn as their own keys above the left and right arrows. Key widths come from Lenovo's own dimensions, through `pfaion/x1carbon-xkb-geometry`.
 
-The sheet draws Ctrl leftmost and Fn second, which needs "Fn and Ctrl key swap" enabled in BIOS (Config > Keyboard/Mouse). XKB cannot do that swap.
+Two tests keep the drawing and `layout.yml` honest about the hardware: `test_every_key_lands_on_a_slot_of_the_ansi_board` and `test_every_row_spans_the_full_board`.
 
 ## Open questions
 

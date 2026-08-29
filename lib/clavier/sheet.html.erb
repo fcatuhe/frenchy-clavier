@@ -12,7 +12,7 @@
     --dead: #2f6f6a;
     --edge: #cfc7ba;
     --edge-strong: #9a9186;
-    --key: 76px;
+    --pitch: 80px;
     --gap: 5px;
     --radius: 7px;
     --step: 6px;
@@ -40,35 +40,53 @@
 
   .row { display: flex; gap: var(--gap); }
 
+  .row-fn { --gap: 2px; margin-bottom: 3px; }
+
   .slot {
-    width: calc(var(--span) * var(--key) + (var(--span) - 1) * var(--gap));
-    height: var(--key);
+    width: calc(var(--span) * var(--pitch) - var(--gap));
+    height: calc(var(--pitch) - var(--gap));
     border: 1px solid var(--edge-strong);
     border-radius: var(--radius);
     box-shadow: 0 1px 0 var(--edge);
     display: grid;
     grid-template-columns: 1fr 1fr;
     grid-template-rows: 1fr 1fr;
-    padding: 3px 5px;
+    padding: 3px 6px;
   }
 
-  .slot.fixed, .slot.fn {
+  .row-fn .slot { height: calc((var(--pitch) - var(--gap)) * 0.667); }
+
+  .slot.fixed {
     align-content: center;
     justify-content: center;
     color: var(--ink-soft);
     display: flex;
-    font-size: 0.7rem;
+    font-size: 0.72rem;
   }
 
-  .slot.fn { height: calc(var(--key) * 0.62); }
+  .slot.spacer { border: none; box-shadow: none; }
 
-  .slot.stack {
+  .slot.cluster {
+    border: none;
+    box-shadow: none;
     display: flex;
     flex-direction: column;
+    gap: var(--gap);
+    padding: 0;
+  }
+
+  .cluster-row { display: flex; gap: var(--gap); flex: 1; }
+
+  .mini {
+    flex: 1;
+    border: 1px solid var(--edge-strong);
+    border-radius: var(--radius);
+    box-shadow: 0 1px 0 var(--edge);
     color: var(--ink-soft);
-    font-size: 0.6rem;
+    font-size: 0.62rem;
+    display: flex;
     align-items: center;
-    justify-content: space-around;
+    justify-content: center;
   }
 
   .q { font-family: var(--mono); font-size: 1.15rem; line-height: 1; }
@@ -85,7 +103,7 @@
 
   .q.word { font-size: 0.55rem; letter-spacing: 0.02em; }
 
-  footer { margin-top: calc(var(--step) * 5); max-width: calc(15 * var(--key)); }
+  footer { margin-top: calc(var(--step) * 5); max-width: calc(15 * var(--pitch)); }
 
   .legend { display: flex; flex-wrap: wrap; gap: calc(var(--step) * 3); font-size: 0.75rem; color: var(--ink-soft); }
 
@@ -104,7 +122,7 @@
   @page { size: A4 landscape; margin: 10mm; }
 
   @media print {
-    :root { --key: 17mm; --gap: 1mm; }
+    :root { --pitch: 18mm; --gap: 1mm; }
     body { padding: 0; background: #fff; }
   }
 
@@ -119,12 +137,18 @@
 
 <div class="board">
 <% rows.each_with_index do |row, row_index| -%>
-  <div class="row">
+  <div class="row<%= " row-fn" if row_index.zero? %>">
   <% row.each do |slot| -%>
-    <% if slot.stack -%>
-    <div class="slot stack <%= unit_class(slot.width) %>"><span><%= escape(slot.stack[0]) %></span><span><%= escape(slot.stack[1]) %></span></div>
+    <% if slot.spacer -%>
+    <div class="slot spacer <%= unit_class(slot.width) %>"></div>
+    <% elsif slot.cluster -%>
+    <div class="slot cluster <%= unit_class(slot.width) %>">
+      <% slot.cluster.each do |cluster_row| -%>
+      <div class="cluster-row"><% cluster_row.each do |label| %><span class="mini"><%= escape(label) %></span><% end %></div>
+      <% end -%>
+    </div>
     <% elsif slot.code.nil? -%>
-    <div class="slot <%= row_index.zero? ? "fn" : "fixed" %> <%= unit_class(slot.width) %>"><%= escape(slot.label) %></div>
+    <div class="slot fixed <%= unit_class(slot.width) %>"><%= escape(slot.label) %></div>
     <% else -%>
     <%
       key = layout[slot.code]
@@ -150,7 +174,6 @@
     <span class="swatch-altgr"><b>bottom right</b> AltGr</span>
     <span class="swatch-altgr"><b>top right</b> AltGr + Shift</span>
     <span class="swatch-dead"><b>&#9676;</b> dead key</span>
-    <span>Ctrl and Fn are drawn swapped (BIOS)</span>
   </div>
 
   <h2>Free levels (<%= layout.free_levels.size %>)</h2>
