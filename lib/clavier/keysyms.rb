@@ -12,7 +12,7 @@ module Clavier
       "[" => "bracketleft", "\\" => "backslash", "]" => "bracketright",
       "^" => "asciicircum", "_" => "underscore", "`" => "grave",
       "{" => "braceleft", "|" => "bar", "}" => "braceright", "~" => "asciitilde",
-      "\u00A0" => "nobreakspace", "°" => "degree", "±" => "plusminus",
+      "\u00A0" => "nobreakspace", "´" => "acute", "°" => "degree", "±" => "plusminus",
       "²" => "twosuperior", "µ" => "mu", "×" => "multiply", "÷" => "division",
       "£" => "sterling", "€" => "EuroSign", "§" => "section",
       "«" => "guillemotleft", "»" => "guillemotright",
