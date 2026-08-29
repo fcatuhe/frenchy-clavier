@@ -8,7 +8,7 @@ digits_lock: true
 # Levels, in order: base, shift, altgr, altgr+shift.
 # "" means the level is free. <name> is a raw keysym (dead keys, space).
 keys:
-  TLDE: ["@", "²", "³", ""]
+  TLDE: ["@", "²", "³", "½"]
   AE01: ["à", "1", "§", "À"]
   AE02: ["è", "2", "`", "È"]
   AE03: ["é", "3", "&", "É"]
