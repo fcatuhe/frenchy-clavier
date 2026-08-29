@@ -38,7 +38,7 @@ class LayoutTest < Minitest::Test
   end
 
   def test_letters_get_an_alphabetic_type_so_caps_lock_works
-    assert_equal("FOUR_LEVEL_SEMIALPHABETIC", @layout["AD01"].xkb_type)
+    assert_equal("FOUR_LEVEL_SEMIALPHABETIC", @layout["AD02"].xkb_type)
     assert_equal("FOUR_LEVEL_ALPHABETIC", @layout["AB03"].xkb_type)
     assert_equal("FOUR_LEVEL", @layout["AE04"].xkb_type)
   end
