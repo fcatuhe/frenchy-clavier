@@ -15,6 +15,7 @@ module Clavier
       @title = data.fetch("title")
       @subtitle = data.fetch("subtitle")
       @keys = data.fetch("keys").transform_values { Key.new(_1) }
+      @keys.each_value(&:lockable_digit!) if data["digits_lock"]
     end
 
     def [](code) = @keys[code]
@@ -61,7 +62,10 @@ module Clavier
 
       def blank? = @levels.all?(&:empty?)
 
+      def lockable_digit! = @lockable = @levels[1].match?(/\A[0-9]\z/)
+
       def xkb_type
+        return "FOUR_LEVEL_LOCKABLE_LEVEL2" if @lockable
         return "FOUR_LEVEL_ALPHABETIC" if case_pair?(0, 1) && case_pair?(2, 3)
         return "FOUR_LEVEL_SEMIALPHABETIC" if case_pair?(0, 1)
 
@@ -77,7 +81,8 @@ module Clavier
         "<dead_caron>" => "#{DOTTED}\u030C", "<dead_grave>" => "#{DOTTED}\u0300",
         "<dead_acute>" => "#{DOTTED}\u0301", "<dead_tilde>" => "#{DOTTED}\u0303",
         "<dead_cedilla>" => "#{DOTTED}\u0327",
-        "<space>" => "", "<nobreakspace>" => "nbsp", "<U202F>" => "nnbsp"
+        "<space>" => "", "<nobreakspace>" => "nbsp", "<U202F>" => "nnbsp",
+        "<Multi_key>" => "Compose", "<ISO_Level5_Lock>" => "digits lock"
       }.freeze
 
       def case_pair?(low, high)

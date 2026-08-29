@@ -48,3 +48,13 @@ Both are Shift-level today, and both are frequent in CSS and JS:
 - `=` on Shift+`:`
 
 `.` and `,` stay unshifted, so those two have nowhere cheaper to go without giving up something else. The 67 free levels listed at the bottom of the sheet are the room left to trade with.
+
+## Caps Lock
+
+Caps is Compose. Shift+Caps toggles the digit row onto its Shift level, so a long number does not need Shift held. Caps Lock itself is both Shifts together.
+
+That needs `compose:caps` out of `kb_options`, since the option redefines the key and would win:
+
+```lua
+hl.config({ input = { kb_layout = "fc", kb_options = "shift:both_capslock_cancel" } })
+```

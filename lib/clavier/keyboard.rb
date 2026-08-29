@@ -40,7 +40,7 @@ module Clavier
     end
 
     def self.home_row
-      [fixed("Caps", 1.65)] +
+      [key("CAPS", 1.65)] +
         %w[AC01 AC02 AC03 AC04 AC05 AC06 AC07 AC08 AC09 AC10 AC11].map { key(it) } +
         [fixed("Enter", 2.35)]
     end

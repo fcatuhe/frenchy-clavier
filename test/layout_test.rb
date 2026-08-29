@@ -40,7 +40,13 @@ class LayoutTest < Minitest::Test
   def test_letters_get_an_alphabetic_type_so_caps_lock_works
     assert_equal("FOUR_LEVEL_SEMIALPHABETIC", @layout["AD02"].xkb_type)
     assert_equal("FOUR_LEVEL_ALPHABETIC", @layout["AB03"].xkb_type)
-    assert_equal("FOUR_LEVEL", @layout["AE04"].xkb_type)
+    assert_equal("FOUR_LEVEL", @layout["AE11"].xkb_type)
+  end
+
+  def test_only_the_ten_digit_keys_lock_on_their_shift_level
+    lockable = @layout.each_key.filter_map { |code, key| code if key.xkb_type == "FOUR_LEVEL_LOCKABLE_LEVEL2" }
+
+    assert_equal((1..10).map { format("AE%02d", it) }, lockable)
   end
 
   def test_keysyms_fall_back_to_unicode_names
