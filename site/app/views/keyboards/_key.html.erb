@@ -1,0 +1,7 @@
+<div class="slot <%= slot_classes(slot) %>" data-code="<%= Clavier::WebCodes[slot.code] %>">
+  <% quadrants.each do |name, level| -%>
+    <% glyph = key.glyph(level) -%>
+    <% next if glyph.empty? -%>
+  <span class="q <%= name %><%= " dead" if key.dead?(level) %><%= " word" if glyph.scan(/\X/).size > 1 %>"><%= glyph %></span>
+  <% end -%>
+</div>

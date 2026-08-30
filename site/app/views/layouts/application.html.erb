@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="fr">
+  <head>
+    <meta charset="utf-8">
+    <title><%= title %></title>
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <%= csrf_meta_tags %>
+    <%= csp_meta_tag %>
+
+    <%= render "layouts/og_meta_tags", tags: {
+      title: title,
+      description: description,
+      author: author,
+      type: "website",
+      site_name: site_name,
+      url: canonical_url,
+    } %>
+
+    <%= tag :link, rel: "canonical", href: canonical_url %>
+    <%= tag :meta, name: "robots", content: robots_content %>
+    <%= tag :meta, name: "theme-color", content: "#f7f4ee", media: "(prefers-color-scheme: light)" %>
+    <%= tag :meta, name: "theme-color", content: "#14120f", media: "(prefers-color-scheme: dark)" %>
+
+    <%= favicon_link_tag "favicon.ico", sizes: "32x32" %>
+    <%= favicon_link_tag "icon.svg", type: "image/svg+xml" %>
+    <%= favicon_link_tag "apple-touch-icon.png", rel: "apple-touch-icon" %>
+
+    <%= stylesheet_link_tag :app, "data-turbo-track": "reload" %>
+    <%= tag.style geometry_css %>
+    <%= javascript_importmap_tags %>
+    <%= yield :head %>
+  </head>
+
+  <body>
+    <header class="masthead">
+      <div class="wrap">
+        <span class="wordmark">Frenchy<b>-</b>Clavier</span>
+        <nav>
+          <% pages.each do |page| %>
+            <%= link_to page.title, page_path(page.slug),
+                  "aria-current": ("page" if page.slug == @page.slug) %>
+          <% end %>
+          <a href="/sheet.html">Feuille A4</a>
+          <a href="https://github.com/fcatuhe/frenchy-clavier">Sources</a>
+        </nav>
+      </div>
+    </header>
+
+    <main class="wrap"><%= yield %></main>
+
+    <footer class="site wrap">
+      <p>
+        Tout ce que vous voyez ici est produit depuis <code>layout.yml</code>, une ligne par
+        touche. Les claviers sont dessinés à leurs vraies largeurs, chaque rangée ferme au
+        millimètre, et un test échoue sinon.
+      </p>
+      <p>MIT, Fran&ccedil;ois Catuhe. <a href="https://github.com/fcatuhe/frenchy-clavier">github.com/fcatuhe/frenchy-clavier</a></p>
+    </footer>
+  </body>
+</html>

@@ -1,0 +1,10 @@
+<table>
+  <tr><th>Donne</th><th>Compose puis</th><th>Sur cette disposition</th></tr>
+  <% Keyboard.keymap.table.each do |sequence, physical, output| %>
+    <tr>
+      <td class="out"><%= output %></td>
+      <td class="keys"><%= sequence %></td>
+      <td class="keys"><%= physical %></td>
+    </tr>
+  <% end %>
+</table>

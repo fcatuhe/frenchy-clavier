@@ -1,0 +1,43 @@
+<div class="controls">
+  <fieldset class="switch">
+    <legend>Clavier</legend>
+    <div class="options">
+      <% boards.each_with_index do |board, index| %>
+        <%= tag.input type: "radio", name: "board", id: "board-#{board.id}", checked: index.zero? %>
+        <%= label_tag "board-#{board.id}", safe_join([ board.name, tag.span(board_shape(board), class: "sub") ]) %>
+      <% end %>
+    </div>
+  </fieldset>
+
+  <fieldset class="switch">
+    <legend>Niveaux</legend>
+    <div class="options">
+      <%= tag.input type: "radio", name: "layer", id: "layer-all", checked: true %>
+      <%= label_tag "layer-all", "Tous" %>
+      <%= tag.input type: "radio", name: "layer", id: "layer-direct" %>
+      <%= label_tag "layer-direct", "Direct et Maj" %>
+      <%= tag.input type: "radio", name: "layer", id: "layer-altgr" %>
+      <%= label_tag "layer-altgr", "AltGr" %>
+    </div>
+  </fieldset>
+</div>
+
+<figure class="stage">
+  <%= render partial: "keyboards/board", collection: boards, as: :board %>
+</figure>
+
+<p class="legend">
+  <span><b>en bas à gauche</b> direct</span>
+  <span><b>en haut à gauche</b> Maj</span>
+  <span class="altgr"><b>en bas à droite</b> AltGr</span>
+  <span class="altgr"><b>en haut à droite</b> AltGr + Maj</span>
+  <span class="dead"><b>&#9676;&#769;</b> touche morte</span>
+</p>
+
+<div class="provenances">
+  <% boards.each do |board| %>
+    <p class="provenance" data-board="<%= board.id %>">
+      <b>Géométrie</b> &mdash; <%= board.source %>.<%= " #{board.note}" if board.note %>
+    </p>
+  <% end %>
+</div>

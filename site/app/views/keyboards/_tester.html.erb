@@ -1,0 +1,21 @@
+<section class="tester" data-controller="tester">
+  <h2>Essayer tout de suite</h2>
+  <p>
+    Tapez dans le cadre. Votre clavier reste celui qu'il est, la page relit les touches par
+    leur position et applique Frenchy-Clavier par-dessus. <kbd>AltGr</kbd> donne le troisième
+    niveau, <kbd>Verr. maj.</kbd> lance une séquence Compose, et une touche morte repeint le
+    clavier avec ce qu'elle produirait.
+  </p>
+
+  <%= tag.textarea "", rows: 4, spellcheck: false, "aria-label": "Essayer la disposition",
+        placeholder: "Écrivez ici. Essayez à, é, AltGr+u, AltGr+c, ^ puis e, ou Verr. maj. puis o c.",
+        data: { tester_target: "box", action: "keydown->tester#press blur->tester#reset" } %>
+
+  <p class="hint">
+    <b>Rien n'est installé</b> et rien ne quitte la page : c'est la disposition simulée en
+    JavaScript, depuis le même <code>layout.yml</code> que le pilote.
+  </p>
+
+  <%= tag.script Keyboard.keymap.to_json.html_safe, type: "application/json",
+        data: { tester_target: "keymap" } %>
+</section>

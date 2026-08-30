@@ -1,0 +1,20 @@
+<div class="grid-dead">
+  <% keymap = Keyboard.keymap -%>
+  <% keymap.dead_keys.each do |name| %>
+    <div>
+      <h3>
+        <span class="dead"><%= Clavier::Layout::Key::DISPLAY.fetch("<#{name}>", name) %></span>
+        <span class="sub"><%= keymap.stroke(name) %></span>
+      </h3>
+      <p class="produced">
+        <% keymap.produced(name).each do |typed, output| %>
+          <span><%= typed %>&thinsp;&rarr;&thinsp;<b><%= output %></b></span>
+        <% end %>
+      </p>
+      <p class="hint">
+        <%= keymap.combinations(name) %> combinaisons en tout, plus l'espace qui donne
+        <b><%= keymap.spacing[name] %></b>.
+      </p>
+    </div>
+  <% end %>
+</div>

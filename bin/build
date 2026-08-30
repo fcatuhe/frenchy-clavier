@@ -6,33 +6,25 @@ root = File.expand_path("..", __dir__)
 layout = Clavier::Layout.load(File.join(root, "layout.yml"))
 xkb = Clavier::Xkb.new(layout)
 
-tree = File.join(root, "linux", "xkb")
 written = { "symbols/#{layout.name}" => xkb.symbols,
             "compat/#{layout.name}" => xkb.compat,
             "rules/evdev.xml" => xkb.registry,
             "rules/evdev" => xkb.rules }
 
 written.each do |path, content|
-  target = File.join(tree, path)
+  target = File.join(root, "linux", "xkb", path)
   FileUtils.mkdir_p(File.dirname(target))
   File.write(target, content)
   puts target
 end
 
-compose = File.join(root, "compose.yml")
-out = File.join(root, "out")
+printed = Clavier::Sheet.new(layout, compose_path: File.join(root, "compose.yml")).to_s
 
-sheet = File.join(out, "sheet.html")
-FileUtils.mkdir_p(out)
-File.write(sheet, Clavier::Sheet.new(layout, compose_path: compose).to_s)
-puts sheet
+SHEETS = [ %w[out sheet.html], %w[site public sheet.html] ].freeze
 
-site = File.join(out, "site")
-FileUtils.mkdir_p(site)
-FileUtils.cp_r(File.join(root, "site", "assets"), site)
-FileUtils.cp(sheet, File.join(site, "sheet.html"))
-
-Clavier::Site.new(layout, compose_path: compose).pages.each do |name, html|
-  File.write(File.join(site, name), html)
-  puts File.join(site, name)
+SHEETS.each do |parts|
+  sheet = File.join(root, *parts)
+  FileUtils.mkdir_p(File.dirname(sheet))
+  File.write(sheet, printed)
+  puts sheet
 end

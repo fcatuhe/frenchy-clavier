@@ -1,0 +1,22 @@
+<div class="board <%= board_class(board) %>" data-board="<%= board.id %>">
+  <% keys = keys_of(board) -%>
+  <% board.rows.each_with_index do |row, index| -%>
+  <div class="row n<%= row.size %><%= " row-fn" if index.zero? %>">
+    <% row.each do |slot| -%>
+      <% if slot.spacer -%>
+    <div class="slot spacer <%= slot_classes(slot) %>"></div>
+      <% elsif slot.cluster -%>
+    <div class="slot cluster <%= slot_classes(slot) %>">
+        <% slot.cluster.each do |cluster_row| -%>
+      <div class="cluster-row"><% cluster_row.each do |label| %><span class="mini"><%= label %></span><% end %></div>
+        <% end -%>
+    </div>
+      <% elsif slot.code.nil? -%>
+    <div class="slot fixed <%= slot_classes(slot) %>"><%= slot.label %></div>
+      <% else -%>
+    <%= render "keyboards/key", slot: slot, key: keys[slot.code] %>
+      <% end -%>
+    <% end -%>
+  </div>
+  <% end -%>
+</div>

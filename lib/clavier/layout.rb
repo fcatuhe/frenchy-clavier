@@ -33,7 +33,7 @@ module Clavier
       (section["keys"] || {}).to_h { |code, levels| [code, Key.new(levels, types[code])] }
     end
 
-    MODIFIERS = ["", "Shift ", "AltGr ", "AltGr Shift "].freeze
+    MODIFIERS = ["", "Maj ", "AltGr ", "AltGr Maj "].freeze
 
     def keystroke(char)
       @keys.each do |code, key|

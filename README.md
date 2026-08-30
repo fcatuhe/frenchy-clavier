@@ -28,7 +28,7 @@ Quatre niveaux par touche : base, Maj, AltGr, AltGr+Maj.
 
 Le clavier complet, imprimable en A4, est dans `out/sheet.html` après un `bin/build`. Il montre les quatre niveaux de chaque touche, la couche Compose, et la liste des niveaux encore libres.
 
-Le site, dans `out/site/`, montre la même disposition sur cinq claviers réels, avec un testeur qui l'applique dans le navigateur sans rien installer.
+Le site montre la même disposition sur cinq claviers réels, avec un testeur qui l'applique dans le navigateur sans rien installer.
 
 ### Verr. maj.
 
@@ -73,9 +73,10 @@ Pas encore. Voir `macos/` et `windows/`.
 ```
 
 ```bash
-bin/build              # linux/xkb/, out/sheet.html et out/site/
+bin/build              # linux/xkb/ et la feuille A4
 bin/apply              # installe et bascule Hyprland dessus, à chaud
-bin/test
+bin/test               # les tests
+site/bin/static-build  # le site, dans site/build/
 ```
 
 `bin/apply` n'écrit rien dans la configuration Hyprland. `hyprctl reload` revient en arrière.
@@ -98,11 +99,11 @@ Les tests ne vérifient pas des goûts, ils vérifient des faits :
 ```
 layout.yml     la disposition, source unique
 compose.yml    les séquences Compose montrées sur la feuille et sur le site
-lib/           le générateur, et les gabarits du site
+lib/           le générateur
 linux/         les fichiers XKB produits, et l'installeur
 macos/         vide, voir le README
 windows/       vide, voir le README
-site/          le CSS et le testeur du site, voir le README
+site/          le site, une application Rails construite en statique, voir le README
 out/           produit par bin/build, hors dépôt
 ```
 
