@@ -50,7 +50,7 @@ Le contrôleur Stimulus lit `event.code`, la position physique de la touche, et 
 disposition installée chez le visiteur. Rien n'est envoyé nulle part : le JSON est dans la
 page, dans un `<script type="application/json">`.
 
-Il gère les quatre niveaux, les touches mortes, et les suites Compose. Une touche morte
+Il gère les quatre niveaux, les touches mortes et les suites Compose. Une touche morte
 armée repeint le clavier avec ce que chaque touche produirait ensuite.
 
 ## Sans JavaScript

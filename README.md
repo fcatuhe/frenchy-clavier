@@ -1,6 +1,6 @@
 # frenchy-clavier
 
-Une disposition AZERTY taillée pour le français, l'anglais, et le code.
+Une disposition AZERTY taillée pour le français, l'anglais et le code.
 
 **[frenchy-clavier.azade.dev](https://frenchy-clavier.azade.dev)** — la disposition sur cinq claviers réels, et un testeur qui l'applique dans le navigateur sans rien installer.
 
@@ -28,7 +28,7 @@ Quatre niveaux par touche : base, Maj, AltGr, AltGr+Maj.
 | ponctuation | `. , : ? / #` en direct, `; = ! &` sur Maj |
 | typographie | `’ — – « » … · ° ± ÷ ×` et l'espace fine insécable sur AltGr+espace |
 
-Le clavier complet, imprimable en A4, est dans `out/sheet.html` après un `bin/build`. Il montre les quatre niveaux de chaque touche, la couche Compose, et la liste des niveaux encore libres.
+Le clavier complet, imprimable en A4, est dans `out/sheet.html` après un `bin/build`. Il montre les quatre niveaux de chaque touche, la couche Compose et la liste des niveaux encore libres.
 
 Le site montre la même disposition sur cinq claviers réels, avec un testeur qui l'applique dans le navigateur sans rien installer.
 
