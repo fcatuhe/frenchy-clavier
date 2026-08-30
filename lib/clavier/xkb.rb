@@ -61,7 +61,34 @@ module Clavier
       lines.join("\n")
     end
 
-    def files = { "symbols" => symbols, "compat" => compat }
+    def registry
+      [
+        %(<?xml version="1.0" encoding="UTF-8"?>),
+        %(<!DOCTYPE xkbConfigRegistry SYSTEM "xkb.dtd">),
+        %(<xkbConfigRegistry version="1.1">),
+        "  <layoutList>",
+        "    <layout>",
+        "      <configItem>",
+        "        <name>#{@layout.name}</name>",
+        "        <shortDescription>#{@layout.short}</shortDescription>",
+        "        <description>#{@layout.title}</description>",
+        "        <languageList><iso639Id>fra</iso639Id><iso639Id>eng</iso639Id></languageList>",
+        "      </configItem>",
+        "      <variantList>",
+        "        <variant>",
+        "          <configItem>",
+        "            <name>iso</name>",
+        "            <shortDescription>#{@layout.short}</shortDescription>",
+        "            <description>#{@layout.title}, ISO</description>",
+        "          </configItem>",
+        "        </variant>",
+        "      </variantList>",
+        "    </layout>",
+        "  </layoutList>",
+        "</xkbConfigRegistry>",
+        ""
+      ].join("\n")
+    end
 
     private
 
@@ -70,9 +97,17 @@ module Clavier
     end
 
     def line(code, key)
+      return acting_line(code, key) if key.actions
+
       syms = key.keysyms.map { _1.ljust(16) }.join(", ").rstrip
       type = key.xkb_type == "FOUR_LEVEL" ? "" : %( type[Group1] = "#{key.xkb_type}",)
       format("    key <%s> {%s [ %s ] };", code, type, syms)
+    end
+
+    def acting_line(code, key)
+      syms = key.keysyms.take(key.actions.size).join(", ")
+      format(%(    key <%s> { type[Group1] = "%s", symbols[Group1] = [ %s ], actions[Group1] = [ %s ] };),
+        code, key.xkb_type, syms, key.actions.join(", "))
     end
   end
 end

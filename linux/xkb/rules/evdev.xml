@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE xkbConfigRegistry SYSTEM "xkb.dtd">
+<xkbConfigRegistry version="1.1">
+  <layoutList>
+    <layout>
+      <configItem>
+        <name>frenchy</name>
+        <shortDescription>fc</shortDescription>
+        <description>Frenchy-Clavier (AZERTY)</description>
+        <languageList><iso639Id>fra</iso639Id><iso639Id>eng</iso639Id></languageList>
+      </configItem>
+      <variantList>
+        <variant>
+          <configItem>
+            <name>iso</name>
+            <shortDescription>fc</shortDescription>
+            <description>Frenchy-Clavier (AZERTY), ISO</description>
+          </configItem>
+        </variant>
+      </variantList>
+    </layout>
+  </layoutList>
+</xkbConfigRegistry>

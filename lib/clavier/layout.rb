@@ -8,14 +8,16 @@ module Clavier
 
     def self.load(path) = new(YAML.safe_load_file(path))
 
-    attr_reader :name, :title, :subtitle
+    attr_reader :name, :title, :subtitle, :short
 
     def initialize(data)
       @name = data.fetch("name")
       @title = data.fetch("title")
       @subtitle = data.fetch("subtitle")
+      @short = data.fetch("short")
       types = data["types"] || {}
-      @keys = data.fetch("keys").to_h { |code, levels| [code, Key.new(levels, types[code])] }
+      actions = data["actions"] || {}
+      @keys = data.fetch("keys").to_h { |code, levels| [code, Key.new(levels, types[code], actions[code])] }
       @keys.each_value(&:lockable_digit!) if data["digits_lock"]
     end
 
@@ -44,9 +46,12 @@ module Clavier
     class Key
       attr_reader :levels
 
-      def initialize(levels, type = nil)
+      attr_reader :actions
+
+      def initialize(levels, type = nil, actions = nil)
         @levels = Array.new(4) { levels[_1].to_s }
         @type = type
+        @actions = actions
       end
 
       def keysyms = @levels.map { Keysyms.of(_1) || "NoSymbol" }

@@ -30,7 +30,9 @@ Le clavier complet, imprimable en A4, est dans `out/sheet.html` après un `bin/b
 
 ### Verr. maj.
 
-Verr. maj. est la touche Compose. Maj+Verr. maj. verrouille la rangée des chiffres sur son niveau Maj, pour taper un long nombre sans tenir Maj. Le vrai Verr. maj. est les deux Maj ensemble, et la disposition le définit elle-même : pas d'option à ajouter. La diode de Verr. maj. s'allume dans les deux cas.
+Verr. maj. est la touche Compose. Maj+Verr. maj. verrouille la rangée des chiffres sur son niveau Maj, pour taper un long nombre sans tenir Maj. Le vrai Verr. maj. est les deux Maj ensemble.
+
+Les deux sont dans la disposition, aucune option à ajouter. Les touches Maj verrouillent par une action `LockMods` et non par le keysym `Caps_Lock`, sinon elles entreraient dans la table du modificateur Lock, qui appartient à la touche et pas au groupe : la moindre autre disposition partageant le clavier hériterait du verrouillage. La diode de Verr. maj. s'allume dans les deux cas.
 
 ## Installer
 
@@ -51,7 +53,9 @@ hl.config({ input = {
 
 Les deux Ctrl basculent entre Frenchy-Clavier et QWERTY US. Sur un clavier ISO, ajouter `kb_variant = "iso"`.
 
-Deux options comptent. `compose:caps` ne doit pas rester : l'option redéfinit Verr. maj. et écrase le verrou des chiffres, que la disposition pose elle-même. Et si une seconde disposition partage le clavier, il lui faut `caps:none` : sans ça sa touche Verr. maj. garde le modificateur Lock, qui est propre à la touche et non au groupe, et Compose verrouillerait les majuscules en même temps.
+Deux options sont à écarter, `compose:caps` et `shift:both_capslock_cancel` : la disposition fait déjà les deux, et les options écraseraient le verrou des chiffres.
+
+`caps:none` n'est là que parce qu'une seconde disposition partage le clavier. Sans elle, le `Caps_Lock` du groupe QWERTY met le modificateur Lock sur la touche, et un modificateur appartient à la touche et non au groupe : Compose verrouillerait les majuscules avec lui. Le prix est que Verr. maj. ne fait plus rien du côté QWERTY.
 
 ### macOS, Windows
 
@@ -82,7 +86,8 @@ Les tests ne vérifient pas des goûts, ils vérifient des faits :
 - chaque rangée dessinée fait exactement la largeur du clavier ;
 - les 94 caractères ASCII imprimables sont tous atteignables ;
 - les fichiers produits compilent, la diode suit bien le verrou des chiffres ;
-- seules les dix touches de chiffres se verrouillent.
+- seules les dix touches de chiffres se verrouillent ;
+- les touches Maj n'entrent dans aucune table de modificateur Lock.
 
 ## Structure
 

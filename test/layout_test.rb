@@ -56,20 +56,36 @@ class LayoutTest < Minitest::Test
     assert_nil(Clavier::Keysyms.of(""))
   end
 
+  def install(dir)
+    xkb = Clavier::Xkb.new(@layout)
+    { "symbols" => xkb.symbols, "compat" => xkb.compat, "rules/evdev" => xkb.rules }.each do |path, content|
+      name = path.include?("/") ? path : "#{path}/#{@layout.name}"
+      FileUtils.mkdir_p("#{dir}/xkb/#{File.dirname(name)}")
+      File.write("#{dir}/xkb/#{name}", content)
+    end
+  end
+
   def test_the_emitted_files_compile_and_light_the_caps_led_on_the_digit_lock
     Dir.mktmpdir do |dir|
-      xkb = Clavier::Xkb.new(@layout)
-      { "symbols" => xkb.symbols, "compat" => xkb.compat, "rules/evdev" => xkb.rules }.each do |path, content|
-        name = path.include?("/") ? path : "#{path}/#{@layout.name}"
-        FileUtils.mkdir_p("#{dir}/xkb/#{File.dirname(name)}")
-        File.write("#{dir}/xkb/#{name}", content)
-      end
+      install(dir)
 
       keymap = IO.popen({ "XDG_CONFIG_HOME" => dir },
         ["xkbcli", "compile-keymap", "--layout", @layout.name, err: File::NULL], &:read)
 
       assert_includes(keymap, "FOUR_LEVEL_LOCKABLE_LEVEL2")
       assert_match(/indicator "Caps Lock" \{[^}]*modifiers= Lock\+LevelFive/m, keymap)
+    end
+  end
+
+  def test_the_shift_keys_lock_without_joining_the_lock_modifier_map
+    Dir.mktmpdir do |dir|
+      install(dir)
+
+      keymap = IO.popen({ "XDG_CONFIG_HOME" => dir },
+        ["xkbcli", "compile-keymap", "--layout", "us,#{@layout.name}", "--options", "caps:none", err: File::NULL], &:read)
+
+      refute_match(/modifier_map Lock/, keymap, "a Lock modmap follows the key across every group")
+      assert_match(/LockMods\(modifiers=Lock\)/, keymap)
     end
   end
 

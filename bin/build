@@ -9,6 +9,7 @@ xkb = Clavier::Xkb.new(layout)
 tree = File.join(root, "linux", "xkb")
 written = { "symbols/#{layout.name}" => xkb.symbols,
             "compat/#{layout.name}" => xkb.compat,
+            "rules/evdev.xml" => xkb.registry,
             "rules/evdev" => xkb.rules }
 
 written.each do |path, content|
