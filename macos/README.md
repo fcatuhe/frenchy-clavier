@@ -2,7 +2,7 @@
 
 Rien ici pour l'instant.
 
-macOS ne lit pas XKB. Il faut un bundle `.bundle` contenant un `.keylayout`, un fichier XML qui liste, pour chaque combinaison de modificateurs, le caractère produit par chaque code de touche. Le format accepte les touches mortes (`<action>` et `<when state=...>`), donc tout ce que fait Frenchy-Clavier est exprimable.
+macOS ne lit pas XKB. Il faut un bundle `.bundle` contenant un `.keylayout`, un fichier XML qui liste, pour chaque combinaison de modificateurs, le caractère produit par chaque code de touche. Le format accepte les touches mortes (`<action>` et `<when state=...>`), donc tout ce que fait frenchy-clavier est exprimable.
 
 Ce qui reste à faire :
 

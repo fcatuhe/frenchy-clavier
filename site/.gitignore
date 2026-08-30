@@ -36,3 +36,6 @@
 # Rails Static
 /build
 content/**/_draft
+
+# Rendered by ../bin/build, not by Rails.
+/public/sheet.html

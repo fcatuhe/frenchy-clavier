@@ -1,6 +1,6 @@
 ---
 title: Installer
-description: Poser Frenchy-Clavier sur Linux, et ce qu'il reste à faire pour macOS et Windows.
+description: Poser frenchy-clavier sur Linux, et ce qu'il reste à faire pour macOS et Windows.
 position: 2
 ---
 
@@ -37,11 +37,11 @@ hl.config({ input = {
 } })
 ```
 
-Les deux Ctrl basculent entre Frenchy-Clavier et QWERTY US. Sans variante c'est l'ISO, le clavier de la plupart des Français. Sur un clavier ANSI, ajoutez `kb_variant = ",ansi"` : une variante par disposition, celle du QWERTY reste vide.
+Les deux Ctrl basculent entre frenchy-clavier et QWERTY US. Sans variante c'est l'ISO, le clavier de la plupart des Français. Sur un clavier ANSI, ajoutez `kb_variant = ",ansi"` : une variante par disposition, celle du QWERTY reste vide.
 
 ### GNOME, KDE, X11
 
-La disposition s'annonce dans le registre XKB, donc elle apparaît dans la liste des dispositions du système sous le nom **Frenchy-Clavier**, avec ses deux variantes ISO et ANSI. Rien de plus à faire.
+La disposition s'annonce dans le registre XKB, donc elle apparaît dans la liste des dispositions du système sous le nom **frenchy-clavier**, avec ses deux variantes ISO et ANSI. Rien de plus à faire.
 
 <details markdown="1">
 <summary>Deux options à ne pas ajouter</summary>
@@ -59,7 +59,7 @@ Uniquement parce qu'une seconde disposition partage le clavier. Sans elle, le `C
 
 ## macOS
 
-Pas encore. macOS ne lit pas XKB : il faut un bundle contenant un `.keylayout`, un XML qui liste, pour chaque combinaison de modificateurs, le caractère produit par chaque code de touche. Le format accepte les touches mortes, donc tout ce que fait Frenchy-Clavier est exprimable.
+Pas encore. macOS ne lit pas XKB : il faut un bundle contenant un `.keylayout`, un XML qui liste, pour chaque combinaison de modificateurs, le caractère produit par chaque code de touche. Le format accepte les touches mortes, donc tout ce que fait frenchy-clavier est exprimable.
 
 Deux choses ne survivront pas au portage, et autant le dire tout de suite : le verrou des chiffres n'a pas d'équivalent, et AltGr n'existe pas. C'est Option qui tiendrait le troisième niveau, et Apple s'en sert déjà.
 

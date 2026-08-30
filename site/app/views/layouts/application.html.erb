@@ -34,10 +34,10 @@
   <body>
     <header class="masthead">
       <div class="wrap">
-        <span class="wordmark">Frenchy<b>-</b>Clavier</span>
+        <span class="wordmark">frenchy<b>-</b>clavier</span>
         <nav>
           <% pages.each do |page| %>
-            <%= link_to page.title, page_path(page.slug),
+            <%= link_to page.title, path_to_page(page.slug),
                   "aria-current": ("page" if page.slug == @page.slug) %>
           <% end %>
           <a href="/sheet.html">Feuille A4</a>

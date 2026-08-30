@@ -6,7 +6,7 @@ Windows ne lit pas XKB non plus. Une disposition Windows est une DLL, produite �
 
 Ce qui reste à faire :
 
-- Générer le `.klc` depuis `layout.yml`. Le format donne quatre colonnes par touche (base, Maj, AltGr, AltGr+Maj), ce qui correspond exactement aux quatre niveaux de Frenchy-Clavier.
+- Générer le `.klc` depuis `layout.yml`. Le format donne quatre colonnes par touche (base, Maj, AltGr, AltGr+Maj), ce qui correspond exactement aux quatre niveaux de frenchy-clavier.
 - Les touches mortes se déclarent en fin de fichier, une table par accent.
 - Le verrou des chiffres n'existe pas sous Windows. Il sautera.
 - Compiler la DLL avec `kbdutool -u -x`, puis fournir un installeur.

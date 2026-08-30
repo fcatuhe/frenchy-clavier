@@ -5,7 +5,7 @@ module ApplicationHelper
   end
 
   def site_name
-    "Frenchy-Clavier"
+    "frenchy-clavier"
   end
 
   def title

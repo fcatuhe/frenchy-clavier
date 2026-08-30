@@ -1,5 +1,6 @@
 #!/usr/bin/env ruby
 require "fileutils"
+require "json"
 require_relative "../lib/clavier"
 
 root = File.expand_path("..", __dir__)
@@ -16,8 +17,21 @@ abort("xkbcli rejected the keymap, nothing applied") unless system(*check, out: 
 
 puts "installed #{target}"
 
-if system("hyprctl", "keyword", "input:kb_layout", layout.name, out: File::NULL)
-  puts "live in hyprland, revert with: hyprctl reload"
-else
-  warn "hyprctl unavailable, layout installed but not applied"
-end
+devices = IO.popen(%w[hyprctl devices -j], err: File::NULL, &:read)
+exit if devices.empty?
+
+running = JSON.parse(devices).fetch("keyboards", []).filter_map { it["active_keymap"] }.uniq
+exit if running.any? { it.start_with?(layout.title) }
+
+warn <<~STALE
+  Hyprland is still on the keymap it compiled at login: #{running.join(', ')}
+
+  It recompiles only when an input value actually changes, and hyprctl keyword
+  does not reach a Lua input block, so reload alone will not pick this up.
+  Change one value in ~/.config/hypr/input.lua, reload, change it back:
+
+    sed -i 's/kb_variant = ",ansi"/kb_variant = ",iso"/' ~/.config/hypr/input.lua
+    hyprctl reload
+    sed -i 's/kb_variant = ",iso"/kb_variant = ",ansi"/' ~/.config/hypr/input.lua
+    hyprctl reload
+STALE

@@ -1,4 +1,4 @@
-# Frenchy-Clavier
+# frenchy-clavier
 
 Une disposition AZERTY pour qui écrit en français, en anglais, et du code.
 
@@ -53,7 +53,7 @@ hl.config({ input = {
 } })
 ```
 
-Les deux Ctrl basculent entre Frenchy-Clavier et QWERTY US. Sans variante, c'est l'ISO. Sur un clavier ANSI, ajouter `kb_variant = ",ansi"` : une variante par disposition, celle du QWERTY reste vide.
+Les deux Ctrl basculent entre frenchy-clavier et QWERTY US. Sans variante, c'est l'ISO. Sur un clavier ANSI, ajouter `kb_variant = ",ansi"` : une variante par disposition, celle du QWERTY reste vide.
 
 Deux options sont à écarter, `compose:caps` et `shift:both_capslock_cancel` : la disposition fait déjà les deux, et les options écraseraient le verrou des chiffres.
 
@@ -80,6 +80,19 @@ site/bin/static-build  # le site, dans site/build/
 ```
 
 `bin/apply` n'écrit rien dans la configuration Hyprland. `hyprctl reload` revient en arrière.
+
+### Hyprland ne recompile pas tout seul
+
+Hyprland compile la disposition une fois, au démarrage de la session, et ne la recompile que si une valeur de la section `input` change vraiment. Réinstaller les fichiers XKB ne suffit donc pas : `hyprctl reload` relit la configuration, n'y voit aucun changement, et garde l'ancienne disposition. `hyprctl keyword` n'aide pas non plus, il n'atteint pas un bloc `input` écrit en Lua.
+
+`bin/apply` compare ce que Hyprland annonce à ce qui vient d'être installé, et le dit quand la session est restée en arrière. Pour la forcer, il faut faire changer une valeur, puis la remettre :
+
+```bash
+sed -i 's/kb_variant = ",ansi"/kb_variant = ",iso"/' ~/.config/hypr/input.lua
+hyprctl reload
+sed -i 's/kb_variant = ",iso"/kb_variant = ",ansi"/' ~/.config/hypr/input.lua
+hyprctl reload
+```
 
 ## Ce qui tient la disposition honnête
 

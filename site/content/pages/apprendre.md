@@ -1,6 +1,6 @@
 ---
 title: Apprendre
-description: Les règles de Frenchy-Clavier, ses touches mortes et sa couche Compose.
+description: Les règles de frenchy-clavier, ses touches mortes et sa couche Compose.
 position: 1
 ---
 
