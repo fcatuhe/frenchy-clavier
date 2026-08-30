@@ -1,5 +1,7 @@
 # Site
 
+[frenchy-clavier.azade.dev](https://frenchy-clavier.azade.dev)
+
 Une application Rails qui ne sert jamais de requête : elle est construite en fichiers
 statiques par Parklife, et déployée sur GitHub Pages. La recette est celle de
 [rails-static](https://github.com/fcatuhe/rails-static) : Decant pour le contenu, kramdown

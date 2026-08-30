@@ -2,6 +2,8 @@
 
 Une disposition AZERTY pour qui écrit en français, en anglais, et du code.
 
+**[frenchy-clavier.azade.dev](https://frenchy-clavier.azade.dev)** — la disposition sur cinq claviers réels, et un testeur qui l'applique dans le navigateur sans rien installer.
+
 ## Pourquoi
 
 - **Français et anglais.** Bépo n'est pas adapté : il optimise le français seul, et il faut tout réapprendre.
