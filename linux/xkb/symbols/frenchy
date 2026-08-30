@@ -14,8 +14,8 @@ xkb_symbols "ansi" {
     key <AE08> { type[Group1] = "FRENCHY_DIGITS_LOCK", [ plus            , 8               , division ] };
     key <AE09> { type[Group1] = "FRENCHY_DIGITS_LOCK", [ minus           , 9               , plusminus ] };
     key <AE10> { type[Group1] = "FRENCHY_DIGITS_LOCK", [ underscore      , 0               , emdash          , endash ] };
-    key <AE11> { [ apostrophe      , percent         , U2019           , dead_acute ] };
-    key <AE12> { [ quotedbl        , degree          , grave           , dead_grave ] };
+    key <AE11> { [ apostrophe      , percent         , grave           , dead_grave ] };
+    key <AE12> { [ quotedbl        , degree          , U2019           , dead_acute ] };
     key <AD01> { type[Group1] = "FOUR_LEVEL_ALPHABETIC", [ a               , A               , ae              , AE ] };
     key <AD02> { type[Group1] = "FOUR_LEVEL_SEMIALPHABETIC", [ z               , Z ] };
     key <AD03> { type[Group1] = "FOUR_LEVEL_SEMIALPHABETIC", [ e               , E               , EuroSign ] };
