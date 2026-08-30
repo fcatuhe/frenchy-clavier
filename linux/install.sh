@@ -19,13 +19,13 @@ Installed into ~/.config/xkb
 Hyprland, in ~/.config/hypr/input.lua:
 
   hl.config({ input = {
-    kb_layout = "frenchy,us",
-    kb_options = "shift:both_capslock_cancel,grp:ctrls_toggle",
+    kb_layout = "us,frenchy",
+    kb_options = "caps:none,grp:ctrls_toggle",
   } })
 
 Add kb_variant = "iso" on an ISO keyboard. Both Ctrls switch layouts.
 
 Anything else running X:
 
-  setxkbmap frenchy -option shift:both_capslock_cancel
+  setxkbmap frenchy
 EOF

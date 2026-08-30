@@ -30,7 +30,7 @@ Le clavier complet, imprimable en A4, est dans `out/sheet.html` après un `bin/b
 
 ### Verr. maj.
 
-Verr. maj. est la touche Compose. Maj+Verr. maj. verrouille la rangée des chiffres sur son niveau Maj, pour taper un long nombre sans tenir Maj. Le vrai Verr. maj. est les deux Maj ensemble. La diode de Verr. maj. s'allume dans les deux cas.
+Verr. maj. est la touche Compose. Maj+Verr. maj. verrouille la rangée des chiffres sur son niveau Maj, pour taper un long nombre sans tenir Maj. Le vrai Verr. maj. est les deux Maj ensemble, et la disposition le définit elle-même : pas d'option à ajouter. La diode de Verr. maj. s'allume dans les deux cas.
 
 ## Installer
 
@@ -44,14 +44,14 @@ Puis, sous Hyprland, dans `~/.config/hypr/input.lua` :
 
 ```lua
 hl.config({ input = {
-  kb_layout = "frenchy,us",
-  kb_options = "shift:both_capslock_cancel,grp:ctrls_toggle",
+  kb_layout = "us,frenchy",
+  kb_options = "caps:none,grp:ctrls_toggle",
 } })
 ```
 
 Les deux Ctrl basculent entre Frenchy-Clavier et QWERTY US. Sur un clavier ISO, ajouter `kb_variant = "iso"`.
 
-`compose:caps` ne doit pas rester dans `kb_options` : l'option redéfinit la touche et écrase le verrou des chiffres.
+Deux options comptent. `compose:caps` ne doit pas rester : l'option redéfinit Verr. maj. et écrase le verrou des chiffres, que la disposition pose elle-même. Et si une seconde disposition partage le clavier, il lui faut `caps:none` : sans ça sa touche Verr. maj. garde le modificateur Lock, qui est propre à la touche et non au groupe, et Compose verrouillerait les majuscules en même temps.
 
 ### macOS, Windows
 

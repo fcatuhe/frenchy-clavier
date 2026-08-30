@@ -14,7 +14,8 @@ module Clavier
       @name = data.fetch("name")
       @title = data.fetch("title")
       @subtitle = data.fetch("subtitle")
-      @keys = data.fetch("keys").transform_values { Key.new(_1) }
+      types = data["types"] || {}
+      @keys = data.fetch("keys").to_h { |code, levels| [code, Key.new(levels, types[code])] }
       @keys.each_value(&:lockable_digit!) if data["digits_lock"]
     end
 
@@ -43,8 +44,9 @@ module Clavier
     class Key
       attr_reader :levels
 
-      def initialize(levels)
+      def initialize(levels, type = nil)
         @levels = Array.new(4) { levels[_1].to_s }
+        @type = type
       end
 
       def keysyms = @levels.map { Keysyms.of(_1) || "NoSymbol" }
@@ -65,6 +67,7 @@ module Clavier
       def lockable_digit! = @lockable = @levels[1].match?(/\A[0-9]\z/)
 
       def xkb_type
+        return @type if @type
         return "FOUR_LEVEL_LOCKABLE_LEVEL2" if @lockable
         return "FOUR_LEVEL_ALPHABETIC" if case_pair?(0, 1) && case_pair?(2, 3)
         return "FOUR_LEVEL_SEMIALPHABETIC" if case_pair?(0, 1)
@@ -82,7 +85,8 @@ module Clavier
         "<dead_acute>" => "#{DOTTED}\u0301", "<dead_tilde>" => "#{DOTTED}\u0303",
         "<dead_cedilla>" => "#{DOTTED}\u0327",
         "<space>" => "", "<nobreakspace>" => "nbsp", "<U202F>" => "nnbsp",
-        "<Multi_key>" => "Compose", "<ISO_Level5_Lock>" => "digits lock"
+        "<Multi_key>" => "Compose", "<ISO_Level5_Lock>" => "digits lock",
+        "<Shift_L>" => "Shift", "<Shift_R>" => "Shift", "<Caps_Lock>" => "Caps Lock"
       }.freeze
 
       def case_pair?(low, high)

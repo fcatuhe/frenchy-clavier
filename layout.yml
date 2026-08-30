@@ -62,3 +62,12 @@ keys:
   SPCE: ["<space>", "<space>", "<U202F>", "<nobreakspace>"]
 
   CAPS: ["<Multi_key>", "<ISO_Level5_Lock>", "", ""]
+
+  LFSH: ["<Shift_L>", "<Caps_Lock>", "", ""]
+  RTSH: ["<Shift_R>", "<Caps_Lock>", "", ""]
+
+# Keys that must not answer to AltGr, or holding it would swallow the modifier.
+types:
+  CAPS: TWO_LEVEL
+  LFSH: ALPHABETIC
+  RTSH: ALPHABETIC

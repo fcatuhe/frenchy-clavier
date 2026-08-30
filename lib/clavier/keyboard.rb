@@ -46,9 +46,9 @@ module Clavier
     end
 
     def self.lower_row
-      [fixed("Shift", 2.15)] +
+      [key("LFSH", 2.15)] +
         %w[AB01 AB02 AB03 AB04 AB05 AB06 AB07 AB08 AB09 AB10].map { key(it) } +
-        [fixed("Shift", 2.85)]
+        [key("RTSH", 2.85)]
     end
 
     def self.bottom_row
