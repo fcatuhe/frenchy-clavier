@@ -57,8 +57,8 @@ keys:
   AB06: ["n", "N", "", ""]
   AB07: [".", ".", "·", "…"]
   AB08: [",", ";", "", ""]
-  AB09: ["?", "!", "", ""]
-  AB10: [":", "=", "", ""]
+  AB09: [":", "=", "", ""]
+  AB10: ["?", "!", "", ""]
 
   SPCE: ["<space>", "<space>", "<U202F>", "<nobreakspace>"]
 
@@ -78,3 +78,12 @@ types:
   CAPS: TWO_LEVEL
   LFSH: ALPHABETIC
   RTSH: ALPHABETIC
+
+# ISO hardware has one key ANSI does not, and Enter reaches up a row. The key
+# left of Enter becomes a second Enter, and the backslash moves left of Maj.
+iso:
+  keys:
+    BKSL: ["<Return>", "", "", ""]
+    LSGT: ["\\", "|", "", ""]
+  types:
+    BKSL: ONE_LEVEL
