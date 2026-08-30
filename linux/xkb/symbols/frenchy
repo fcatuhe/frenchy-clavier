@@ -60,6 +60,14 @@ xkb_symbols "frenchy" {
 };
 
 partial alphanumeric_keys
+xkb_symbols "ansi" {
+
+    include "frenchy(frenchy)"
+
+    name[Group1] = "Frenchy-Clavier (AZERTY), ANSI";
+};
+
+partial alphanumeric_keys
 xkb_symbols "iso" {
 
     include "frenchy(frenchy)"

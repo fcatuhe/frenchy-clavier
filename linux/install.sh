@@ -23,7 +23,7 @@ Hyprland, in ~/.config/hypr/input.lua:
     kb_options = "caps:none,grp:ctrls_toggle",
   } })
 
-Add kb_variant = "iso" on an ISO keyboard. Both Ctrls switch layouts.
+Both Ctrls switch layouts. No variant means ANSI; kb_variant = "ansi" says it out loud, kb_variant = "iso" for an ISO board.
 
 Anything else running X:
 

@@ -12,6 +12,13 @@
       <variantList>
         <variant>
           <configItem>
+            <name>ansi</name>
+            <shortDescription>fc</shortDescription>
+            <description>Frenchy-Clavier (AZERTY), ANSI</description>
+          </configItem>
+        </variant>
+        <variant>
+          <configItem>
             <name>iso</name>
             <shortDescription>fc</shortDescription>
             <description>Frenchy-Clavier (AZERTY), ISO</description>

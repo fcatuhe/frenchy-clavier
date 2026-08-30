@@ -4,9 +4,24 @@ module Clavier
 
     def initialize(layout) = @layout = layout
 
-    def symbols = [ansi, iso].join("\n")
+    VARIANTS = { "ansi" => "ANSI", "iso" => "ISO" }.freeze
+
+    def symbols = [base, ansi, iso].join("\n")
 
     def ansi
+      [
+        "partial alphanumeric_keys",
+        %(xkb_symbols "ansi" {),
+        "",
+        %(    include "#{@layout.name}(#{@layout.name})"),
+        "",
+        %(    name[Group1] = "#{@layout.title}, ANSI";),
+        "};",
+        ""
+      ].join("\n")
+    end
+
+    def base
       [
         "default partial alphanumeric_keys",
         %(xkb_symbols "#{@layout.name}" {),
@@ -75,13 +90,15 @@ module Clavier
         "        <languageList><iso639Id>fra</iso639Id><iso639Id>eng</iso639Id></languageList>",
         "      </configItem>",
         "      <variantList>",
-        "        <variant>",
-        "          <configItem>",
-        "            <name>iso</name>",
-        "            <shortDescription>#{@layout.short}</shortDescription>",
-        "            <description>#{@layout.title}, ISO</description>",
-        "          </configItem>",
-        "        </variant>",
+        VARIANTS.flat_map { |name, label|
+          ["        <variant>",
+           "          <configItem>",
+           "            <name>#{name}</name>",
+           "            <shortDescription>#{@layout.short}</shortDescription>",
+           "            <description>#{@layout.title}, #{label}</description>",
+           "          </configItem>",
+           "        </variant>"]
+        },
         "      </variantList>",
         "    </layout>",
         "  </layoutList>",
