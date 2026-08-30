@@ -56,7 +56,7 @@ Aucune lettre n'a été déplacée pour gagner un millimètre. Il n'y a pas de p
 
 | | | |
 |---|---|---|
-| Rangée du haut | `@ à è é ( ) " ' _ - + * ~` | les chiffres passent sur Maj |
+| Rangée du haut | `@ à è é ( ) ~ * + - _ ' "` | les chiffres passent sur Maj |
 | Accents | `à è é` | en direct, `ù` sur AltGr+U, `ç` sur AltGr+C, majuscules sur AltGr+Maj |
 | Code | `( ) " '` | en direct, `{ }` sur AltGr+`( )`, `[ ]` sur AltGr+R T, `< >` sur AltGr+F G |
 | Ponctuation | `. , : ? / #` | en direct, `; = ! &` sur Maj |

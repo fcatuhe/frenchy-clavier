@@ -22,7 +22,7 @@ Quatre niveaux par touche : base, Maj, AltGr, AltGr+Maj.
 
 | | |
 |---|---|
-| rangée du haut | `@ à è é ( ) " ' _ - + * ~`, les chiffres sur Maj |
+| rangée du haut | `@ à è é ( ) ~ * + - _ ' "`, les chiffres sur Maj |
 | accents | `à è é` en direct, `ù` sur AltGr+U, `ç` sur AltGr+C, majuscules sur AltGr+Maj |
 | code | `( )` et `" '` en direct, `{ }` sur AltGr+`(` `)`, `[ ]` sur AltGr+R T, `< >` sur AltGr+F G |
 | ponctuation | `. , : ? / #` en direct, `; = ! &` sur Maj |
