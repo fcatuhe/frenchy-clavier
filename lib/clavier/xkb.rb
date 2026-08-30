@@ -63,12 +63,14 @@ module Clavier
       ].join("\n")
     end
 
+    INDICATOR = "Scroll Lock".freeze
+
     def compat
       [
         %(partial xkb_compatibility "#{LED}" {),
-        %(    indicator "Caps Lock" {),
+        %(    indicator "#{INDICATOR}" {),
         "\twhichModState= Locked;",
-        "\tmodifiers= Lock+LevelFive;",
+        "\tmodifiers= LevelFive;",
         "    };",
         "};",
         ""

@@ -59,7 +59,7 @@ class LayoutTest < Minitest::Test
     end
   end
 
-  def test_the_emitted_files_compile_and_light_the_caps_led_on_the_digit_lock
+  def test_the_emitted_files_compile_and_the_digit_lock_drives_its_own_indicator
     Dir.mktmpdir do |dir|
       install(dir)
 
@@ -67,7 +67,9 @@ class LayoutTest < Minitest::Test
         ["xkbcli", "compile-keymap", "--layout", @layout.name, err: File::NULL], &:read)
 
       assert_includes(keymap, Clavier::Xkb::DIGITS_LOCK)
-      assert_match(/indicator "Caps Lock" \{[^}]*modifiers= Lock\+LevelFive/m, keymap)
+      assert_match(/indicator "Scroll Lock" \{[^}]*modifiers= LevelFive/m, keymap)
+      refute_match(/indicator "Caps Lock" \{[^}]*LevelFive/m, keymap,
+        "Caps Lock has to mean Caps Lock, or one light says two things")
     end
   end
 

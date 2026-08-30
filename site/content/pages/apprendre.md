@@ -44,7 +44,9 @@ La règle la plus facile à retenir : **la même touche deux fois**. Compose pui
 
 <kbd>Maj</kbd> + <kbd>Verr. maj.</kbd> verrouille la rangée des chiffres sur son niveau Maj. On tape un long nombre sans tenir Maj, et le reste du clavier ne bouge pas : les lettres restent des minuscules.
 
-Le vrai Verr. maj. existe toujours, c'est les **deux Maj ensemble**. La diode s'allume dans les deux cas. Les deux sont dans la disposition, il n'y a aucune option à ajouter.
+Le vrai Verr. maj. existe toujours, c'est les **deux Maj ensemble**, et la diode ne s'allume que pour lui. Les deux sont dans la disposition, il n'y a aucune option à ajouter.
+
+Le verrou des chiffres, lui, allume l'indicateur Verr. défil. Aucun portable ne l'affiche, mais le système le voit, et la barre d'état peut donc le montrer sans que la diode de Verr. maj. ait à dire deux choses à la fois.
 
 ## Ce qui reste libre
 

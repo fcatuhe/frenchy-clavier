@@ -36,7 +36,7 @@ Le site montre la même disposition sur cinq claviers réels, avec un testeur qu
 
 Verr. maj. est la touche Compose. Maj+Verr. maj. verrouille la rangée des chiffres sur son niveau Maj, pour taper un long nombre sans tenir Maj. Le vrai Verr. maj. est les deux Maj ensemble.
 
-Les deux sont dans la disposition, aucune option à ajouter. Les touches Maj verrouillent par une action `LockMods` et non par le keysym `Caps_Lock`, sinon elles entreraient dans la table du modificateur Lock, qui appartient à la touche et pas au groupe : la moindre autre disposition partageant le clavier hériterait du verrouillage. La diode de Verr. maj. s'allume dans les deux cas.
+Les deux sont dans la disposition, aucune option à ajouter. Les touches Maj verrouillent par une action `LockMods` et non par le keysym `Caps_Lock`, sinon elles entreraient dans la table du modificateur Lock, qui appartient à la touche et pas au groupe : la moindre autre disposition partageant le clavier hériterait du verrouillage. La diode de Verr. maj. ne s'allume que pour le vrai Verr. maj.
 
 ## Installer
 
@@ -105,7 +105,7 @@ Les tests ne vérifient pas des goûts, ils vérifient des faits :
 - les largeurs du Framework tombent sur des millimètres entiers de son propre pas ;
 - la touche ISO supplémentaire n'existe que sur les claviers ISO ;
 - les 94 caractères ASCII imprimables sont tous atteignables ;
-- les fichiers produits compilent, la diode suit bien le verrou des chiffres ;
+- les fichiers produits compilent, et le verrou des chiffres a son propre indicateur ;
 - seules les dix touches de chiffres se verrouillent ;
 - les touches Maj n'entrent dans aucune table de modificateur Lock.
 
