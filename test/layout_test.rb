@@ -56,16 +56,20 @@ class LayoutTest < Minitest::Test
     assert_nil(Clavier::Keysyms.of(""))
   end
 
-  def test_the_emitted_symbols_compile
+  def test_the_emitted_files_compile_and_light_the_caps_led_on_the_digit_lock
     Dir.mktmpdir do |dir|
-      FileUtils.mkdir_p("#{dir}/symbols")
-      File.write("#{dir}/symbols/#{@layout.name}", Clavier::Xkb.new(@layout).to_s)
+      xkb = Clavier::Xkb.new(@layout)
+      { "symbols" => xkb.symbols, "compat" => xkb.compat, "rules/evdev" => xkb.rules }.each do |path, content|
+        name = path.include?("/") ? path : "#{path}/#{@layout.name}"
+        FileUtils.mkdir_p("#{dir}/xkb/#{File.dirname(name)}")
+        File.write("#{dir}/xkb/#{name}", content)
+      end
 
-      env = { "XKB_CONFIG_EXTRA_PATH" => dir, "XDG_CONFIG_HOME" => "#{dir}/empty" }
-      compiled = system(env,
-        "xkbcli", "compile-keymap", "--layout", @layout.name, out: File::NULL, err: File::NULL)
+      keymap = IO.popen({ "XDG_CONFIG_HOME" => dir },
+        ["xkbcli", "compile-keymap", "--layout", @layout.name, err: File::NULL], &:read)
 
-      assert(compiled, "xkbcli rejected the generated symbols")
+      assert_includes(keymap, "FOUR_LEVEL_LOCKABLE_LEVEL2")
+      assert_match(/indicator "Caps Lock" \{[^}]*modifiers= Lock\+LevelFive/m, keymap)
     end
   end
 end

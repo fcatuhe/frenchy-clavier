@@ -1,8 +1,10 @@
 module Clavier
   class Xkb
+    LED = "leddigits".freeze
+
     def initialize(layout) = @layout = layout
 
-    def to_s
+    def symbols
       [
         "default partial alphanumeric_keys",
         %(xkb_symbols "#{@layout.name}" {),
@@ -17,6 +19,24 @@ module Clavier
         ""
       ].join("\n")
     end
+
+    def compat
+      [
+        %(partial xkb_compatibility "#{LED}" {),
+        %(    indicator "Caps Lock" {),
+        "\twhichModState= Locked;",
+        "\tmodifiers= Lock+LevelFive;",
+        "    };",
+        "};",
+        ""
+      ].join("\n")
+    end
+
+    def rules
+      ["! include %S/evdev", "", "! layout = compat", "  #{@layout.name} = +#{@layout.name}(#{LED})", ""].join("\n")
+    end
+
+    def files = { "symbols" => symbols, "compat" => compat }
 
     private
 

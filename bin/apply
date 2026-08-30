@@ -7,17 +7,17 @@ layout = Clavier::Layout.load(File.join(root, "layout.yml"))
 
 system(File.join(root, "bin", "build"), out: File::NULL) or abort("build failed")
 
-target = File.expand_path("~/.config/xkb/symbols")
+target = File.expand_path("~/.config/xkb")
 FileUtils.mkdir_p(target)
-FileUtils.cp(File.join(root, "out", layout.name), target)
+FileUtils.cp_r(File.join(root, "out", "xkb", "."), target)
 
 check = %W[xkbcli compile-keymap --layout #{layout.name}]
 abort("xkbcli rejected the keymap, nothing applied") unless system(*check, out: File::NULL)
 
-puts "installed #{target}/#{layout.name}"
+puts "installed #{target}"
 
 if system("hyprctl", "keyword", "input:kb_layout", layout.name, out: File::NULL)
-  puts "live in hyprland, revert with: hyprctl keyword input:kb_layout us"
+  puts "live in hyprland, revert with: hyprctl reload"
 else
   warn "hyprctl unavailable, layout installed but not applied"
 end

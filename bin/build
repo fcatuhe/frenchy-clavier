@@ -1,14 +1,23 @@
 #!/usr/bin/env ruby
+require "fileutils"
 require_relative "../lib/clavier"
 
 root = File.expand_path("..", __dir__)
 layout = Clavier::Layout.load(File.join(root, "layout.yml"))
+xkb = Clavier::Xkb.new(layout)
 
-symbols = File.join(root, "out", layout.name)
+tree = File.join(root, "out", "xkb")
+written = { "symbols/#{layout.name}" => xkb.symbols,
+            "compat/#{layout.name}" => xkb.compat,
+            "rules/evdev" => xkb.rules }
+
+written.each do |path, content|
+  target = File.join(tree, path)
+  FileUtils.mkdir_p(File.dirname(target))
+  File.write(target, content)
+  puts target
+end
+
 sheet = File.join(root, "out", "sheet.html")
-
-File.write(symbols, Clavier::Xkb.new(layout).to_s)
 File.write(sheet, Clavier::Sheet.new(layout, compose_path: File.join(root, "compose.yml")).to_s)
-
-puts symbols
 puts sheet

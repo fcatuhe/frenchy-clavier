@@ -5,8 +5,8 @@ An AZERTY layout for writing French and English prose and for coding in Ruby, CS
 `layout.yml` is the only thing to edit. Everything else is generated from it: the XKB symbols file that Hyprland loads, and a printable reference sheet.
 
 ```bash
-./bin/build          # out/fc (xkb symbols) + out/sheet.html
-./bin/apply          # build, install to ~/.config/xkb/symbols/fc, switch Hyprland to it
+./bin/build          # out/xkb/ (symbols, compat, rules) + out/sheet.html
+./bin/apply          # build, install out/xkb/ into ~/.config/xkb/, switch Hyprland to it
 ruby test/layout_test.rb
 ```
 
@@ -52,6 +52,8 @@ Both are Shift-level today, and both are frequent in CSS and JS:
 ## Caps Lock
 
 Caps is Compose. Shift+Caps toggles the digit row onto its Shift level, so a long number does not need Shift held. Caps Lock itself is both Shifts together.
+
+The Caps Lock light follows the digit lock as well as Caps Lock. An LED is chosen in the compat section, which a symbols file cannot reach, so `compat/fc` redefines the indicator as `Lock+LevelFive` and `rules/evdev` attaches it to this layout. That rules file starts with `! include %S/evdev`, so every other layout on the machine keeps working.
 
 That needs `compose:caps` out of `kb_options`, since the option redefines the key and would win:
 
