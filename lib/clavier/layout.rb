@@ -1,6 +1,7 @@
 require "set"
 require "yaml"
 require_relative "keysyms"
+require_relative "xkb"
 
 module Clavier
   class Layout
@@ -83,7 +84,7 @@ module Clavier
 
       def xkb_type
         return @type if @type
-        return "FOUR_LEVEL_LOCKABLE_LEVEL2" if @lockable
+        return Xkb::DIGITS_LOCK if @lockable
         return "FOUR_LEVEL_ALPHABETIC" if case_pair?(0, 1) && case_pair?(2, 3)
         return "FOUR_LEVEL_SEMIALPHABETIC" if case_pair?(0, 1)
 

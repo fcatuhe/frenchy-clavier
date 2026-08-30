@@ -1,6 +1,7 @@
 module Clavier
   class Xkb
     LED = "leddigits".freeze
+    DIGITS_LOCK = "FRENCHY_DIGITS_LOCK".freeze
 
     def initialize(layout) = @layout = layout
 
@@ -39,6 +40,29 @@ module Clavier
       ].join("\n")
     end
 
+    def types
+      [
+        %(partial xkb_types "#{LED}" {),
+        %(    type "#{DIGITS_LOCK}" {),
+        "	modifiers = Shift + LevelThree + LevelFive;",
+        "	map[None] = Level1;",
+        "	map[Shift] = Level2;",
+        "	map[LevelFive] = Level2;",
+        "	map[Shift+LevelFive] = Level1;",
+        "	map[LevelThree] = Level3;",
+        "	map[Shift+LevelThree] = Level4;",
+        "	map[LevelFive+LevelThree] = Level3;",
+        "	map[Shift+LevelFive+LevelThree] = Level4;",
+        %(	level_name[Level1] = "Base";),
+        %(	level_name[Level2] = "Digit";),
+        %(	level_name[Level3] = "AltGr";),
+        %(	level_name[Level4] = "Shift AltGr";),
+        "    };",
+        "};",
+        ""
+      ].join("\n")
+    end
+
     def compat
       [
         %(partial xkb_compatibility "#{LED}" {),
@@ -53,11 +77,15 @@ module Clavier
 
     GROUPS = 4
 
+    SECTIONS = %w[types compat].freeze
+
     def rules
       tables = ["! layout"] + (1..GROUPS).map { "! layout[#{it}]" }
 
       lines = ["! include %S/evdev", ""] +
-        tables.flat_map { ["#{it} = compat", "  #{@layout.name} = +#{@layout.name}(#{LED})", ""] }
+        SECTIONS.flat_map { |section|
+          tables.flat_map { ["#{it} = #{section}", "  #{@layout.name} = +#{@layout.name}(#{LED})", ""] }
+        }
 
       lines.join("\n")
     end

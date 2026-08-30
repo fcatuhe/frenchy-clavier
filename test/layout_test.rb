@@ -23,6 +23,13 @@ class LayoutTest < Minitest::Test
     assert_equal("<", @layout["AC04"].glyph(2))
   end
 
+  def test_the_digit_lock_type_is_ours_so_an_older_xkeyboard_config_still_compiles
+    refute_match(/FOUR_LEVEL_LOCKABLE_LEVEL2/, Clavier::Xkb.new(@layout).symbols,
+      "the stock type only exists from xkeyboard-config 2.42, Ubuntu 24.04 ships 2.41")
+    assert_match(/map\[Shift\+LevelFive\] = Level1;/, Clavier::Xkb.new(@layout).types,
+      "Shift while locked has to hand back the base level, that is where the quotes live")
+  end
+
   def test_letters_get_an_alphabetic_type_so_caps_lock_works
     assert_equal("FOUR_LEVEL_SEMIALPHABETIC", @layout["AD02"].xkb_type)
     assert_equal("FOUR_LEVEL_ALPHABETIC", @layout["AB03"].xkb_type)
@@ -30,7 +37,7 @@ class LayoutTest < Minitest::Test
   end
 
   def test_only_the_ten_digit_keys_lock_on_their_shift_level
-    lockable = @layout.each_key.filter_map { |code, key| code if key.xkb_type == "FOUR_LEVEL_LOCKABLE_LEVEL2" }
+    lockable = @layout.each_key.filter_map { |code, key| code if key.xkb_type == Clavier::Xkb::DIGITS_LOCK }
 
     assert_equal((1..10).map { format("AE%02d", it) }, lockable)
   end
@@ -44,7 +51,8 @@ class LayoutTest < Minitest::Test
 
   def install(dir)
     xkb = Clavier::Xkb.new(@layout)
-    { "symbols" => xkb.symbols, "compat" => xkb.compat, "rules/evdev" => xkb.rules }.each do |path, content|
+    { "symbols" => xkb.symbols, "types" => xkb.types, "compat" => xkb.compat,
+      "rules/evdev" => xkb.rules }.each do |path, content|
       name = path.include?("/") ? path : "#{path}/#{@layout.name}"
       FileUtils.mkdir_p("#{dir}/xkb/#{File.dirname(name)}")
       File.write("#{dir}/xkb/#{name}", content)
@@ -58,7 +66,7 @@ class LayoutTest < Minitest::Test
       keymap = IO.popen({ "XDG_CONFIG_HOME" => dir },
         ["xkbcli", "compile-keymap", "--layout", @layout.name, err: File::NULL], &:read)
 
-      assert_includes(keymap, "FOUR_LEVEL_LOCKABLE_LEVEL2")
+      assert_includes(keymap, Clavier::Xkb::DIGITS_LOCK)
       assert_match(/indicator "Caps Lock" \{[^}]*modifiers= Lock\+LevelFive/m, keymap)
     end
   end
