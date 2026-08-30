@@ -12,7 +12,7 @@ Une disposition AZERTY pour qui écrit en français, en anglais, et du code.
 - **Facile à mémoriser pour un humain.** Ça reste de l'AZERTY : les lettres ne bougent pas.
 - **Moins de stats, plus d'humain.** Aucune lettre n'a été déplacée pour gagner un millimètre.
 - **Rapprocher les caractères qui se ressemblent.** `à è é` ensemble, `_ - +` ensemble, `« »` juste sous `< >`, l'accent grave et sa touche morte sur la même touche.
-- **Adapté ISO, ANSI ou Mac.** L'ANSI est la disposition par défaut. Sur ISO, la touche à droite de la rangée du milieu devient un second Entrée, et la barre oblique inverse part sur la touche supplémentaire à gauche.
+- **Adapté ISO, ANSI ou Mac.** L'ISO est la disposition par défaut, c'est le clavier de la plupart des Français : la touche à droite de la rangée du milieu devient un second Entrée, et la barre oblique inverse part sur la touche supplémentaire à gauche. `kb_variant = "ansi"` pour un clavier américain.
 
 ## Ce que ça donne
 
@@ -51,7 +51,7 @@ hl.config({ input = {
 } })
 ```
 
-Les deux Ctrl basculent entre Frenchy-Clavier et QWERTY US. Sans variante, c'est l'ANSI ; `kb_variant = "ansi"` le dit explicitement, `kb_variant = "iso"` sert aux claviers ISO.
+Les deux Ctrl basculent entre Frenchy-Clavier et QWERTY US. Sans variante, c'est l'ISO. Sur un clavier ANSI, ajouter `kb_variant = ",ansi"` : une variante par disposition, celle du QWERTY reste vide.
 
 Deux options sont à écarter, `compose:caps` et `shift:both_capslock_cancel` : la disposition fait déjà les deux, et les options écraseraient le verrou des chiffres.
 

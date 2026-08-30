@@ -6,22 +6,22 @@
       <configItem>
         <name>frenchy</name>
         <shortDescription>fc</shortDescription>
-        <description>Frenchy-Clavier (AZERTY)</description>
+        <description>Frenchy-Clavier (AZERTY), ISO</description>
         <languageList><iso639Id>fra</iso639Id><iso639Id>eng</iso639Id></languageList>
       </configItem>
       <variantList>
         <variant>
           <configItem>
-            <name>ansi</name>
+            <name>iso</name>
             <shortDescription>fc</shortDescription>
-            <description>Frenchy-Clavier (AZERTY), ANSI</description>
+            <description>Frenchy-Clavier (AZERTY), ISO</description>
           </configItem>
         </variant>
         <variant>
           <configItem>
-            <name>iso</name>
+            <name>ansi</name>
             <shortDescription>fc</shortDescription>
-            <description>Frenchy-Clavier (AZERTY), ISO</description>
+            <description>Frenchy-Clavier (AZERTY), ANSI</description>
           </configItem>
         </variant>
       </variantList>

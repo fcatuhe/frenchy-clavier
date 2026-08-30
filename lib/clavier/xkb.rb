@@ -4,29 +4,16 @@ module Clavier
 
     def initialize(layout) = @layout = layout
 
-    VARIANTS = { "ansi" => "ANSI", "iso" => "ISO" }.freeze
+    VARIANTS = { "iso" => "ISO", "ansi" => "ANSI" }.freeze
 
-    def symbols = [base, ansi, iso].join("\n")
+    def symbols = [ansi, iso].join("\n")
 
     def ansi
       [
         "partial alphanumeric_keys",
         %(xkb_symbols "ansi" {),
         "",
-        %(    include "#{@layout.name}(#{@layout.name})"),
-        "",
         %(    name[Group1] = "#{@layout.title}, ANSI";),
-        "};",
-        ""
-      ].join("\n")
-    end
-
-    def base
-      [
-        "default partial alphanumeric_keys",
-        %(xkb_symbols "#{@layout.name}" {),
-        "",
-        %(    name[Group1] = "#{@layout.title}";),
         "",
         key_lines,
         "",
@@ -39,10 +26,10 @@ module Clavier
 
     def iso
       [
-        "partial alphanumeric_keys",
+        "default partial alphanumeric_keys",
         %(xkb_symbols "iso" {),
         "",
-        %(    include "#{@layout.name}(#{@layout.name})"),
+        %(    include "#{@layout.name}(ansi)"),
         "",
         %(    name[Group1] = "#{@layout.title}, ISO";),
         "",
@@ -86,7 +73,7 @@ module Clavier
         "      <configItem>",
         "        <name>#{@layout.name}</name>",
         "        <shortDescription>#{@layout.short}</shortDescription>",
-        "        <description>#{@layout.title}</description>",
+        "        <description>#{@layout.title}, ISO</description>",
         "        <languageList><iso639Id>fra</iso639Id><iso639Id>eng</iso639Id></languageList>",
         "      </configItem>",
         "      <variantList>",

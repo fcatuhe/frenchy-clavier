@@ -1,7 +1,7 @@
-default partial alphanumeric_keys
-xkb_symbols "frenchy" {
+partial alphanumeric_keys
+xkb_symbols "ansi" {
 
-    name[Group1] = "Frenchy-Clavier (AZERTY)";
+    name[Group1] = "Frenchy-Clavier (AZERTY), ANSI";
 
     key <TLDE> { [ at              , twosuperior     , U00B3           , U00BD ] };
     key <AE01> { type[Group1] = "FOUR_LEVEL_LOCKABLE_LEVEL2", [ agrave          , 1               , section         , Agrave ] };
@@ -59,18 +59,10 @@ xkb_symbols "frenchy" {
     include "keypad(oss)"
 };
 
-partial alphanumeric_keys
-xkb_symbols "ansi" {
-
-    include "frenchy(frenchy)"
-
-    name[Group1] = "Frenchy-Clavier (AZERTY), ANSI";
-};
-
-partial alphanumeric_keys
+default partial alphanumeric_keys
 xkb_symbols "iso" {
 
-    include "frenchy(frenchy)"
+    include "frenchy(ansi)"
 
     name[Group1] = "Frenchy-Clavier (AZERTY), ISO";
 
