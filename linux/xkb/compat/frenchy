@@ -1,0 +1,6 @@
+partial xkb_compatibility "leddigits" {
+    indicator "Caps Lock" {
+	whichModState= Locked;
+	modifiers= Lock+LevelFive;
+    };
+};

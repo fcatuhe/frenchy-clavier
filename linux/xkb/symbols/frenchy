@@ -1,0 +1,69 @@
+default partial alphanumeric_keys
+xkb_symbols "frenchy" {
+
+    name[Group1] = "Frenchy-Clavier (AZERTY)";
+
+    key <TLDE> { [ at              , twosuperior     , U00B3           , U00BD ] };
+    key <AE01> { type[Group1] = "FOUR_LEVEL_LOCKABLE_LEVEL2", [ agrave          , 1               , section         , Agrave ] };
+    key <AE02> { type[Group1] = "FOUR_LEVEL_LOCKABLE_LEVEL2", [ egrave          , 2               , grave           , Egrave ] };
+    key <AE03> { type[Group1] = "FOUR_LEVEL_LOCKABLE_LEVEL2", [ eacute          , 3               , ampersand       , Eacute ] };
+    key <AE04> { type[Group1] = "FOUR_LEVEL_LOCKABLE_LEVEL2", [ parenleft       , 4               , braceleft       , NoSymbol ] };
+    key <AE05> { type[Group1] = "FOUR_LEVEL_LOCKABLE_LEVEL2", [ parenright      , 5               , braceright      , NoSymbol ] };
+    key <AE06> { type[Group1] = "FOUR_LEVEL_LOCKABLE_LEVEL2", [ quotedbl        , 6               , grave           , dead_grave ] };
+    key <AE07> { type[Group1] = "FOUR_LEVEL_LOCKABLE_LEVEL2", [ apostrophe      , 7               , U2019           , dead_acute ] };
+    key <AE08> { type[Group1] = "FOUR_LEVEL_LOCKABLE_LEVEL2", [ underscore      , 8               , emdash          , endash ] };
+    key <AE09> { type[Group1] = "FOUR_LEVEL_LOCKABLE_LEVEL2", [ minus           , 9               , plusminus       , NoSymbol ] };
+    key <AE10> { type[Group1] = "FOUR_LEVEL_LOCKABLE_LEVEL2", [ plus            , 0               , division        , NoSymbol ] };
+    key <AE11> { [ asterisk        , percent         , multiply        , NoSymbol ] };
+    key <AE12> { [ asciitilde      , degree          , dead_tilde      , NoSymbol ] };
+    key <AD01> { type[Group1] = "FOUR_LEVEL_ALPHABETIC", [ a               , A               , ae              , AE ] };
+    key <AD02> { type[Group1] = "FOUR_LEVEL_SEMIALPHABETIC", [ z               , Z               , NoSymbol        , NoSymbol ] };
+    key <AD03> { type[Group1] = "FOUR_LEVEL_SEMIALPHABETIC", [ e               , E               , EuroSign        , NoSymbol ] };
+    key <AD04> { type[Group1] = "FOUR_LEVEL_SEMIALPHABETIC", [ r               , R               , bracketleft     , NoSymbol ] };
+    key <AD05> { type[Group1] = "FOUR_LEVEL_SEMIALPHABETIC", [ t               , T               , bracketright    , NoSymbol ] };
+    key <AD06> { type[Group1] = "FOUR_LEVEL_SEMIALPHABETIC", [ y               , Y               , NoSymbol        , NoSymbol ] };
+    key <AD07> { type[Group1] = "FOUR_LEVEL_ALPHABETIC", [ u               , U               , ugrave          , Ugrave ] };
+    key <AD08> { type[Group1] = "FOUR_LEVEL_SEMIALPHABETIC", [ i               , I               , NoSymbol        , NoSymbol ] };
+    key <AD09> { type[Group1] = "FOUR_LEVEL_ALPHABETIC", [ o               , O               , oe              , OE ] };
+    key <AD10> { type[Group1] = "FOUR_LEVEL_SEMIALPHABETIC", [ p               , P               , NoSymbol        , NoSymbol ] };
+    key <AD11> { [ dead_circumflex , dead_diaeresis  , asciicircum     , diaeresis ] };
+    key <AD12> { [ numbersign      , ampersand       , NoSymbol        , NoSymbol ] };
+    key <BKSL> { [ backslash       , bar             , NoSymbol        , NoSymbol ] };
+    key <AC01> { type[Group1] = "FOUR_LEVEL_SEMIALPHABETIC", [ q               , Q               , NoSymbol        , NoSymbol ] };
+    key <AC02> { type[Group1] = "FOUR_LEVEL_SEMIALPHABETIC", [ s               , S               , dollar          , sterling ] };
+    key <AC03> { type[Group1] = "FOUR_LEVEL_SEMIALPHABETIC", [ d               , D               , NoSymbol        , NoSymbol ] };
+    key <AC04> { type[Group1] = "FOUR_LEVEL_SEMIALPHABETIC", [ f               , F               , less            , U2264 ] };
+    key <AC05> { type[Group1] = "FOUR_LEVEL_SEMIALPHABETIC", [ g               , G               , greater         , U2265 ] };
+    key <AC06> { type[Group1] = "FOUR_LEVEL_SEMIALPHABETIC", [ h               , H               , NoSymbol        , NoSymbol ] };
+    key <AC07> { type[Group1] = "FOUR_LEVEL_SEMIALPHABETIC", [ j               , J               , NoSymbol        , NoSymbol ] };
+    key <AC08> { type[Group1] = "FOUR_LEVEL_SEMIALPHABETIC", [ k               , K               , NoSymbol        , NoSymbol ] };
+    key <AC09> { type[Group1] = "FOUR_LEVEL_SEMIALPHABETIC", [ l               , L               , NoSymbol        , NoSymbol ] };
+    key <AC10> { type[Group1] = "FOUR_LEVEL_SEMIALPHABETIC", [ m               , M               , mu              , NoSymbol ] };
+    key <AC11> { [ slash           , bar             , NoSymbol        , NoSymbol ] };
+    key <AB01> { type[Group1] = "FOUR_LEVEL_SEMIALPHABETIC", [ w               , W               , NoSymbol        , NoSymbol ] };
+    key <AB02> { type[Group1] = "FOUR_LEVEL_SEMIALPHABETIC", [ x               , X               , NoSymbol        , NoSymbol ] };
+    key <AB03> { type[Group1] = "FOUR_LEVEL_ALPHABETIC", [ c               , C               , ccedilla        , Ccedilla ] };
+    key <AB04> { type[Group1] = "FOUR_LEVEL_SEMIALPHABETIC", [ v               , V               , guillemotleft   , NoSymbol ] };
+    key <AB05> { type[Group1] = "FOUR_LEVEL_SEMIALPHABETIC", [ b               , B               , guillemotright  , NoSymbol ] };
+    key <AB06> { type[Group1] = "FOUR_LEVEL_SEMIALPHABETIC", [ n               , N               , NoSymbol        , NoSymbol ] };
+    key <AB07> { [ period          , period          , periodcentered  , ellipsis ] };
+    key <AB08> { [ comma           , semicolon       , NoSymbol        , NoSymbol ] };
+    key <AB09> { [ question        , exclam          , NoSymbol        , NoSymbol ] };
+    key <AB10> { [ colon           , equal           , NoSymbol        , NoSymbol ] };
+    key <SPCE> { [ space           , space           , U202F           , nobreakspace ] };
+    key <CAPS> { [ Multi_key       , ISO_Level5_Lock , NoSymbol        , NoSymbol ] };
+
+    include "level3(ralt_switch)"
+    include "keypad(oss)"
+};
+
+partial alphanumeric_keys
+xkb_symbols "iso" {
+
+    include "frenchy(frenchy)"
+
+    name[Group1] = "Frenchy-Clavier (AZERTY), ISO";
+
+    replace key <BKSL> { type[Group1] = "ONE_LEVEL", [ Return ] };
+    replace key <LSGT> { type[Group1] = "FOUR_LEVEL", [ backslash, bar, NoSymbol, NoSymbol ] };
+};

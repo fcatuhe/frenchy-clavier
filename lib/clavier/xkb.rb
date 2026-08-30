@@ -4,7 +4,9 @@ module Clavier
 
     def initialize(layout) = @layout = layout
 
-    def symbols
+    def symbols = [ansi, iso].join("\n")
+
+    def ansi
       [
         "default partial alphanumeric_keys",
         %(xkb_symbols "#{@layout.name}" {),
@@ -15,6 +17,22 @@ module Clavier
         "",
         %(    include "level3(ralt_switch)"),
         %(    include "keypad(oss)"),
+        "};",
+        ""
+      ].join("\n")
+    end
+
+    def iso
+      [
+        "partial alphanumeric_keys",
+        %(xkb_symbols "iso" {),
+        "",
+        %(    include "#{@layout.name}(#{@layout.name})"),
+        "",
+        %(    name[Group1] = "#{@layout.title}, ISO";),
+        "",
+        %(    replace key <BKSL> { type[Group1] = "ONE_LEVEL", [ Return ] };),
+        %(    replace key <LSGT> { type[Group1] = "FOUR_LEVEL", [ backslash, bar, NoSymbol, NoSymbol ] };),
         "};",
         ""
       ].join("\n")
@@ -32,8 +50,15 @@ module Clavier
       ].join("\n")
     end
 
+    GROUPS = 4
+
     def rules
-      ["! include %S/evdev", "", "! layout = compat", "  #{@layout.name} = +#{@layout.name}(#{LED})", ""].join("\n")
+      tables = ["! layout"] + (1..GROUPS).map { "! layout[#{it}]" }
+
+      lines = ["! include %S/evdev", ""] +
+        tables.flat_map { ["#{it} = compat", "  #{@layout.name} = +#{@layout.name}(#{LED})", ""] }
+
+      lines.join("\n")
     end
 
     def files = { "symbols" => symbols, "compat" => compat }

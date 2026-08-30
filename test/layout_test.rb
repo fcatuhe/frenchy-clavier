@@ -72,4 +72,11 @@ class LayoutTest < Minitest::Test
       assert_match(/indicator "Caps Lock" \{[^}]*modifiers= Lock\+LevelFive/m, keymap)
     end
   end
+
+  def test_the_iso_variant_doubles_enter_and_moves_the_backslash_left
+    iso = Clavier::Xkb.new(@layout).iso
+
+    assert_match(/replace key <BKSL> \{[^}]*Return/, iso)
+    assert_match(/replace key <LSGT> \{[^}]*backslash, bar/, iso)
+  end
 end

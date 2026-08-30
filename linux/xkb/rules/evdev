@@ -1,0 +1,16 @@
+! include %S/evdev
+
+! layout = compat
+  frenchy = +frenchy(leddigits)
+
+! layout[1] = compat
+  frenchy = +frenchy(leddigits)
+
+! layout[2] = compat
+  frenchy = +frenchy(leddigits)
+
+! layout[3] = compat
+  frenchy = +frenchy(leddigits)
+
+! layout[4] = compat
+  frenchy = +frenchy(leddigits)

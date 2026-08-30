@@ -9,7 +9,7 @@ system(File.join(root, "bin", "build"), out: File::NULL) or abort("build failed"
 
 target = File.expand_path("~/.config/xkb")
 FileUtils.mkdir_p(target)
-FileUtils.cp_r(File.join(root, "out", "xkb", "."), target)
+FileUtils.cp_r(File.join(root, "linux", "xkb", "."), target)
 
 check = %W[xkbcli compile-keymap --layout #{layout.name}]
 abort("xkbcli rejected the keymap, nothing applied") unless system(*check, out: File::NULL)

@@ -6,7 +6,7 @@ root = File.expand_path("..", __dir__)
 layout = Clavier::Layout.load(File.join(root, "layout.yml"))
 xkb = Clavier::Xkb.new(layout)
 
-tree = File.join(root, "out", "xkb")
+tree = File.join(root, "linux", "xkb")
 written = { "symbols/#{layout.name}" => xkb.symbols,
             "compat/#{layout.name}" => xkb.compat,
             "rules/evdev" => xkb.rules }
