@@ -20,7 +20,7 @@ Hyprland, in ~/.config/hypr/input.lua:
 
   hl.config({ input = {
     kb_layout = "us,frenchy",
-    kb_options = "caps:none,grp:ctrls_toggle",
+    kb_options = "compose:caps,shift:both_capslock_cancel,grp:ctrls_toggle",
   } })
 
 Both Ctrls switch layouts. No variant means ISO. On an ANSI keyboard add kb_variant = ",ansi", one per layout.

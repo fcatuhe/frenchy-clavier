@@ -73,6 +73,21 @@ class LayoutTest < Minitest::Test
     end
   end
 
+  def test_omarchys_own_options_leave_the_digit_lock_alone
+    Dir.mktmpdir do |dir|
+      install(dir)
+
+      keymap = IO.popen({ "XDG_CONFIG_HOME" => dir },
+        ["xkbcli", "compile-keymap", "--layout", "us,#{@layout.name}", "--variant", ",ansi",
+         "--options", "compose:caps,shift:both_capslock_cancel", err: File::NULL], &:read)
+
+      assert_match(/key <CAPS>[^}]*symbols\[2\]= \[\s*Multi_key,\s*ISO_Level5_Lock/m, keymap,
+        "compose:caps must not take the digit lock off Shift+Caps")
+      assert_match(/key <CAPS>[^}]*symbols\[1\]= \[\s*Multi_key,\s*Multi_key/m, keymap,
+        "the QWERTY group keeps the Compose that Omarchy gives it")
+    end
+  end
+
   def test_the_shift_keys_lock_without_joining_the_lock_modifier_map
     Dir.mktmpdir do |dir|
       install(dir)

@@ -33,7 +33,7 @@ Dans `~/.config/hypr/input.lua` :
 ```lua
 hl.config({ input = {
   kb_layout = "us,frenchy",
-  kb_options = "caps:none,grp:ctrls_toggle",
+  kb_options = "compose:caps,shift:both_capslock_cancel,grp:ctrls_toggle",
 } })
 ```
 
@@ -44,16 +44,13 @@ Les deux Ctrl basculent entre frenchy-clavier et QWERTY US. Sans variante c'est 
 La disposition s'annonce dans le registre XKB, donc elle apparaît dans la liste des dispositions du système sous le nom **frenchy-clavier**, avec ses deux variantes ISO et ANSI. Rien de plus à faire.
 
 <details markdown="1">
-<summary>Deux options à ne pas ajouter</summary>
+<summary>Pourquoi ces trois options</summary>
 
-`compose:caps` et `shift:both_capslock_cancel` : la disposition fait déjà les deux, et les options écraseraient le verrou des chiffres.
+`compose:caps` et `shift:both_capslock_cancel` sont celles d'Omarchy, gardées telles quelles : la première donne Compose sur Verr. maj. au groupe QWERTY aussi, la seconde lui donne le Verr. maj. par les deux Maj. Sans elles, la disposition garde les deux pour elle et le côté QWERTY les perd.
 
-</details>
+Elles n'écrasent rien. `compose:caps` ne touche que le niveau direct de la touche, donc Maj + Verr. maj. reste le verrou des chiffres, et `shift:both_capslock_cancel` pose exactement les actions que la disposition posait déjà. Installée seule, la disposition n'a besoin d'aucune des deux.
 
-<details markdown="1">
-<summary>Pourquoi <code>caps:none</code></summary>
-
-Uniquement parce qu'une seconde disposition partage le clavier. Sans elle, le `Caps_Lock` du groupe QWERTY pose le modificateur Lock sur la touche, et un modificateur appartient à la touche et non au groupe : Compose verrouillerait les majuscules avec lui. Le prix est que Verr. maj. ne fait plus rien du côté QWERTY.
+`grp:ctrls_toggle` est le seul ajout. `kb_options` remplace la valeur d'Omarchy au lieu de s'y ajouter, d'où les trois écrites en entier.
 
 </details>
 

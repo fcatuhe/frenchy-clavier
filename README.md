@@ -51,15 +51,17 @@ Puis, sous Hyprland, dans `~/.config/hypr/input.lua` :
 ```lua
 hl.config({ input = {
   kb_layout = "us,frenchy",
-  kb_options = "caps:none,grp:ctrls_toggle",
+  kb_options = "compose:caps,shift:both_capslock_cancel,grp:ctrls_toggle",
 } })
 ```
 
 Les deux Ctrl basculent entre frenchy-clavier et QWERTY US. Sans variante, c'est l'ISO. Sur un clavier ANSI, ajouter `kb_variant = ",ansi"` : une variante par disposition, celle du QWERTY reste vide.
 
-Deux options sont à écarter, `compose:caps` et `shift:both_capslock_cancel` : la disposition fait déjà les deux, et les options écraseraient le verrou des chiffres.
+`compose:caps` et `shift:both_capslock_cancel` sont les deux options d'Omarchy, gardées telles quelles. La première donne Compose sur Verr. maj. au groupe QWERTY aussi, la seconde son Verr. maj. par les deux Maj. Sans elles, la disposition garde les deux pour elle et le côté QWERTY les perd.
 
-`caps:none` n'est là que parce qu'une seconde disposition partage le clavier. Sans elle, le `Caps_Lock` du groupe QWERTY met le modificateur Lock sur la touche, et un modificateur appartient à la touche et non au groupe : Compose verrouillerait les majuscules avec lui. Le prix est que Verr. maj. ne fait plus rien du côté QWERTY.
+Elles n'écrasent rien : `compose:caps` ne touche que le niveau direct de la touche, donc Maj + Verr. maj. reste le verrou des chiffres, et `shift:both_capslock_cancel` pose exactement les actions que la disposition posait déjà. Une disposition installée seule n'a besoin d'aucune des deux : elle les porte.
+
+`grp:ctrls_toggle` est le seul ajout. `kb_options` remplace la valeur d'Omarchy au lieu de s'y ajouter, d'où les trois options écrites en entier.
 
 ### macOS, Windows
 
