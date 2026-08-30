@@ -1,12 +1,12 @@
 ---
 title: Le clavier
-description: Une disposition AZERTY pour qui écrit en français, en anglais, et du code.
+description: Une disposition AZERTY taillée pour le français, l'anglais, et le code.
 position: 0
 ---
 
 <section class="hero" markdown="1">
 
-# Une disposition AZERTY pour le français, l'anglais, et le code.
+# Une disposition AZERTY taillée pour le français, l'anglais, et le code.
 
 Les lettres ne bougent pas. Ce qui bouge, c'est tout le reste : **les accents en accès direct**, les chiffres sur Maj, et les signes du code sous la main gauche.
 

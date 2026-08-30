@@ -1,6 +1,6 @@
 # frenchy-clavier
 
-Une disposition AZERTY pour qui écrit en français, en anglais, et du code.
+Une disposition AZERTY taillée pour le français, l'anglais, et le code.
 
 **[frenchy-clavier.azade.dev](https://frenchy-clavier.azade.dev)** — la disposition sur cinq claviers réels, et un testeur qui l'applique dans le navigateur sans rien installer.
 
