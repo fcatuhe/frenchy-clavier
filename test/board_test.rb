@@ -40,12 +40,12 @@ class BoardTest < Minitest::Test
     end
   end
 
-  def test_an_iso_board_reaches_the_backslash_the_ansi_one_lost_to_enter
+  def test_an_iso_board_reaches_the_hash_key_the_ansi_one_lost_to_enter
     iso = Clavier::Boards["framework-13-iso"]
 
     assert_equal("Entrée", @layout.on(iso)["BKSL"].glyph(0))
-    assert_equal("\\", @layout.on(iso)["LSGT"].glyph(0))
-    assert_equal("\\", @layout["BKSL"].glyph(0))
+    assert_equal("#", @layout.on(iso)["LSGT"].glyph(0))
+    assert_equal("#", @layout["BKSL"].glyph(0))
   end
 
   def test_every_board_says_where_its_millimetres_came_from

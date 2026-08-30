@@ -10,10 +10,10 @@ xkb_symbols "ansi" {
     key <AE04> { type[Group1] = "FRENCHY_DIGITS_LOCK", [ parenleft       , 4               , braceleft ] };
     key <AE05> { type[Group1] = "FRENCHY_DIGITS_LOCK", [ parenright      , 5               , braceright ] };
     key <AE06> { type[Group1] = "FRENCHY_DIGITS_LOCK", [ asciitilde      , 6               , dead_tilde ] };
-    key <AE07> { type[Group1] = "FRENCHY_DIGITS_LOCK", [ asterisk        , 7               , multiply ] };
-    key <AE08> { type[Group1] = "FRENCHY_DIGITS_LOCK", [ plus            , 8               , division ] };
-    key <AE09> { type[Group1] = "FRENCHY_DIGITS_LOCK", [ minus           , 9               , plusminus ] };
-    key <AE10> { type[Group1] = "FRENCHY_DIGITS_LOCK", [ underscore      , 0               , emdash          , endash ] };
+    key <AE07> { type[Group1] = "FRENCHY_DIGITS_LOCK", [ dead_circumflex , 7               , asciicircum ] };
+    key <AE08> { type[Group1] = "FRENCHY_DIGITS_LOCK", [ dead_diaeresis  , 8               , diaeresis ] };
+    key <AE09> { type[Group1] = "FRENCHY_DIGITS_LOCK", [ asterisk        , 9               , multiply ] };
+    key <AE10> { type[Group1] = "FRENCHY_DIGITS_LOCK", [ plus            , 0               , division ] };
     key <AE11> { [ apostrophe      , percent         , grave           , dead_grave ] };
     key <AE12> { [ quotedbl        , degree          , U2019           , dead_acute ] };
     key <AD01> { type[Group1] = "FOUR_LEVEL_ALPHABETIC", [ a               , A               , ae              , AE ] };
@@ -26,9 +26,9 @@ xkb_symbols "ansi" {
     key <AD08> { type[Group1] = "FOUR_LEVEL_SEMIALPHABETIC", [ i               , I ] };
     key <AD09> { type[Group1] = "FOUR_LEVEL_ALPHABETIC", [ o               , O               , oe              , OE ] };
     key <AD10> { type[Group1] = "FOUR_LEVEL_SEMIALPHABETIC", [ p               , P ] };
-    key <AD11> { [ dead_circumflex , dead_diaeresis  , asciicircum     , diaeresis ] };
-    key <AD12> { [ numbersign      , ampersand ] };
-    key <BKSL> { [ backslash       , bar ] };
+    key <AD11> { [ minus           , NoSymbol        , plusminus ] };
+    key <AD12> { [ underscore      , ampersand       , emdash          , endash ] };
+    key <BKSL> { [ numbersign      , backslash ] };
     key <AC01> { type[Group1] = "FOUR_LEVEL_SEMIALPHABETIC", [ q               , Q ] };
     key <AC02> { type[Group1] = "FOUR_LEVEL_SEMIALPHABETIC", [ s               , S               , dollar          , sterling ] };
     key <AC03> { type[Group1] = "FOUR_LEVEL_SEMIALPHABETIC", [ d               , D ] };
@@ -67,5 +67,5 @@ xkb_symbols "iso" {
     name[Group1] = "frenchy-clavier (AZERTY), ISO";
 
     replace key <BKSL> { type[Group1] = "ONE_LEVEL", [ Return ] };
-    replace key <LSGT> { [ backslash       , bar ] };
+    replace key <LSGT> { [ numbersign      , backslash ] };
 };

@@ -15,9 +15,9 @@ class KeymapTest < Minitest::Test
     assert_equal(["à", "1", "§", "À"], @keys.fetch("Digit1"))
   end
 
-  def test_both_shapes_reach_the_backslash_from_the_key_their_hardware_has
-    assert_equal("\\", @keys.fetch("Backslash").first)
-    assert_equal("\\", @keys.fetch("IntlBackslash").first)
+  def test_both_shapes_reach_the_hash_from_the_key_their_hardware_has
+    assert_equal(["#", "\\"], @keys.fetch("Backslash").first(2))
+    assert_equal(["#", "\\"], @keys.fetch("IntlBackslash").first(2))
   end
 
   def test_a_free_level_is_null_and_a_modifier_is_never_typed
@@ -26,7 +26,7 @@ class KeymapTest < Minitest::Test
   end
 
   def test_a_dead_level_announces_itself_so_the_next_stroke_can_resolve_it
-    circumflex = @keys.fetch("BracketLeft").first
+    circumflex = @keys.fetch("Digit7").first
 
     assert_equal("dead_circumflex", circumflex.fetch("d"))
     assert_equal("â", JSON.parse(@keymap.to_json).dig("dead", "dead_circumflex", "a"))
@@ -36,9 +36,9 @@ class KeymapTest < Minitest::Test
     assert_equal([" ", " ", "\u202F", "\u00A0"], @keys.fetch("Space"))
   end
 
-  def test_a_dead_key_is_named_by_the_literal_it_shares_its_key_with
-    assert_equal("^", @keymap.stroke("dead_circumflex"))
-    assert_equal("Maj ^", @keymap.stroke("dead_diaeresis"))
+  def test_a_dead_key_is_named_by_the_key_it_sits_on
+    assert_equal("7", @keymap.stroke("dead_circumflex"))
+    assert_equal("8", @keymap.stroke("dead_diaeresis"))
     assert_equal("AltGr ~", @keymap.stroke("dead_tilde"))
   end
 

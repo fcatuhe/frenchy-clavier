@@ -14,7 +14,7 @@ Une disposition AZERTY taillée pour le français, l'anglais et le code.
 - **Facile à mémoriser pour un humain.** Ça reste de l'AZERTY : les lettres ne bougent pas.
 - **Moins de stats, plus d'humain.** Aucune lettre n'a été déplacée pour gagner un millimètre.
 - **Rapprocher les caractères qui se ressemblent.** `à è é` ensemble, `_ - +` ensemble, `« »` juste sous `< >`, l'accent grave et sa touche morte sur la même touche.
-- **Adapté ISO, ANSI ou Mac.** L'ISO est la disposition par défaut, c'est le clavier de la plupart des Français : la touche à droite de la rangée du milieu devient un second Entrée, et la barre oblique inverse part sur la touche supplémentaire à gauche. `kb_variant = "ansi"` pour un clavier américain.
+- **Adapté ISO, ANSI ou Mac.** L'ISO est la disposition par défaut, c'est le clavier de la plupart des Français : la touche à droite de la rangée du milieu devient un second Entrée, et `#` avec sa barre oblique inverse partent sur la touche supplémentaire à gauche. `kb_variant = "ansi"` pour un clavier américain.
 
 ## Ce que ça donne
 
@@ -22,10 +22,10 @@ Quatre niveaux par touche : base, Maj, AltGr, AltGr+Maj.
 
 | | |
 |---|---|
-| rangée du haut | `@ à è é ( ) ~ * + - _ ' "`, les chiffres sur Maj |
-| accents | `à è é` en direct, `ù` sur AltGr+U, `ç` sur AltGr+C, majuscules sur AltGr+Maj |
+| rangée du haut | `@ à è é ( ) ~ ◌̂ ◌̈ * + ' "`, les chiffres sur Maj |
+| accents | `à è é` en direct, `ù` sur AltGr+U, `ç` sur AltGr+C, majuscules sur AltGr+Maj, les touches mortes `◌̂ ◌̈` sur les touches 7 et 8 |
 | code | `( )` et `" '` en direct, `{ }` sur AltGr+`(` `)`, `[ ]` sur AltGr+R T, `< >` sur AltGr+F G |
-| ponctuation | `. , : ? / #` en direct, `; = ! &` sur Maj |
+| ponctuation | `. , : ? / # - _` en direct, `\ ; = ! &` sur Maj |
 | typographie | `’ — – « » … · ° ± ÷ ×` et l'espace fine insécable sur AltGr+espace |
 
 Le clavier complet, imprimable en A4, est dans `out/sheet.html` après un `bin/build`. Il montre les quatre niveaux de chaque touche, la couche Compose et la liste des niveaux encore libres.
