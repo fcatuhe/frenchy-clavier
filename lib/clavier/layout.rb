@@ -19,9 +19,19 @@ module Clavier
       actions = data["actions"] || {}
       @keys = data.fetch("keys").to_h { |code, levels| [code, Key.new(levels, types[code], actions[code])] }
       @keys.each_value(&:lockable_digit!) if data["digits_lock"]
+      @iso = build(data["iso"] || {})
     end
 
+    attr_reader :iso
+
     def [](code) = @keys[code]
+
+    def on(board) = board.iso? ? @keys.merge(@iso) : @keys
+
+    def build(section)
+      types = section["types"] || {}
+      (section["keys"] || {}).to_h { |code, levels| [code, Key.new(levels, types[code])] }
+    end
 
     MODIFIERS = ["", "Shift ", "AltGr ", "AltGr Shift "].freeze
 
@@ -90,8 +100,8 @@ module Clavier
         "<dead_acute>" => "#{DOTTED}\u0301", "<dead_tilde>" => "#{DOTTED}\u0303",
         "<dead_cedilla>" => "#{DOTTED}\u0327",
         "<space>" => "", "<nobreakspace>" => "nbsp", "<U202F>" => "nnbsp",
-        "<Multi_key>" => "Compose", "<ISO_Level5_Lock>" => "digits lock",
-        "<Shift_L>" => "Shift", "<Shift_R>" => "Shift", "<Caps_Lock>" => "Caps Lock"
+        "<Multi_key>" => "Compose", "<ISO_Level5_Lock>" => "chiffres", "<Return>" => "Entrée",
+        "<Shift_L>" => "Maj", "<Shift_R>" => "Maj", "<Caps_Lock>" => "Verr. maj."
       }.freeze
 
       def case_pair?(low, high)

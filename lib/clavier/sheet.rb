@@ -1,14 +1,16 @@
 require "erb"
 require "yaml"
+require_relative "boards"
 require_relative "compose"
-require_relative "keyboard"
 
 module Clavier
   class Sheet
     TEMPLATE = File.expand_path("sheet.html.erb", __dir__)
 
-    def initialize(layout, compose_path: nil)
+    def initialize(layout, compose_path: nil, board: Boards.default)
       @layout = layout
+      @board = board
+      @keys = layout.on(board)
       @compose = Compose.load
       @wanted = compose_path && File.exist?(compose_path) ? YAML.safe_load_file(compose_path).fetch("sequences") : []
     end
@@ -17,20 +19,22 @@ module Clavier
 
     private
 
-    attr_reader :layout
+    attr_reader :layout, :board
 
-    def rows = Keyboard.rows
+    def rows = board.rows
 
-    def unit_class(width) = "u#{(width * 100).round}"
+    def key(code) = @keys[code]
+
+    def unit_class(width) = "u#{(width * 1000).round}"
 
     def unit_classes
-      Keyboard.rows.flatten.map(&:width).uniq.sort.map { |width|
+      rows.flatten.map(&:width).uniq.sort.map { |width|
         ".#{unit_class(width)} { --span: #{format('%.4f', width)}; }"
       }.join("\n      ")
     end
 
     def slot_count_classes
-      Keyboard.rows.map(&:size).uniq.sort.map { ".n#{it} { --slots: #{it}; }" }.join("\n      ")
+      rows.map(&:size).uniq.sort.map { ".n#{it} { --slots: #{it}; }" }.join("\n      ")
     end
 
     def escape(text) = ERB::Util.html_escape(text)
@@ -38,8 +42,7 @@ module Clavier
     attr_reader :compose
 
     def composed(code, index)
-      key = layout[code]
-      character = key.levels[index]
+      character = key(code).levels[index]
       compose.doubled[character] if compose && character.size == 1
     end
 

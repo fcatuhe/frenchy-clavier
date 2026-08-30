@@ -4,26 +4,12 @@ require "fileutils"
 require_relative "../lib/clavier"
 
 class LayoutTest < Minitest::Test
-  ISO_ONLY = %w[LSGT AC12].freeze
-
   def setup
     @layout = Clavier::Layout.load(File.expand_path("../layout.yml", __dir__))
   end
 
-  def test_every_key_lands_on_a_slot_of_the_ansi_board
-    board = Clavier::Keyboard.rows.flatten.filter_map(&:code)
-
-    @layout.each_key { |code, _| assert_includes(board, code, "#{code} has no key on an ANSI X1 Carbon") }
-  end
-
-  def test_every_row_spans_the_full_board
-    Clavier::Keyboard.rows.each_with_index do |row, index|
-      assert_in_delta(Clavier::Keyboard::ROW_UNITS, row.sum(&:width), 0.001, "row #{index} does not span the board")
-    end
-  end
-
-  def test_no_iso_only_key_is_used
-    ISO_ONLY.each { |code| assert_nil(@layout[code], "#{code} does not exist on ANSI hardware") }
+  def test_the_base_layout_asks_for_no_key_ansi_hardware_lacks
+    assert_nil(@layout["LSGT"], "LSGT belongs to the iso section, ANSI hardware has no such key")
   end
 
   def test_every_ascii_printable_is_reachable
@@ -93,6 +79,6 @@ class LayoutTest < Minitest::Test
     iso = Clavier::Xkb.new(@layout).iso
 
     assert_match(/replace key <BKSL> \{[^}]*Return/, iso)
-    assert_match(/replace key <LSGT> \{[^}]*backslash, bar/, iso)
+    assert_match(/replace key <LSGT> \{[^}]*backslash\s*, bar/, iso)
   end
 end

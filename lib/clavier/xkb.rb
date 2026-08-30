@@ -33,8 +33,7 @@ module Clavier
         "",
         %(    name[Group1] = "#{@layout.title}, ISO";),
         "",
-        %(    replace key <BKSL> { type[Group1] = "ONE_LEVEL", [ Return ] };),
-        %(    replace key <LSGT> { type[Group1] = "FOUR_LEVEL", [ backslash, bar, NoSymbol, NoSymbol ] };),
+        @layout.iso.map { |code, key| line(code, key, verb: "replace key") }.join("\n"),
         "};",
         ""
       ].join("\n")
@@ -100,12 +99,16 @@ module Clavier
       @layout.each_key.reject { |_, key| key.blank? }.map { |code, key| line(code, key) }.join("\n")
     end
 
-    def line(code, key)
+    def line(code, key, verb: "key")
       return acting_line(code, key) if key.actions
 
-      syms = key.keysyms.map { _1.ljust(16) }.join(", ").rstrip
       type = key.xkb_type == "FOUR_LEVEL" ? "" : %( type[Group1] = "#{key.xkb_type}",)
-      format("    key <%s> {%s [ %s ] };", code, type, syms)
+      format("    %s <%s> {%s [ %s ] };", verb, code, type, spell(key.keysyms))
+    end
+
+    def spell(keysyms)
+      filled = keysyms.rindex { _1 != "NoSymbol" } || 0
+      keysyms[0..filled].map { _1.ljust(16) }.join(", ").rstrip
     end
 
     def acting_line(code, key)
