@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="fr" class="no-js">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title><%= escape(page == "index" ? layout.title : "#{Site::PAGES[page]} - #{layout.title}") %></title>
+<meta name="description" content="Une disposition AZERTY pour qui écrit en français, en anglais, et du code.">
+<meta name="theme-color" content="#f7f4ee" media="(prefers-color-scheme: light)">
+<meta name="theme-color" content="#14120f" media="(prefers-color-scheme: dark)">
+<link rel="stylesheet" href="assets/frenchy.css">
+<style>
+<%= geometry_css %>
+</style>
+</head>
+<body>
+
+<header class="masthead">
+  <div class="wrap">
+    <span class="wordmark">Frenchy<b>-</b>Clavier</span>
+    <nav>
+    <% Site::PAGES.each do |name, title| -%>
+      <a href="<%= name %>.html"<%= %( aria-current="page") if name == page %>><%= escape(title) %></a>
+    <% end -%>
+      <a href="sheet.html">Feuille A4</a>
+      <a href="https://github.com/fcatuhe/frenchy-clavier">Sources</a>
+    </nav>
+  </div>
+</header>
+
+<main class="wrap">
+<%= body %>
+</main>
+
+<footer class="site wrap">
+  <p>
+    Tout ce que vous voyez ici est produit depuis <code>layout.yml</code>, une ligne par touche.
+    Les claviers sont dessinés à leurs vraies largeurs, chaque rangée ferme au millimètre, et un test échoue sinon.
+  </p>
+  <p>MIT, François Catuhe. <a href="https://github.com/fcatuhe/frenchy-clavier">github.com/fcatuhe/frenchy-clavier</a></p>
+</footer>
+
+<script src="assets/tester.js" defer></script>
+</body>
+</html>

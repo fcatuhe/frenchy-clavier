@@ -1,0 +1,100 @@
+<section class="hero">
+  <h1>Apprendre</h1>
+  <p>
+    Il n'y a pas de leçons ici, parce qu'il n'y a rien à réapprendre : les lettres
+    sont celles de l'AZERTY. Il y a des règles, et elles tiennent en une page.
+  </p>
+</section>
+
+<section class="prose">
+  <h2>Une règle par famille</h2>
+
+  <h3>Rapprocher ce qui se ressemble</h3>
+  <p>
+    <code>à è é</code> se suivent sur les trois premières touches.
+    <code>_ - +</code> se suivent aussi. Les guillemets doubles <code>&laquo; &raquo;</code>
+    sont juste sous les chevrons simples <code>&lt; &gt;</code>, une rangée plus bas.
+    Rien de tout cela ne sort d'un calcul : ce sont des voisinages qu'un humain retient.
+  </p>
+
+  <h3>Un accent et sa touche morte partagent une touche</h3>
+  <p>
+    Le caractère littéral et sa touche morte ne sont jamais à deux endroits différents :
+    ils sont sur la même touche, à un niveau d'écart. L'accent grave <code>`</code> et
+    <code>&#9676;&#768;</code> vont ensemble, l'accent aigu et le sien aussi.
+  </p>
+
+  <h3>Le code sous la main gauche</h3>
+  <p>
+    Le pouce droit tient AltGr, donc tout ce qui se tape en tenant AltGr est à gauche.
+    Les accolades sont sur les parenthèses, les crochets sur R et T, les chevrons sur F et G.
+  </p>
+</section>
+
+<section class="prose">
+  <h2>Touches mortes</h2>
+  <p>
+    Une touche morte ne produit rien toute seule : elle attend la lettre suivante.
+    Sur la page d'accueil, appuyer sur l'une d'elles repeint le clavier avec ce qu'elle
+    donnerait. Voici ce que chacune produit sur les voyelles.
+  </p>
+</section>
+
+<div class="grid-dead">
+<% dead_keys.each do |name| -%>
+  <div>
+    <h3><span class="dead"><%= escape(Layout::Key::DISPLAY.fetch("<#{name}>", name)) %></span> <span class="sub"><%= escape(dead_stroke(name)) %></span></h3>
+    <p class="produced">
+    <% produced(name).each do |typed, output| -%>
+      <span><%= escape(typed) %>&thinsp;&rarr;&thinsp;<b><%= escape(output) %></b></span>
+    <% end -%>
+    </p>
+    <p class="hint"><%= combinations(name) %> combinaisons en tout, plus l'espace qui donne <b><%= escape(dead_spacing[name]) %></b>.</p>
+  </div>
+<% end -%>
+</div>
+
+<section class="prose">
+  <h2>Compose</h2>
+  <p>
+    <kbd>Verr. maj.</kbd> est la touche Compose. On l'appuie, on la relâche, puis on tape
+    une suite courte, et le système rend un caractère. C'est la réserve : tout ce qui ne
+    mérite pas une touche à lui vit ici.
+  </p>
+  <p>
+    La règle la plus facile à retenir : <strong>la même touche deux fois</strong>. Compose
+    puis <code>o</code> <code>o</code> donne <code>&deg;</code>, Compose puis <code>e</code>
+    <code>e</code> donne un <code>&#279;</code>. Voici les suites qui servent vraiment.
+  </p>
+</section>
+
+<table>
+  <tr><th>Donne</th><th>Compose puis</th><th>Sur cette disposition</th></tr>
+  <% compose_table.each do |sequence, physical, output| -%>
+  <tr><td class="out"><%= escape(output) %></td><td class="keys"><%= escape(sequence) %></td><td class="keys"><%= escape(physical) %></td></tr>
+  <% end -%>
+</table>
+
+<section class="prose">
+  <h2>Verrouiller les chiffres</h2>
+  <p>
+    <kbd>Maj</kbd> + <kbd>Verr. maj.</kbd> verrouille la rangée des chiffres sur son niveau
+    Maj. On tape un long nombre sans tenir Maj, et le reste du clavier ne bouge pas :
+    les lettres restent des minuscules.
+  </p>
+  <p>
+    Le vrai Verr. maj. existe toujours, c'est les <strong>deux Maj ensemble</strong>.
+    La diode s'allume dans les deux cas. Les deux sont dans la disposition, il n'y a
+    aucune option à ajouter.
+  </p>
+</section>
+
+<section class="prose">
+  <h2>Ce qui reste libre</h2>
+  <p>
+    <%= layout.free_levels.size %> niveaux ne portent encore rien. Ils sont listés pour
+    que le prochain ajout se pose là où il y a de la place, et pas sur quelque chose d'utile.
+  </p>
+</section>
+
+<pre><%= escape(layout.free_levels.each_slice(6).map { it.join("   ") }.join("\n")) %></pre>

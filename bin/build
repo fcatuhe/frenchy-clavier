@@ -19,6 +19,20 @@ written.each do |path, content|
   puts target
 end
 
-sheet = File.join(root, "out", "sheet.html")
-File.write(sheet, Clavier::Sheet.new(layout, compose_path: File.join(root, "compose.yml")).to_s)
+compose = File.join(root, "compose.yml")
+out = File.join(root, "out")
+
+sheet = File.join(out, "sheet.html")
+FileUtils.mkdir_p(out)
+File.write(sheet, Clavier::Sheet.new(layout, compose_path: compose).to_s)
 puts sheet
+
+site = File.join(out, "site")
+FileUtils.mkdir_p(site)
+FileUtils.cp_r(File.join(root, "site", "assets"), site)
+FileUtils.cp(sheet, File.join(site, "sheet.html"))
+
+Clavier::Site.new(layout, compose_path: compose).pages.each do |name, html|
+  File.write(File.join(site, name), html)
+  puts File.join(site, name)
+end

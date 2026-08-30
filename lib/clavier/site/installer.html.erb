@@ -1,0 +1,110 @@
+<section class="hero">
+  <h1>Installer</h1>
+  <p>
+    Linux marche aujourd'hui, avec un script qui ne demande pas Ruby.
+    macOS et Windows demandent chacun un autre format de fichier, et ne sont pas encore écrits.
+  </p>
+</section>
+
+<section class="prose">
+  <h2>Linux</h2>
+  <p>
+    XKB lit la disposition depuis <code>~/.config/xkb</code>, sans droits d'administrateur
+    et sans toucher au système. Le script y copie quatre fichiers.
+  </p>
+
+<pre>git clone https://github.com/fcatuhe/frenchy-clavier
+cd frenchy-clavier
+linux/install.sh</pre>
+
+  <p class="warn">
+    C'est un script shell qui écrit dans votre configuration. Il fait dix lignes,
+    <a href="https://github.com/fcatuhe/frenchy-clavier/blob/main/linux/install.sh">lisez-le avant</a>.
+    Il n'utilise pas <code>sudo</code>.
+  </p>
+
+  <h3>Hyprland</h3>
+  <p>Dans <code>~/.config/hypr/input.lua</code> :</p>
+
+<pre>hl.config({ input = {
+  kb_layout = "us,frenchy",
+  kb_options = "caps:none,grp:ctrls_toggle",
+} })</pre>
+
+  <p>
+    Les deux Ctrl basculent entre Frenchy-Clavier et QWERTY US. Sans variante c'est l'ISO,
+    le clavier de la plupart des Français. Sur un clavier ANSI, ajoutez
+    <code>kb_variant = ",ansi"</code> : une variante par disposition, celle du QWERTY reste vide.
+  </p>
+
+  <h3>GNOME, KDE, X11</h3>
+  <p>
+    La disposition s'annonce dans le registre XKB, donc elle apparaît dans la liste des
+    dispositions du système sous le nom <strong>Frenchy-Clavier</strong>, avec ses deux
+    variantes ISO et ANSI. Rien de plus à faire.
+  </p>
+
+  <details>
+    <summary>Deux options à ne pas ajouter</summary>
+    <p>
+      <code>compose:caps</code> et <code>shift:both_capslock_cancel</code> : la disposition
+      fait déjà les deux, et les options écraseraient le verrou des chiffres.
+    </p>
+  </details>
+
+  <details>
+    <summary>Pourquoi <code>caps:none</code></summary>
+    <p>
+      Uniquement parce qu'une seconde disposition partage le clavier. Sans elle, le
+      <code>Caps_Lock</code> du groupe QWERTY pose le modificateur Lock sur la touche, et un
+      modificateur appartient à la touche et non au groupe : Compose verrouillerait les
+      majuscules avec lui. Le prix est que Verr. maj. ne fait plus rien du côté QWERTY.
+    </p>
+  </details>
+</section>
+
+<section class="prose">
+  <h2>macOS</h2>
+  <p>
+    Pas encore. macOS ne lit pas XKB : il faut un bundle contenant un <code>.keylayout</code>,
+    un XML qui liste, pour chaque combinaison de modificateurs, le caractère produit par
+    chaque code de touche. Le format accepte les touches mortes, donc tout ce que fait
+    Frenchy-Clavier est exprimable.
+  </p>
+  <p>
+    Deux choses ne survivront pas au portage, et autant le dire tout de suite : le verrou
+    des chiffres n'a pas d'équivalent, et AltGr n'existe pas. C'est Option qui tiendrait le
+    troisième niveau, et Apple s'en sert déjà.
+  </p>
+</section>
+
+<section class="prose">
+  <h2>Windows</h2>
+  <p>
+    Pas encore. Il faut un <code>.klc</code>, compilé par le Microsoft Keyboard Layout Creator
+    en un pilote à installer. Les touches mortes passent, le verrou des chiffres non.
+  </p>
+</section>
+
+<section class="prose">
+  <h2>Changer la disposition</h2>
+  <p>
+    <code>layout.yml</code> est le seul fichier à toucher. Une ligne par touche, quatre
+    niveaux, dans l'ordre direct, Maj, AltGr, AltGr+Maj. <code>""</code> marque un niveau
+    libre, <code>&lt;nom&gt;</code> un keysym brut.
+  </p>
+
+<pre>AE02: ["è", "2", "`", "È"]
+BKSL: ["\\", "|", "", ""]</pre>
+
+  <p>Puis :</p>
+
+<pre>bin/build     # les fichiers XKB, la feuille A4, le site
+bin/apply     # installe et bascule Hyprland dessus, à chaud
+bin/test      # les tests</pre>
+
+  <p>
+    <code>bin/apply</code> n'écrit rien dans la configuration Hyprland.
+    <code>hyprctl reload</code> revient en arrière.
+  </p>
+</section>
