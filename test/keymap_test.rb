@@ -26,7 +26,7 @@ class KeymapTest < Minitest::Test
   end
 
   def test_a_dead_level_announces_itself_so_the_next_stroke_can_resolve_it
-    circumflex = @keys.fetch("Digit7").first
+    circumflex = @keys.fetch("Digit8").first
 
     assert_equal("dead_circumflex", circumflex.fetch("d"))
     assert_equal("â", JSON.parse(@keymap.to_json).dig("dead", "dead_circumflex", "a"))
@@ -37,8 +37,8 @@ class KeymapTest < Minitest::Test
   end
 
   def test_a_dead_key_is_named_by_the_key_it_sits_on
-    assert_equal("7", @keymap.stroke("dead_circumflex"))
-    assert_equal("8", @keymap.stroke("dead_diaeresis"))
+    assert_equal("8", @keymap.stroke("dead_circumflex"))
+    assert_equal("7", @keymap.stroke("dead_diaeresis"))
     assert_equal("AltGr ~", @keymap.stroke("dead_tilde"))
   end
 

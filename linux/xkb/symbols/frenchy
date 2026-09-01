@@ -5,17 +5,17 @@ xkb_symbols "ansi" {
 
     key <TLDE> { [ at              , twosuperior     , U00B3           , U00BD ] };
     key <AE01> { type[Group1] = "FRENCHY_DIGITS_LOCK", [ agrave          , 1               , section         , Agrave ] };
-    key <AE02> { type[Group1] = "FRENCHY_DIGITS_LOCK", [ egrave          , 2               , grave           , Egrave ] };
+    key <AE02> { type[Group1] = "FRENCHY_DIGITS_LOCK", [ egrave          , 2               , NoSymbol        , Egrave ] };
     key <AE03> { type[Group1] = "FRENCHY_DIGITS_LOCK", [ eacute          , 3               , ampersand       , Eacute ] };
     key <AE04> { type[Group1] = "FRENCHY_DIGITS_LOCK", [ parenleft       , 4               , braceleft ] };
     key <AE05> { type[Group1] = "FRENCHY_DIGITS_LOCK", [ parenright      , 5               , braceright ] };
     key <AE06> { type[Group1] = "FRENCHY_DIGITS_LOCK", [ asciitilde      , 6               , dead_tilde ] };
-    key <AE07> { type[Group1] = "FRENCHY_DIGITS_LOCK", [ dead_circumflex , 7               , asciicircum ] };
-    key <AE08> { type[Group1] = "FRENCHY_DIGITS_LOCK", [ dead_diaeresis  , 8               , diaeresis ] };
+    key <AE07> { type[Group1] = "FRENCHY_DIGITS_LOCK", [ dead_diaeresis  , 7               , diaeresis ] };
+    key <AE08> { type[Group1] = "FRENCHY_DIGITS_LOCK", [ dead_circumflex , 8               , asciicircum ] };
     key <AE09> { type[Group1] = "FRENCHY_DIGITS_LOCK", [ asterisk        , 9               , multiply ] };
     key <AE10> { type[Group1] = "FRENCHY_DIGITS_LOCK", [ plus            , 0               , division ] };
-    key <AE11> { [ apostrophe      , percent         , grave           , dead_grave ] };
-    key <AE12> { [ quotedbl        , degree          , U2019           , dead_acute ] };
+    key <AE11> { [ underscore      , percent         , grave           , dead_grave ] };
+    key <AE12> { [ NoSymbol        , degree          , U2019           , dead_acute ] };
     key <AD01> { type[Group1] = "FOUR_LEVEL_ALPHABETIC", [ a               , A               , ae              , AE ] };
     key <AD02> { type[Group1] = "FOUR_LEVEL_SEMIALPHABETIC", [ z               , Z ] };
     key <AD03> { type[Group1] = "FOUR_LEVEL_SEMIALPHABETIC", [ e               , E               , EuroSign ] };
@@ -27,7 +27,7 @@ xkb_symbols "ansi" {
     key <AD09> { type[Group1] = "FOUR_LEVEL_ALPHABETIC", [ o               , O               , oe              , OE ] };
     key <AD10> { type[Group1] = "FOUR_LEVEL_SEMIALPHABETIC", [ p               , P ] };
     key <AD11> { [ minus           , NoSymbol        , plusminus ] };
-    key <AD12> { [ underscore      , ampersand       , emdash          , endash ] };
+    key <AD12> { [ slash           , bar             , emdash          , endash ] };
     key <BKSL> { [ numbersign      , backslash ] };
     key <AC01> { type[Group1] = "FOUR_LEVEL_SEMIALPHABETIC", [ q               , Q ] };
     key <AC02> { type[Group1] = "FOUR_LEVEL_SEMIALPHABETIC", [ s               , S               , dollar          , sterling ] };
@@ -39,7 +39,7 @@ xkb_symbols "ansi" {
     key <AC08> { type[Group1] = "FOUR_LEVEL_SEMIALPHABETIC", [ k               , K ] };
     key <AC09> { type[Group1] = "FOUR_LEVEL_SEMIALPHABETIC", [ l               , L ] };
     key <AC10> { type[Group1] = "FOUR_LEVEL_SEMIALPHABETIC", [ m               , M               , mu ] };
-    key <AC11> { [ slash           , bar ] };
+    key <AC11> { [ apostrophe      , quotedbl ] };
     key <AB01> { type[Group1] = "FOUR_LEVEL_SEMIALPHABETIC", [ w               , W ] };
     key <AB02> { type[Group1] = "FOUR_LEVEL_SEMIALPHABETIC", [ x               , X ] };
     key <AB03> { type[Group1] = "FOUR_LEVEL_ALPHABETIC", [ c               , C               , ccedilla        , Ccedilla ] };

@@ -22,10 +22,10 @@ Quatre niveaux par touche : base, Maj, AltGr, AltGr+Maj.
 
 | | |
 |---|---|
-| rangée du haut | `@ à è é ( ) ~ ◌̂ ◌̈ * + ' "`, les chiffres sur Maj |
-| accents | `à è é` en direct, `ù` sur AltGr+U, `ç` sur AltGr+C, majuscules sur AltGr+Maj, les touches mortes `◌̂ ◌̈` sur les touches 7 et 8 |
-| code | `( )` et `" '` en direct, `{ }` sur AltGr+`(` `)`, `[ ]` sur AltGr+R T, `< >` sur AltGr+F G |
-| ponctuation | `. , : ? / # - _` en direct, `\ ; = ! &` sur Maj |
+| rangée du haut | `@ à è é ( ) ~ ◌̈ ◌̂ * + _`, les chiffres sur Maj |
+| accents | `à è é` en direct, `ù` sur AltGr+U, `ç` sur AltGr+C, majuscules sur AltGr+Maj, les touches mortes `◌̈ ◌̂` sur les touches 7 et 8 |
+| code | `( )` en direct, `' "` sur la touche à droite de M, `/ |` à droite de P, `{ }` sur AltGr+`(` `)`, `[ ]` sur AltGr+R T, `< >` sur AltGr+F G |
+| ponctuation | `. , : ? ' / # - _` en direct, `\ ; = ! | "` sur Maj, `&` sur AltGr+É |
 | typographie | `’ — – « » … · ° ± ÷ ×` et l'espace fine insécable sur AltGr+espace |
 
 Le clavier complet, imprimable en A4, est dans `out/sheet.html` après un `bin/build`. Il montre les quatre niveaux de chaque touche, la couche Compose et la liste des niveaux encore libres.
@@ -72,8 +72,8 @@ Pas encore. Voir `macos/` et `windows/`.
 `layout.yml` est le seul fichier à toucher. Une ligne par touche, quatre niveaux, dans l'ordre base, Maj, AltGr, AltGr+Maj. `""` marque un niveau libre, `<nom>` un keysym brut.
 
 ```yaml
-  AE02: ["è", "2", "`", "È"]
-  BKSL: ["\\", "|", "", ""]
+  AE02: ["è", "2", "", "È"]
+  AE11: ["_", "%", "`", "<dead_grave>"]
 ```
 
 ```bash

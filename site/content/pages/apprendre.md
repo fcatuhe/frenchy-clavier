@@ -46,7 +46,7 @@ La règle la plus facile à retenir : **la même touche deux fois**. Compose pui
 
 Le vrai Verr. maj. existe toujours, c'est les **deux Maj ensemble**, et la diode ne s'allume que pour lui. Les deux sont dans la disposition, il n'y a aucune option à ajouter.
 
-Ce que le code écrit le plus a quitté la rangée qui se verrouille. `'` et `"` sont sur les deux touches à droite de la rangée du haut, `-` et `_` sur les deux touches à droite de la rangée du dessous : quatre touches que le verrou ne touche pas, donc quatre caractères qui restent en accès direct en mode chiffres.
+Ce que le code écrit le plus a quitté la rangée qui se verrouille. `'` et `"` sont sur la touche à droite de M, `/` et `|` à droite de P, `-` juste à côté, et `_` sur la touche qui suit le 0 : le verrou ne prend que les dix chiffres, donc tous ces caractères restent en accès direct en mode chiffres.
 
 Le verrou des chiffres, lui, allume l'indicateur Verr. défil. Aucun portable ne l'affiche, mais le système le voit, et la barre d'état peut donc le montrer sans que la diode de Verr. maj. ait à dire deux choses à la fois.
 
