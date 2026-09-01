@@ -64,11 +64,11 @@ keys:
 
   CAPS: ["<Multi_key>", "<ISO_Level5_Lock>", "", ""]
 
-  LFSH: ["<Shift_L>", "<Shift_L>", "", ""]
-  RTSH: ["<Shift_R>", "<Shift_R>", "", ""]
+  LFSH: ["<Shift_L>", "<VoidSymbol>", "", ""]
+  RTSH: ["<Shift_R>", "<VoidSymbol>", "", ""]
 
-# Locking through an action, not through the Caps_Lock keysym, keeps the Shift
-# keys out of the Lock modifier map, which belongs to the key and not the group.
+# Locking by action, not by the Caps_Lock keysym, keeps the Shift keys out of
+# the Lock modifier map. VoidSymbol on that level is what Compose cannot ignore.
 actions:
   LFSH: ["SetMods(modifiers=Shift,clearLocks)", "LockMods(modifiers=Lock)"]
   RTSH: ["SetMods(modifiers=Shift,clearLocks)", "LockMods(modifiers=Lock)"]

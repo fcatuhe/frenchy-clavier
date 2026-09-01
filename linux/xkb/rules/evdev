@@ -29,3 +29,18 @@
 
 ! layout[4] = compat
   frenchy = +frenchy(leddigits)
+
+! layout option = symbols
+  * shift:frenchy_capslock = +frenchy(shiftlock)
+
+! layout[1] option = symbols
+  * shift:frenchy_capslock = +frenchy(shiftlock):1
+
+! layout[2] option = symbols
+  * shift:frenchy_capslock = +frenchy(shiftlock):2
+
+! layout[3] option = symbols
+  * shift:frenchy_capslock = +frenchy(shiftlock):3
+
+! layout[4] option = symbols
+  * shift:frenchy_capslock = +frenchy(shiftlock):4

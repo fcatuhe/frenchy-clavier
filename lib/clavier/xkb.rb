@@ -2,12 +2,14 @@ module Clavier
   class Xkb
     LED = "leddigits".freeze
     DIGITS_LOCK = "FRENCHY_DIGITS_LOCK".freeze
+    SHIFTLOCK = "shiftlock".freeze
+    SHIFTLOCK_OPTION = "shift:frenchy_capslock".freeze
 
     def initialize(layout) = @layout = layout
 
     VARIANTS = { "iso" => "ISO", "ansi" => "ANSI" }.freeze
 
-    def symbols = [ansi, iso].join("\n")
+    def symbols = [ansi, iso, shiftlock].join("\n")
 
     def ansi
       [
@@ -18,8 +20,20 @@ module Clavier
         "",
         key_lines,
         "",
+        %(    include "#{@layout.name}(#{SHIFTLOCK})"),
         %(    include "level3(ralt_switch)"),
         %(    include "keypad(oss)"),
+        "};",
+        ""
+      ].join("\n")
+    end
+
+    def shiftlock
+      [
+        "partial modifier_keys",
+        %(xkb_symbols "#{SHIFTLOCK}" {),
+        "",
+        acting_lines,
         "};",
         ""
       ].join("\n")
@@ -87,9 +101,17 @@ module Clavier
       lines = ["! include %S/evdev", ""] +
         SECTIONS.flat_map { |section|
           tables.flat_map { ["#{it} = #{section}", "  #{@layout.name} = +#{@layout.name}(#{LED})", ""] }
-        }
+        } + option_rules(tables)
 
       lines.join("\n")
+    end
+
+    def option_rules(tables)
+      tables.each_with_index.flat_map { |table, index|
+        group = index.zero? ? "" : ":#{index}"
+        ["#{table} option = symbols",
+         "  * #{SHIFTLOCK_OPTION} = +#{@layout.name}(#{SHIFTLOCK})#{group}", ""]
+      }
     end
 
     def registry
@@ -126,7 +148,13 @@ module Clavier
     private
 
     def key_lines
-      @layout.each_key.reject { |_, key| key.blank? }.map { |code, key| line(code, key) }.join("\n")
+      plain = @layout.each_key.reject { |_, key| key.blank? || key.actions }
+      plain.map { |code, key| line(code, key) }.join("\n")
+    end
+
+    def acting_lines
+      acting = @layout.each_key.select { |_, key| key.actions }
+      acting.map { |code, key| acting_line(code, key) }.join("\n")
     end
 
     def line(code, key, verb: "key")

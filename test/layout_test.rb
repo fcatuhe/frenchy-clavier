@@ -1,7 +1,6 @@
 require "minitest/autorun"
 require "tmpdir"
-require "fileutils"
-require_relative "../lib/clavier"
+require_relative "keyboard"
 
 class LayoutTest < Minitest::Test
   def setup
@@ -49,15 +48,7 @@ class LayoutTest < Minitest::Test
     assert_nil(Clavier::Keysyms.of(""))
   end
 
-  def install(dir)
-    xkb = Clavier::Xkb.new(@layout)
-    { "symbols" => xkb.symbols, "types" => xkb.types, "compat" => xkb.compat,
-      "rules/evdev" => xkb.rules }.each do |path, content|
-      name = path.include?("/") ? path : "#{path}/#{@layout.name}"
-      FileUtils.mkdir_p("#{dir}/xkb/#{File.dirname(name)}")
-      File.write("#{dir}/xkb/#{name}", content)
-    end
-  end
+  def install(dir) = Keyboard.install(dir, @layout)
 
   def test_the_emitted_files_compile_and_the_digit_lock_drives_its_own_indicator
     Dir.mktmpdir do |dir|
@@ -73,17 +64,19 @@ class LayoutTest < Minitest::Test
     end
   end
 
+  def how_to_type(dir, *arguments)
+    IO.popen({ "XDG_CONFIG_HOME" => dir },
+      ["xkbcli", "how-to-type", "--layout", "us,#{@layout.name}", "--variant", ",ansi",
+       "--options", Keyboard::OMARCHY_OPTIONS, *arguments, err: File::NULL], &:read)
+  end
+
   def test_omarchys_own_options_leave_the_digit_lock_alone
     Dir.mktmpdir do |dir|
       install(dir)
 
-      keymap = IO.popen({ "XDG_CONFIG_HOME" => dir },
-        ["xkbcli", "compile-keymap", "--layout", "us,#{@layout.name}", "--variant", ",ansi",
-         "--options", "compose:caps,shift:both_capslock_cancel", err: File::NULL], &:read)
-
-      assert_match(/key <CAPS>[^}]*symbols\[2\]= \[\s*Multi_key,\s*ISO_Level5_Lock/m, keymap,
-        "compose:caps must not take the digit lock off Shift+Caps")
-      assert_match(/key <CAPS>[^}]*symbols\[1\]= \[\s*Multi_key,\s*Multi_key/m, keymap,
+      assert_match(/LevelFive/, how_to_type(dir, "1"),
+        "compose:caps must leave the digit lock on Shift+Caps")
+      assert_match(/CAPS.*English \(US\)/, how_to_type(dir, "--keysym", "Multi_key"),
         "the QWERTY group keeps the Compose that Omarchy gives it")
     end
   end

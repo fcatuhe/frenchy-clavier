@@ -33,7 +33,7 @@ Dans `~/.config/hypr/input.lua` :
 ```lua
 hl.config({ input = {
   kb_layout = "us,frenchy",
-  kb_options = "compose:caps,shift:both_capslock_cancel,grp:ctrls_toggle",
+  kb_options = "compose:caps,shift:frenchy_capslock,grp:ctrls_toggle",
 } })
 ```
 
@@ -46,11 +46,11 @@ La disposition s'annonce dans le registre XKB, donc elle apparaît dans la liste
 <details markdown="1">
 <summary>Pourquoi ces trois options</summary>
 
-`compose:caps` et `shift:both_capslock_cancel` sont celles d'Omarchy, gardées telles quelles : la première donne Compose sur Verr. maj. au groupe QWERTY aussi, la seconde lui donne le Verr. maj. par les deux Maj. Sans elles, la disposition garde les deux pour elle et le côté QWERTY les perd.
+`compose:caps` est celle d'Omarchy, gardée telle quelle : elle donne Compose sur Verr. maj. au groupe QWERTY aussi. Elle n'écrase rien, elle ne touche que le niveau direct de la touche, donc Maj + Verr. maj. reste le verrou des chiffres.
 
-Elles n'écrasent rien. `compose:caps` ne touche que le niveau direct de la touche, donc Maj + Verr. maj. reste le verrou des chiffres, et `shift:both_capslock_cancel` pose exactement les actions que la disposition posait déjà. Installée seule, la disposition n'a besoin d'aucune des deux.
+`shift:frenchy_capslock` vient de la disposition et remplace le `shift:both_capslock_cancel` d'Omarchy : même Verr. maj. par les deux Maj, posé sur tous les groupes, mais il referme la séquence Compose en cours au lieu de la laisser ouverte, et il garde les touches Maj hors de la table du modificateur Lock. Sans lui, le côté QWERTY perd les deux.
 
-`grp:ctrls_toggle` est le seul ajout. `kb_options` remplace la valeur d'Omarchy au lieu de s'y ajouter, d'où les trois écrites en entier.
+`grp:ctrls_toggle` fait basculer les groupes. `kb_options` remplace la valeur d'Omarchy au lieu de s'y ajouter, d'où les trois écrites en entier. Installée seule, la disposition n'a besoin d'aucune.
 
 </details>
 

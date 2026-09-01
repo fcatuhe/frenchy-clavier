@@ -102,7 +102,8 @@ module Clavier
         "<dead_cedilla>" => "#{DOTTED}\u0327",
         "<space>" => "", "<nobreakspace>" => "nbsp", "<U202F>" => "nnbsp",
         "<Multi_key>" => "Compose", "<ISO_Level5_Lock>" => "chiffres", "<Return>" => "Entrée",
-        "<Shift_L>" => "Maj", "<Shift_R>" => "Maj", "<Caps_Lock>" => "Verr. maj."
+        "<Shift_L>" => "Maj", "<Shift_R>" => "Maj", "<Caps_Lock>" => "Verr. maj.",
+        "<VoidSymbol>" => "Verr. maj."
       }.freeze
 
       def case_pair?(low, high)

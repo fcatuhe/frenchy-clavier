@@ -44,7 +44,7 @@ La règle la plus facile à retenir : **la même touche deux fois**. Compose pui
 
 <kbd>Maj</kbd> + <kbd>Verr. maj.</kbd> verrouille la rangée des chiffres sur son niveau Maj. On tape un long nombre sans tenir Maj, et le reste du clavier ne bouge pas : les lettres restent des minuscules.
 
-Le vrai Verr. maj. existe toujours, c'est les **deux Maj ensemble**, et la diode ne s'allume que pour lui. Les deux sont dans la disposition, il n'y a aucune option à ajouter.
+Le vrai Verr. maj. existe toujours, c'est les **deux Maj ensemble**, et la diode ne s'allume que pour lui. Les deux sont dans la disposition, il n'y a aucune option à ajouter. Si une séquence Compose était commencée, les deux Maj l'abandonnent en verrouillant : on ressort en majuscules, pas au milieu d'une suite qui attend encore une touche. Le QWERTY partagé avec la disposition se comporte pareil, l'option `shift:frenchy_capslock` lui pose le même verrou.
 
 Ce que le code écrit le plus a quitté la rangée qui se verrouille. `'` et `"` sont sur la touche à droite de M, `/` et `|` à droite de P, `-` juste à côté, et `_` sur la touche qui suit le 0 : le verrou ne prend que les dix chiffres, donc tous ces caractères restent en accès direct en mode chiffres.
 

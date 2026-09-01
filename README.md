@@ -38,6 +38,10 @@ Verr. maj. est la touche Compose. Maj+Verr. maj. verrouille la rangée des chiff
 
 Les deux sont dans la disposition, aucune option à ajouter. Les touches Maj verrouillent par une action `LockMods` et non par le keysym `Caps_Lock`, sinon elles entreraient dans la table du modificateur Lock, qui appartient à la touche et pas au groupe : la moindre autre disposition partageant le clavier hériterait du verrouillage. La diode de Verr. maj. ne s'allume que pour le vrai Verr. maj.
 
+Le niveau qui verrouille répond `VoidSymbol`. Compose ignore tous les keysyms de modificateur, `Shift_L` comme `Caps_Lock` : une séquence commencée resterait ouverte derrière le verrouillage, à avaler ce qui vient ensuite. Avec `VoidSymbol`, les deux Maj verrouillent Verr. maj. et referment la séquence.
+
+Le même verrou est offert aux autres groupes du clavier par l'option `shift:frenchy_capslock`, que les règles de la disposition posent sur chacun des groupes. C'est ce que `shift:both_capslock_cancel` fait chez Omarchy, au keysym près : la sienne est `Caps_Lock`, que Compose ignore, donc le QWERTY garderait la séquence ouverte.
+
 ## Installer
 
 ### Linux
@@ -51,17 +55,17 @@ Puis, sous Hyprland, dans `~/.config/hypr/input.lua` :
 ```lua
 hl.config({ input = {
   kb_layout = "us,frenchy",
-  kb_options = "compose:caps,shift:both_capslock_cancel,grp:ctrls_toggle",
+  kb_options = "compose:caps,shift:frenchy_capslock,grp:ctrls_toggle",
 } })
 ```
 
 Les deux Ctrl basculent entre frenchy-clavier et QWERTY US. Sans variante, c'est l'ISO. Sur un clavier ANSI, ajouter `kb_variant = ",ansi"` : une variante par disposition, celle du QWERTY reste vide.
 
-`compose:caps` et `shift:both_capslock_cancel` sont les deux options d'Omarchy, gardées telles quelles. La première donne Compose sur Verr. maj. au groupe QWERTY aussi, la seconde son Verr. maj. par les deux Maj. Sans elles, la disposition garde les deux pour elle et le côté QWERTY les perd.
+`compose:caps` est celle d'Omarchy, gardée telle quelle : elle donne Compose sur Verr. maj. au groupe QWERTY aussi. Elle n'écrase rien, elle ne touche que le niveau direct de la touche, donc Maj + Verr. maj. reste le verrou des chiffres.
 
-Elles n'écrasent rien : `compose:caps` ne touche que le niveau direct de la touche, donc Maj + Verr. maj. reste le verrou des chiffres, et `shift:both_capslock_cancel` pose exactement les actions que la disposition posait déjà. Une disposition installée seule n'a besoin d'aucune des deux : elle les porte.
+`shift:frenchy_capslock` remplace le `shift:both_capslock_cancel` d'Omarchy et vient de la disposition : même Verr. maj. par les deux Maj sur tous les groupes, mais qui referme la séquence Compose en cours et laisse les touches Maj hors de la table du modificateur Lock. Sans elle, le côté QWERTY perd les deux.
 
-`grp:ctrls_toggle` est le seul ajout. `kb_options` remplace la valeur d'Omarchy au lieu de s'y ajouter, d'où les trois options écrites en entier.
+`grp:ctrls_toggle` fait basculer les groupes. `kb_options` remplace la valeur d'Omarchy au lieu de s'y ajouter, d'où les trois options écrites en entier. Une disposition installée seule n'a besoin d'aucune : elle les porte.
 
 ### macOS, Windows
 
@@ -89,7 +93,7 @@ site/bin/static-build  # le site, dans site/build/
 
 Hyprland compile la disposition une fois, au démarrage de la session, et ne la recompile que si une valeur de la section `input` change vraiment. Réinstaller les fichiers XKB ne suffit donc pas : `hyprctl reload` relit la configuration, n'y voit aucun changement, et garde l'ancienne disposition. `hyprctl keyword` n'aide pas non plus, il n'atteint pas un bloc `input` écrit en Lua.
 
-`bin/apply` compare ce que Hyprland annonce à ce qui vient d'être installé, et le dit quand la session est restée en arrière. Pour la forcer, il faut faire changer une valeur, puis la remettre :
+`bin/apply` compare le nom que Hyprland annonce à celui de la disposition installée, et le dit quand la session est sur autre chose. Il ne voit pas une session restée sur une version précédente des mêmes fichiers : le nom n'a pas changé. Pour forcer la recompilation, il faut faire changer une valeur, puis la remettre :
 
 ```bash
 sed -i 's/kb_variant = ",ansi"/kb_variant = ",iso"/' ~/.config/hypr/input.lua
@@ -97,6 +101,8 @@ hyprctl reload
 sed -i 's/kb_variant = ",iso"/kb_variant = ",ansi"/' ~/.config/hypr/input.lua
 hyprctl reload
 ```
+
+fcitx5 garde lui aussi la disposition compilée à son démarrage, et comme son clavier virtuel est le clavier principal de la session, c'est celle-là que reçoivent les applications : `omarchy-restart-xcompose` après le `hyprctl reload`, sinon la session répond encore à l'ancienne. `xkbcli dump-keymap-wayland` montre ce qu'elle sert vraiment.
 
 ## Ce qui tient la disposition honnête
 
@@ -109,7 +115,9 @@ Les tests ne vérifient pas des goûts, ils vérifient des faits :
 - les 94 caractères ASCII imprimables sont tous atteignables ;
 - les fichiers produits compilent, et le verrou des chiffres a son propre indicateur ;
 - seules les dix touches de chiffres se verrouillent ;
-- les touches Maj n'entrent dans aucune table de modificateur Lock.
+- les touches Maj n'entrent dans aucune table de modificateur Lock ;
+- les deux Maj verrouillent Verr. maj. et abandonnent la séquence Compose en cours, un seul Maj déverrouille, sur les deux groupes ;
+- l'option d'Omarchy verrouille bien le QWERTY, mais y laisse la séquence ouverte, ce qui est la raison d'être de la nôtre.
 
 ## Structure
 
