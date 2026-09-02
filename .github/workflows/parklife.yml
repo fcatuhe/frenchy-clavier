@@ -14,12 +14,13 @@ permissions:
 jobs:
   test:
     runs-on: ubuntu-latest
+    # The tests assert what xkeyboard-config answers, and its answers change
+    # between releases: Ubuntu ships 2.41, the layout is written against 2.48.
+    container: archlinux:latest
     steps:
+    # libx11 carries the Compose table the dead keys and how-to-type read.
+    - run: pacman -Syu --noconfirm --needed git ruby ruby-minitest ruby-erb libxkbcommon xkeyboard-config libx11
     - uses: actions/checkout@v7
-    - uses: ruby/setup-ruby@v1
-      with:
-        ruby-version: .ruby-version
-    - run: sudo apt-get update && sudo apt-get install -y libxkbcommon-tools xkb-data
     - run: bin/test
 
   build:
