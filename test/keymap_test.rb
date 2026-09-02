@@ -11,8 +11,8 @@ class KeymapTest < Minitest::Test
   end
 
   def test_the_browser_reads_keys_by_position_not_by_letter
-    assert_equal(%w[a A æ Æ], @keys.fetch("KeyQ"))
-    assert_equal(["à", "1", "§", "À"], @keys.fetch("Digit1"))
+    assert_equal(["a", "A", "æ", nil], @keys.fetch("KeyQ"))
+    assert_equal(["à", "1", "§", nil], @keys.fetch("Digit1"))
   end
 
   def test_both_shapes_reach_the_hash_from_the_key_their_hardware_has

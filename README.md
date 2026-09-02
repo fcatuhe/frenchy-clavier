@@ -7,13 +7,13 @@ Une disposition AZERTY taillée pour le français, l'anglais et le code.
 ## Pourquoi
 
 - **Français et anglais.** Bépo n'est pas adapté : il optimise le français seul, et il faut tout réapprendre.
-- **Vraiment français pour les accents.** `à è é ù ç` en accès direct, majuscules accentuées comprises.
+- **Vraiment français pour les accents.** `à è é ù ç` en accès direct, les majuscules accentuées par les touches mortes.
 - **Basculer en anglais avec les chiffres**, sans avoir besoin des accents. Maj+Verr. maj. verrouille la rangée des chiffres.
 - **Raccourcis de code**, pour VS Code comme pour Vim : `{ } [ ] < > | / \ # @ $ & ~ ^` tous atteignables d'une main.
 - **AltGr facile.** Les symboles de code sont sur la main gauche, le pouce droit tient AltGr.
 - **Facile à mémoriser pour un humain.** Ça reste de l'AZERTY : les lettres ne bougent pas.
 - **Moins de stats, plus d'humain.** Aucune lettre n'a été déplacée pour gagner un millimètre.
-- **Rapprocher les caractères qui se ressemblent.** `à è é` ensemble, `_ - +` ensemble, `« »` juste sous `< >`, l'accent grave et sa touche morte sur la même touche.
+- **Rapprocher les caractères qui se ressemblent.** `à è é` ensemble, `_ - +` ensemble, `« »` juste sous `< >`, l'accent grave et sa touche morte sur la touche du tiret.
 - **Adapté ISO, ANSI ou Mac.** L'ISO est la disposition par défaut, c'est le clavier de la plupart des Français : la touche à droite de la rangée du milieu devient un second Entrée, et `#` avec sa barre oblique inverse partent sur la touche supplémentaire à gauche. `kb_variant = "ansi"` pour un clavier américain.
 
 ## Ce que ça donne
@@ -22,11 +22,11 @@ Quatre niveaux par touche : base, Maj, AltGr, AltGr+Maj.
 
 | | |
 |---|---|
-| rangée du haut | `@ à è é ( ) ~ ◌̈ ◌̂ * + _`, les chiffres sur Maj |
-| accents | `à è é` en direct, `ù` sur AltGr+U, `ç` sur AltGr+C, majuscules sur AltGr+Maj, les touches mortes `◌̈ ◌̂` sur les touches 7 et 8 |
-| code | `( )` en direct, `' "` sur la touche à droite de M, `/ |` à droite de P, `{ }` sur AltGr+`(` `)`, `[ ]` sur AltGr+R T, `< >` sur AltGr+F G |
-| ponctuation | `. , : ? ' / # - _` en direct, `\ ; = ! | "` sur Maj, `&` sur AltGr+É |
-| typographie | `’ — – « » … · ° ± ÷ ×` et l'espace fine insécable sur AltGr+espace |
+| rangée du haut | `@ à è é ( ) ~ ◌̈ ◌̂ * + _ =`, les chiffres sur Maj |
+| accents | `à è é` en direct, `ù` sur AltGr+U, `ç` sur AltGr+C et `Ç` sur AltGr+Maj+C, les autres majuscules accentuées par les touches mortes, `◌̈ ◌̂` sur les touches 7 et 8, `◌̀` avec le tiret et `◌́` avec la barre oblique |
+| code | `( )` en direct, `' "` sur la touche à droite de M, `` ` `` sur Maj+`-`, `/ |` à droite de P, `{ }` sur AltGr+`(` `)`, `[ ]` sur AltGr+R T, `< >` sur AltGr+F G |
+| ponctuation | `. , : ? ' / # - _ =` en direct, `\ ; ! | " · ^` sur Maj, `&` sur AltGr+É |
+| typographie | `’ « » ° ± ÷ ×` et l'espace fine insécable sur AltGr+espace |
 
 Le clavier complet, imprimable en A4, est dans `out/sheet.html` après un `bin/build`. Il montre les quatre niveaux de chaque touche, la couche Compose et la liste des niveaux encore libres.
 
@@ -77,7 +77,7 @@ Pas encore. Voir `macos/` et `windows/`.
 
 ```yaml
   AE02: ["è", "2", "", "È"]
-  AE11: ["_", "%", "`", "<dead_grave>"]
+  AC11: ["'", "\"", "`", "<dead_grave>"]
 ```
 
 ```bash

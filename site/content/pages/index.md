@@ -27,7 +27,7 @@ Bépo n'est pas adapté : il optimise le français seul, et il faut tout réappr
 
 <div class="card" markdown="1">
 ### Vraiment français
-`à è é ù ç` en accès direct, majuscules accentuées comprises. Pas de détour par une touche morte pour écrire un mot courant.
+`à è é ù ç` en accès direct. Pas de détour par une touche morte pour écrire un mot courant.
 </div>
 
 <div class="card" markdown="1">
@@ -56,10 +56,10 @@ Aucune lettre n'a été déplacée pour gagner un millimètre. Il n'y a pas de p
 
 | | | |
 |---|---|---|
-| Rangée du haut | `@ à è é ( ) ~ ◌̂ ◌̈ * + ' "` | les chiffres passent sur Maj |
-| Accents | `à è é` | en direct, `ù` sur AltGr+U, `ç` sur AltGr+C, majuscules sur AltGr+Maj |
-| Code | `( ) " '` | en direct, `{ }` sur AltGr+`( )`, `[ ]` sur AltGr+R T, `< >` sur AltGr+F G |
-| Ponctuation | `. , : ? / # - _` | en direct, `\ ; = ! &` sur Maj |
-| Typographie | `’ — – « » … · ° ± ÷ ×` | et l'espace fine insécable sur AltGr+espace |
+| Rangée du haut | `@ à è é ( ) ~ ◌̈ ◌̂ * + _ =` | les chiffres passent sur Maj |
+| Accents | `à è é` | en direct, `ù` sur AltGr+U, `ç` sur AltGr+C, les majuscules accentuées par les touches mortes |
+| Code | `( ) ' "` | `' "` à droite de M, `/ |` à droite de P, `{ }` sur AltGr+`( )`, `[ ]` sur AltGr+R T, `< >` sur AltGr+F G |
+| Ponctuation | `. , : ? ' / # - _ =` | en direct, `\ ; ! | " · ^` sur Maj, `&` sur AltGr+É |
+| Typographie | `’ « » ° ± ÷ ×` | et l'espace fine insécable sur AltGr+espace |
 
 Les règles derrière ces choix, les touches mortes et la couche Compose sont sur <%= link_to_page "apprendre" %>. Pour poser la disposition sur votre machine, <%= link_to_page "installer" %>.

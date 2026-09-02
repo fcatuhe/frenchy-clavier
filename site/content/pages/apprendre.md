@@ -20,7 +20,7 @@ Il n'y a pas de leçons ici, parce qu'il n'y a rien à réapprendre : les lettre
 
 ### Un accent et sa touche morte partagent une touche
 
-Le caractère littéral et sa touche morte ne sont jamais à deux endroits différents : ils sont sur la même touche, à un niveau d'écart. L'accent grave et le sien vont ensemble, sur la touche de l'apostrophe.
+Le caractère littéral et sa touche morte ne sont jamais à deux endroits différents : ils sont sur la même touche, à un niveau d'écart. L'accent grave et le sien vont ensemble, sur la touche du tiret.
 
 ### Le code sous la main gauche
 
