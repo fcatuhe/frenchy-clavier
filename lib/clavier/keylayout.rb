@@ -2,6 +2,7 @@ require "set"
 require_relative "compose"
 require_relative "keysyms"
 require_relative "mac_codes"
+require_relative "xkb"
 
 module Clavier
   class Keylayout
@@ -42,7 +43,7 @@ module Clavier
 
     def iso? = @variant == "iso"
 
-    def name = "#{@layout.title}, #{@variant.upcase}"
+    def name = @layout.description(Xkb::VARIANTS.fetch(@variant))
 
     def to_s
       [header, layouts, modifier_map, key_map_set, actions, terminators, "</keyboard>", ""].join("\n")

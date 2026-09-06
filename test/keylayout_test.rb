@@ -61,6 +61,11 @@ class KeylayoutTest < Minitest::Test
     assert_empty(missing, "unreachable on macOS: #{missing.join}")
   end
 
+  def test_the_menu_reads_the_name_the_xkb_files_carry
+    assert_equal("frenchy-clavier (AZERTY) ISO", @iso.elements["keyboard"].attribute("name").value)
+    assert_includes(Clavier::Xkb.new(@layout).symbols, "frenchy-clavier (AZERTY) ISO")
+  end
+
   def test_no_map_asks_one_key_code_to_do_two_things
     MAPS.each do |index|
       codes = @iso.elements.to_a("keyboard/keyMapSet/keyMap[@index='#{index}']/key")

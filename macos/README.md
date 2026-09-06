@@ -26,11 +26,13 @@ Une touche dont les deux niveaux AltGr sont vides répond à Option ce qu'elle r
 
 ## Ce que macOS ne rend pas
 
-Un `.keylayout` fait parler les touches, il ne fait rien d'autre : une touche modificatrice n'y produit rien, et il n'y a ni cinquième niveau ni action de verrouillage. Donc :
+Un `.keylayout` fait parler les touches, il ne fait rien d'autre : une touche modificatrice n'y produit rien, et les seuls modificateurs qu'il sait lire sont Maj, Option, Contrôle, Commande et Verr. maj. Donc :
 
 - **Compose sur Verr. maj.** n'existe pas. Karabiner-Elements peut envoyer F19 sur `caps_lock`, et le générateur donnerait alors à ce code de touche une action ouvrant un état `compose` alimenté par `compose.yml`. Non fait.
-- **Le verrou des chiffres** (Maj + Verr. maj.) n'a aucun équivalent. Il saute.
+- **Le verrou des chiffres** n'a aucun équivalent : sous Linux c'est Num Lock qui le porte, et macOS ne montre pas Num Lock aux dispositions. Le fichier fige l'état Num Lock allumé, celui d'un MacBook : accents en direct, chiffres sur Maj.
 - **Verr. maj. par les deux Maj** non plus. Karabiner seul saurait.
+
+Sous Linux, Compose sur Verr. maj. et Verr. maj. par les deux Maj sont les options d'Omarchy, pas la disposition. Sur macOS, elles n'ont personne pour les porter.
 
 ## Le piège des codes de touches
 

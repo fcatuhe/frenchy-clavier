@@ -25,6 +25,8 @@ module Clavier
 
     attr_reader :iso
 
+    def description(shape) = "#{@title} #{shape}"
+
     def [](code) = @keys[code]
 
     def on(board) = board.iso? ? @keys.merge(@iso) : @keys

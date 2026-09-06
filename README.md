@@ -93,7 +93,7 @@ macos/install.sh
 
 Deux fichiers, un par matériel : ISO pour un MacBook français, ANSI pour un MacBook US. Ils vont dans `~/Library/Keyboard Layouts`, la disposition s'ajoute dans Réglages Système > Clavier > Sources de saisie après une reconnexion.
 
-Option (⌥) joue AltGr. Verr. maj. reste Verr. maj. : ni Compose, ni verrou des chiffres, ni Verr. maj. par les deux Maj, un `.keylayout` ne sait rien faire dire à une touche modificatrice. Voir `macos/README.md`.
+Option (⌥) joue AltGr. Verr. maj. reste Verr. maj. : un `.keylayout` ne sait rien faire dire à une touche modificatrice, donc ni Compose, ni Verr. maj. par les deux Maj. Le verrou des chiffres non plus : macOS ne montre pas Num Lock aux dispositions, le fichier fige l'état allumé, accents en direct et chiffres sur Maj. Voir `macos/README.md`.
 
 ### Windows
 

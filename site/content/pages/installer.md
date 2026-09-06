@@ -68,7 +68,7 @@ macos/install.sh
 
 Fermer la session, la réouvrir, puis ajouter la disposition dans Réglages Système > Clavier > Sources de saisie > Modifier > +, à la rubrique Autres.
 
-Option (⌥) joue AltGr, et les touches mortes répondent comme sous Linux. Verr. maj. reste Verr. maj. : un fichier de disposition macOS ne sait rien faire dire à une touche modificatrice, donc ni Compose, ni verrou des chiffres, ni Verr. maj. par les deux Maj.
+Option (⌥) joue AltGr, et les touches mortes répondent comme sous Linux. Verr. maj. reste Verr. maj. : un fichier de disposition macOS ne sait rien faire dire à une touche modificatrice, donc ni Compose, ni Verr. maj. par les deux Maj. Le verrou des chiffres non plus, puisqu'il repose sur Num Lock, que macOS ne montre pas aux dispositions : les accents restent en direct et les chiffres sur Maj.
 
 Pour la retirer, la supprimer de la liste des sources de saisie puis :
 

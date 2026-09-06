@@ -16,8 +16,6 @@ module Clavier
     OPTION_DESCRIPTION =
       "Digit row on the Num Lock state, locked by Shift + Caps Lock".freeze
 
-    def description(shape) = "#{@layout.title} #{shape}"
-
     def symbols = [ansi, iso, shiftlock, digitlock].join("\n")
 
     def ansi
@@ -25,7 +23,7 @@ module Clavier
         "partial alphanumeric_keys",
         %(xkb_symbols "ansi" {),
         "",
-        %(    name[Group1] = "#{description("ANSI")}";),
+        %(    name[Group1] = "#{@layout.description("ANSI")}";),
         "",
         key_lines,
         "",
@@ -66,7 +64,7 @@ module Clavier
         "",
         %(    include "#{@layout.name}(ansi)"),
         "",
-        %(    name[Group1] = "#{description("ISO")}";),
+        %(    name[Group1] = "#{@layout.description("ISO")}";),
         "",
         @layout.iso.map { |code, key| line(code, key, verb: "replace key") }.join("\n"),
         "};",
@@ -132,7 +130,7 @@ module Clavier
         "      <configItem>",
         "        <name>#{@layout.name}</name>",
         "        <shortDescription>#{@layout.short}</shortDescription>",
-        "        <description>#{description("ISO")}</description>",
+        "        <description>#{@layout.description("ISO")}</description>",
         "        <languageList><iso639Id>fra</iso639Id><iso639Id>eng</iso639Id></languageList>",
         "      </configItem>",
         "      <variantList>",
@@ -141,7 +139,7 @@ module Clavier
            "          <configItem>",
            "            <name>#{name}</name>",
            "            <shortDescription>#{@layout.short}</shortDescription>",
-           "            <description>#{description(label)}</description>",
+           "            <description>#{@layout.description(label)}</description>",
            "          </configItem>",
            "        </variant>"]
         },
