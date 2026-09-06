@@ -1,17 +1,22 @@
 module Clavier
   class Xkb
-    LED = "leddigits".freeze
+    DIGITS = "digits".freeze
     DIGITS_LOCK = "FRENCHY_DIGITS_LOCK".freeze
     SHIFTLOCK = "shiftlock".freeze
     DIGITLOCK = "digitlock".freeze
     CAPS = "CAPS".freeze
-    COMPOSE = "+compose(caps)".freeze
+    LEVEL5_LOCK = "+level5(level5_lock)".freeze
 
     def initialize(layout) = @layout = layout
 
-    def option = "#{@layout.name}:capslock"
+    def option = "#{@layout.name}:#{DIGITLOCK}"
 
     VARIANTS = { "iso" => "ISO", "ansi" => "ANSI" }.freeze
+
+    OPTION_DESCRIPTION =
+      "Digit row on the Num Lock state, locked by Shift + Caps Lock".freeze
+
+    def description(shape) = "#{@layout.title} #{shape}"
 
     def symbols = [ansi, iso, shiftlock, digitlock].join("\n")
 
@@ -20,7 +25,7 @@ module Clavier
         "partial alphanumeric_keys",
         %(xkb_symbols "ansi" {),
         "",
-        %(    name[Group1] = "#{@layout.title}, ANSI";),
+        %(    name[Group1] = "#{description("ANSI")}";),
         "",
         key_lines,
         "",
@@ -61,7 +66,7 @@ module Clavier
         "",
         %(    include "#{@layout.name}(ansi)"),
         "",
-        %(    name[Group1] = "#{@layout.title}, ISO";),
+        %(    name[Group1] = "#{description("ISO")}";),
         "",
         @layout.iso.map { |code, key| line(code, key, verb: "replace key") }.join("\n"),
         "};",
@@ -71,17 +76,19 @@ module Clavier
 
     def types
       [
-        %(partial xkb_types "#{LED}" {),
+        %(partial xkb_types "#{DIGITS}" {),
+        "    virtual_modifiers NumLock;",
+        "",
         %(    type "#{DIGITS_LOCK}" {),
-        "	modifiers = Shift + LevelThree + LevelFive;",
-        "	map[None] = Level1;",
-        "	map[Shift] = Level2;",
-        "	map[LevelFive] = Level2;",
-        "	map[Shift+LevelFive] = Level1;",
+        "	modifiers = Shift + LevelThree + NumLock;",
+        "	map[None] = Level2;",
+        "	map[Shift] = Level1;",
+        "	map[NumLock] = Level1;",
+        "	map[Shift+NumLock] = Level2;",
         "	map[LevelThree] = Level3;",
         "	map[Shift+LevelThree] = Level4;",
-        "	map[LevelFive+LevelThree] = Level3;",
-        "	map[Shift+LevelFive+LevelThree] = Level4;",
+        "	map[NumLock+LevelThree] = Level3;",
+        "	map[Shift+NumLock+LevelThree] = Level4;",
         %(	level_name[Level1] = "Base";),
         %(	level_name[Level2] = "Digit";),
         %(	level_name[Level3] = "AltGr";),
@@ -92,47 +99,28 @@ module Clavier
       ].join("\n")
     end
 
-    INDICATOR = "Scroll Lock".freeze
-
-    def compat
-      [
-        %(partial xkb_compatibility "#{LED}" {),
-        %(    indicator "#{INDICATOR}" {),
-        "\twhichModState= Locked;",
-        "\tmodifiers= LevelFive;",
-        "    };",
-        "};",
-        ""
-      ].join("\n")
-    end
-
     GROUPS = 4
-
-    SECTIONS = %w[types compat].freeze
 
     def rules
       tables = ["! layout"] + (1..GROUPS).map { "! layout[#{it}]" }
 
       lines = ["! include %S/evdev", ""] +
-        SECTIONS.flat_map { |section|
-          tables.flat_map { ["#{it} = #{section}", "  #{@layout.name} = +#{@layout.name}(#{LED})", ""] }
+        sections.flat_map { |section, included|
+          tables.flat_map { ["#{it} = #{section}", "  #{@layout.name} = #{included}", ""] }
         } + option_rules(tables)
 
       lines.join("\n")
     end
 
+    def sections = { "types" => "+#{@layout.name}(#{DIGITS})", "compat" => LEVEL5_LOCK }
+
     def option_rules(tables)
-      width = @layout.name.size
       tables.each_with_index.flat_map { |table, index|
         group = index.zero? ? "" : ":#{index}"
         ["#{table} option = symbols",
-         option_rule("*".ljust(width), "+#{@layout.name}(#{SHIFTLOCK})#{group}"),
-         option_rule("*".ljust(width), "#{COMPOSE}#{group}"),
-         option_rule(@layout.name, "+#{@layout.name}(#{DIGITLOCK})#{group}"), ""]
+         "  * #{option} = +#{@layout.name}(#{DIGITLOCK})#{group}", ""]
       }
     end
-
-    def option_rule(layout, symbols) = "  #{layout} #{option} = #{symbols}"
 
     def registry
       [
@@ -144,7 +132,7 @@ module Clavier
         "      <configItem>",
         "        <name>#{@layout.name}</name>",
         "        <shortDescription>#{@layout.short}</shortDescription>",
-        "        <description>#{@layout.title}, ISO</description>",
+        "        <description>#{description("ISO")}</description>",
         "        <languageList><iso639Id>fra</iso639Id><iso639Id>eng</iso639Id></languageList>",
         "      </configItem>",
         "      <variantList>",
@@ -153,13 +141,27 @@ module Clavier
            "          <configItem>",
            "            <name>#{name}</name>",
            "            <shortDescription>#{@layout.short}</shortDescription>",
-           "            <description>#{@layout.title}, #{label}</description>",
+           "            <description>#{description(label)}</description>",
            "          </configItem>",
            "        </variant>"]
         },
         "      </variantList>",
         "    </layout>",
         "  </layoutList>",
+        "  <optionList>",
+        %(    <group allowMultipleSelection="true">),
+        "      <configItem>",
+        "        <name>#{@layout.name}</name>",
+        "        <description>#{@layout.title}</description>",
+        "      </configItem>",
+        "      <option>",
+        "        <configItem>",
+        "          <name>#{option}</name>",
+        "          <description>#{OPTION_DESCRIPTION}</description>",
+        "        </configItem>",
+        "      </option>",
+        "    </group>",
+        "  </optionList>",
         "</xkbConfigRegistry>",
         ""
       ].join("\n")

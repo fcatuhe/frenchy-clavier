@@ -3,7 +3,7 @@ title: frenchy-clavier (AZERTY)
 short: fc
 subtitle: ThinkPad X1 Carbon Gen 6 - ANSI
 
-# Shift + Caps locks the digit row on its Shift level, Caps alone stays Compose.
+# Shift + Caps turns Num Lock off, which hands the digit row its Shift level. Caps alone stays Compose.
 digits_lock: true
 
 # Levels, in order: base, shift, altgr, altgr+shift.

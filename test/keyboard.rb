@@ -9,6 +9,7 @@ module Xkb
   NO_DEFAULT_INCLUDES = 1
   TEXT_V1 = 1
   MODS_LOCKED = 1 << 3
+  MOD2 = 1 << 4
   COMPOSING = 1
   CANCELLED = 3
   UP = 0
@@ -26,6 +27,7 @@ module Xkb
   extern "int xkb_state_key_get_utf8(void *, unsigned int, char *, size_t)"
   extern "int xkb_keysym_get_name(unsigned int, char *, size_t)"
   extern "int xkb_state_mod_name_is_active(void *, char *, int)"
+  extern "int xkb_state_led_name_is_active(void *, char *)"
   extern "void *xkb_compose_table_new_from_buffer(void *, char *, size_t, char *, int, int)"
   extern "void *xkb_compose_state_new(void *, int)"
   extern "int xkb_compose_state_feed(void *, unsigned int)"
@@ -34,12 +36,14 @@ end
 
 class Keyboard
   OMARCHY_OPTIONS = "compose:caps,shift:both_capslock_cancel".freeze
+  GROUP_TOGGLE = "grp:ctrls_toggle".freeze
+  DIGITS_UNLOCKED = Xkb::MOD2
   SEQUENCE = %(<Multi_key> <a> <a> : "\u0101"\n).freeze
 
   def self.install(dir, layout)
     xkb = Clavier::Xkb.new(layout)
     { "symbols/#{layout.name}" => xkb.symbols, "types/#{layout.name}" => xkb.types,
-      "compat/#{layout.name}" => xkb.compat, "rules/evdev" => xkb.rules }.each do |path, content|
+      "rules/evdev" => xkb.rules, "rules/evdev.xml" => xkb.registry }.each do |path, content|
       target = File.join(dir, "xkb", path)
       FileUtils.mkdir_p(File.dirname(target))
       File.write(target, content)
@@ -55,7 +59,7 @@ class Keyboard
     raise "the layout does not compile" if @keymap.null?
 
     @state = Xkb.xkb_state_new(@keymap)
-    Xkb.xkb_state_update_mask(@state, 0, 0, 0, 0, 0, group)
+    Xkb.xkb_state_update_mask(@state, 0, 0, DIGITS_UNLOCKED, 0, 0, group)
     @compose = compose_state
   end
 
@@ -95,6 +99,8 @@ class Keyboard
   def caps_locked?
     Xkb.xkb_state_mod_name_is_active(@state, "Lock", Xkb::MODS_LOCKED) == 1
   end
+
+  def digits_locked? = Xkb.xkb_state_led_name_is_active(@state, "Num Lock").zero?
 
   def composing? = compose_status == Xkb::COMPOSING
 

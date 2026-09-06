@@ -25,8 +25,8 @@ class LayoutTest < Minitest::Test
   def test_the_digit_lock_type_is_ours_so_an_older_xkeyboard_config_still_compiles
     refute_match(/FOUR_LEVEL_LOCKABLE_LEVEL2/, Clavier::Xkb.new(@layout).symbols,
       "the stock type only exists from xkeyboard-config 2.42, Ubuntu 24.04 ships 2.41")
-    assert_match(/map\[Shift\+LevelFive\] = Level1;/, Clavier::Xkb.new(@layout).types,
-      "Shift while locked has to hand back the base level, that is where the quotes live")
+    assert_match(/map\[Shift\] = Level1;/, Clavier::Xkb.new(@layout).types,
+      "Shift on a locked row has to hand back the base level, that is where the accents live")
   end
 
   def test_letters_get_an_alphabetic_type_so_caps_lock_works
@@ -50,7 +50,7 @@ class LayoutTest < Minitest::Test
 
   def install(dir) = Keyboard.install(dir, @layout)
 
-  def test_the_emitted_files_compile_and_the_digit_lock_drives_its_own_indicator
+  def test_the_emitted_files_compile_and_the_digit_lock_rides_the_num_lock_modifier
     Dir.mktmpdir do |dir|
       install(dir)
 
@@ -58,19 +58,21 @@ class LayoutTest < Minitest::Test
         ["xkbcli", "compile-keymap", "--layout", @layout.name, err: File::NULL], &:read)
 
       assert_includes(keymap, Clavier::Xkb::DIGITS_LOCK)
-      assert_match(/indicator "Scroll Lock" \{[^}]*modifiers= LevelFive/m, keymap)
-      refute_match(/indicator "Caps Lock" \{[^}]*LevelFive/m, keymap,
-        "Caps Lock has to mean Caps Lock, or one light says two things")
+      assert_match(/interpret ISO_Level5_Lock[^}]*LockMods\(modifiers=NumLock\)/m, keymap,
+        "upstream level5(level5_lock) is what puts the lock on a modifier with a light")
+      refute_match(/indicator[^}]*modifiers= LevelFive/m, keymap,
+        "no light of our own to drive, the Num Lock one already says it")
     end
   end
 
-  def test_the_option_hands_every_group_compose_and_frenchy_alone_the_digit_lock
+  def test_the_option_carries_the_digit_lock_alone_and_reaches_every_group
     rules = Clavier::Xkb.new(@layout).rules
 
+    refute_match(/compose\(caps\)|shiftlock/, rules, "Compose and Caps Lock are Omarchy's own options")
+
     (1..Clavier::Xkb::GROUPS).each do |group|
-      assert_match(/^  \*\s+#{@layout.name}:capslock = \+compose\(caps\):#{group}$/, rules)
-      assert_match(/^  #{@layout.name} #{@layout.name}:capslock = \+#{@layout.name}\(digitlock\):#{group}$/,
-        rules, "group #{group} takes the digit lock only when frenchy sits there")
+      assert_match(/^  \* #{@layout.name}:digitlock = \+#{@layout.name}\(digitlock\):#{group}$/, rules,
+        "group #{group} has to reach the lock, wherever frenchy sits")
     end
   end
 
@@ -83,6 +85,41 @@ class LayoutTest < Minitest::Test
 
       refute_match(/modifier_map Lock/, keymap, "a Lock modmap follows the key across every group")
       assert_match(/LockMods\(modifiers=Lock\)/, keymap)
+    end
+  end
+
+  def test_a_layout_description_carries_no_comma_for_a_bar_widget_to_cut_itself_on
+    xkb = Clavier::Xkb.new(@layout)
+
+    [xkb.symbols, xkb.registry].each do |emitted|
+      emitted.scan(/name\[Group1\] = "([^"]+)"|<description>([^<]+)<\/description>/).flatten.compact
+        .reject { it == Clavier::Xkb::OPTION_DESCRIPTION }
+        .each { refute_includes(it, ",", "Hyprland's activelayout event is comma-separated") }
+    end
+  end
+
+  def test_the_groups_switch_on_the_ctrls_because_both_alts_would_eat_the_altgr
+    Dir.mktmpdir do |dir|
+      install(dir)
+
+      { Keyboard::GROUP_TOGGLE => "{", "grp:alts_toggle" => "(" }.each do |toggle, brace|
+        board = Keyboard.new(dir, layout: "#{@layout.name},us", variant: "ansi,",
+          options: "#{Keyboard::OMARCHY_OPTIONS},#{toggle}")
+
+        assert_equal(brace, board.press("RALT").character("AE04"),
+          "#{toggle} decides whether the right thumb still reaches the third level")
+      end
+    end
+  end
+
+  def test_a_layout_picker_can_find_the_option_the_installer_asks_for
+    Dir.mktmpdir do |dir|
+      install(dir)
+
+      registry = IO.popen({ "XDG_CONFIG_HOME" => dir }, ["xkbcli", "list", err: File::NULL], &:read)
+
+      assert_includes(registry, Clavier::Xkb.new(@layout).option)
+      assert_includes(registry, Clavier::Xkb::OPTION_DESCRIPTION)
     end
   end
 

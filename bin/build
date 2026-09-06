@@ -8,7 +8,6 @@ xkb = Clavier::Xkb.new(layout)
 
 written = { "symbols/#{layout.name}" => xkb.symbols,
             "types/#{layout.name}" => xkb.types,
-            "compat/#{layout.name}" => xkb.compat,
             "rules/evdev.xml" => xkb.registry,
             "rules/evdev" => xkb.rules }
 

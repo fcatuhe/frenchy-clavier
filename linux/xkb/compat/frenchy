@@ -1,6 +1,0 @@
-partial xkb_compatibility "leddigits" {
-    indicator "Scroll Lock" {
-	whichModState= Locked;
-	modifiers= LevelFive;
-    };
-};
