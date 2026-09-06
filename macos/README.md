@@ -34,6 +34,12 @@ Un `.keylayout` fait parler les touches, il ne fait rien d'autre : une touche mo
 
 Sous Linux, Compose sur Verr. maj. et Verr. maj. par les deux Maj sont les options d'Omarchy, pas la disposition. Sur macOS, elles n'ont personne pour les porter.
 
+## Les touches que la disposition ne nomme pas
+
+Sur macOS, une touche absente du fichier ne produit rien : sans elles, Tab, Échap, Retour arrière, les flèches et tout le pavé numérique seraient muets. `MacCodes::SYSTEM` les pose dans chaque table, aux valeurs qu'Apple leur donne, et le pavé numérique tape ses chiffres quoi qu'il arrive, séparateur décimal compris, `.` comme sous Linux. Seule Entrée du pavé diffère : macOS attend `0x03`, Linux envoie un retour chariot.
+
+Ces valeurs sont des caractères de contrôle, écrits `&#x001B;` comme Apple les écrit, ce que XML 1.0 interdit. Le fichier n'est donc pas du XML strict, et le test le relit après avoir déplacé ces références dans la zone privée.
+
 ## Le piège des codes de touches
 
 macOS numérote les touches par position, et l'ISO d'Apple échange deux codes par rapport à l'ANSI : 10 est la touche en haut à gauche, 50 celle à gauche du Z, alors qu'en ANSI 50 est celle du haut. `lib/clavier/mac_codes.rb` en tient compte, la variante ISO pose donc `@` sur 10 et `#` sur 50. Ces deux touches sont les premières à vérifier sur du vrai matériel.

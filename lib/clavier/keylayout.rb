@@ -84,10 +84,17 @@ module Clavier
     end
 
     def key_lines(map)
-      @keys.filter_map { |code, key|
+      typing = @keys.filter_map { |code, key|
         mac = MacCodes[code, iso: iso?] or next
-        [mac, key_line(mac, key, map.level(key))]
-      }.sort_by(&:first).filter_map(&:last)
+        line = key_line(mac, key, map.level(key)) or next
+        [mac, line]
+      }.to_h
+
+      typing.merge(system_lines).sort.map(&:last)
+    end
+
+    def system_lines
+      @system_lines ||= MacCodes::SYSTEM.to_h { |mac, output| [mac, key_tag(mac, "output", output)] }
     end
 
     def key_line(mac, key, level)
@@ -156,8 +163,9 @@ module Clavier
 
     def composed = @composed ||= tables.values.flat_map(&:keys).to_set
 
-    ESCAPES = { "&" => "&amp;", "<" => "&lt;", ">" => "&gt;", '"' => "&quot;", "\r" => "&#x000D;" }.freeze
+    ESCAPES = { "&" => "&amp;", "<" => "&lt;", ">" => "&gt;", '"' => "&quot;" }.freeze
 
-    def escape(text) = text.gsub(/[&<>"\r]/) { ESCAPES.fetch(it) }
+    # INFO: fc 06sep26 Apple's parser wants &#x001B; for the control keys, which XML 1.0 forbids
+    def escape(text) = text.gsub(/[&<>"[:cntrl:]]/) { ESCAPES[it] || format("&#x%04X;", it.ord) }
   end
 end

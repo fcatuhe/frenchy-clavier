@@ -9,12 +9,21 @@ class KeylayoutTest < Minitest::Test
   COMBOS = [[], %w[LFSH], %w[RALT], %w[LFSH RALT]].freeze
   LEAKY = "LSGT".freeze
 
+  CONTROL = /&#x00([0-9A-F]{2});/
+  SPARE = (0xE000..0xE0FF).freeze
+
   def setup
     @layout = Clavier::Layout.load(File.expand_path("../layout.yml", __dir__))
-    @documents = %w[iso ansi].to_h { [it, REXML::Document.new(Clavier::Keylayout.new(@layout, variant: it).to_s)] }
+    @documents = %w[iso ansi].to_h { [it, REXML::Document.new(parseable(it))] }
     @iso = @documents.fetch("iso")
     @ansi = @documents.fetch("ansi")
   end
+
+  def parseable(variant)
+    Clavier::Keylayout.new(@layout, variant: variant).to_s.gsub(CONTROL) { format("&#xE0%s;", $1) }
+  end
+
+  def controls_back(text) = text.gsub(/[\uE000-\uE0FF]/) { (it.ord - SPARE.first).chr }
 
   def maps(document)
     @maps ||= {}
@@ -26,7 +35,7 @@ class KeylayoutTest < Minitest::Test
 
   def typed(document, index, code)
     key = maps(document)[index][code] or return ""
-    return key.attribute("output").value unless (id = key.attribute("action")&.value)
+    return controls_back(key.attribute("output").value) unless (id = key.attribute("action")&.value)
 
     document.elements["keyboard/actions/action[@id='#{id}']/when[@state='none']"]&.attribute("output")&.value.to_s
   end
@@ -59,6 +68,22 @@ class KeylayoutTest < Minitest::Test
 
     missing = @layout.characters.to_a - reached
     assert_empty(missing, "unreachable on macOS: #{missing.join}")
+  end
+
+  def test_the_keys_the_layout_never_mentions_still_answer_under_every_modifier
+    MAPS.each do |index|
+      assert_equal("\t", typed(@iso, index, 48), "map #{index} has no Tab")
+      assert_equal("\e", typed(@iso, index, 53), "map #{index} has no Escape")
+      assert_equal("\b", typed(@iso, index, 51), "map #{index} has no Delete")
+      assert_equal("7", typed(@iso, index, 89), "map #{index} has no keypad")
+      assert_equal(".", typed(@iso, index, 65), "the keypad separator Linux types")
+      refute_equal("", typed(@iso, index, 123), "map #{index} has no left arrow")
+    end
+  end
+
+  def test_a_system_key_never_lands_on_a_code_the_layout_types
+    assert_empty(Clavier::MacCodes::SYSTEM.keys & codes("iso").values)
+    assert_empty(Clavier::MacCodes::SYSTEM.keys & codes("ansi").values)
   end
 
   def test_the_menu_reads_the_name_the_xkb_files_carry
@@ -132,12 +157,12 @@ class KeylayoutTest < Minitest::Test
 
   DTD = "/System/Library/DTDs/KeyboardLayout.dtd".freeze
 
-  def test_the_file_validates_against_the_system_dtd
+  def test_the_structure_validates_against_the_system_dtd
     skip "no #{DTD} outside macOS" unless File.exist?(DTD)
 
     Dir.mktmpdir do |dir|
       file = File.join(dir, "frenchy.keylayout")
-      File.write(file, Clavier::Keylayout.new(@layout, variant: "iso").to_s)
+      File.write(file, parseable("iso"))
 
       assert(system("xmllint", "--noout", "--valid", file), "the DTD refuses the file")
     end
