@@ -26,6 +26,8 @@ Le caractère littéral et sa touche morte ne sont jamais à deux endroits diff�
 
 Le pouce droit tient AltGr, donc tout ce qui se tape en tenant AltGr est à gauche. Les accolades sont sur les parenthèses, les crochets sur R et T, les chevrons sur F et G.
 
+AltGr + Maj porte les majuscules accentuées `À È É Ù Ç`, puis `Æ Œ ½ £ ≤ ≥` et les deux touches mortes. Le clavier ci-dessus ne le dessine pas : quatre caractères par touche se lisent mal, et celui-là sert le moins. Le bouton **+ AltGr Maj** l'affiche, et la feuille A4 le montre toujours.
+
 ## Touches mortes
 
 Une touche morte ne produit rien toute seule : elle attend la lettre suivante. Sur <%= link_to_page "index" %>, appuyer sur l'une d'elles repeint le clavier avec ce qu'elle donnerait. Voici ce que chacune produit sur les voyelles.

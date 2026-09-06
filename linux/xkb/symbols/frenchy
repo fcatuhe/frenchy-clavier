@@ -3,10 +3,10 @@ xkb_symbols "ansi" {
 
     name[Group1] = "frenchy-clavier (AZERTY), ANSI";
 
-    key <TLDE> { [ at              , twosuperior     , U00B3 ] };
-    key <AE01> { type[Group1] = "FRENCHY_DIGITS_LOCK", [ agrave          , 1               , section ] };
-    key <AE02> { type[Group1] = "FRENCHY_DIGITS_LOCK", [ egrave          , 2 ] };
-    key <AE03> { type[Group1] = "FRENCHY_DIGITS_LOCK", [ eacute          , 3               , ampersand ] };
+    key <TLDE> { [ at              , twosuperior     , U00B3           , U00BD ] };
+    key <AE01> { type[Group1] = "FRENCHY_DIGITS_LOCK", [ agrave          , 1               , section         , Agrave ] };
+    key <AE02> { type[Group1] = "FRENCHY_DIGITS_LOCK", [ egrave          , 2               , NoSymbol        , Egrave ] };
+    key <AE03> { type[Group1] = "FRENCHY_DIGITS_LOCK", [ eacute          , 3               , ampersand       , Eacute ] };
     key <AE04> { type[Group1] = "FRENCHY_DIGITS_LOCK", [ parenleft       , 4               , braceleft ] };
     key <AE05> { type[Group1] = "FRENCHY_DIGITS_LOCK", [ parenright      , 5               , braceright ] };
     key <AE06> { type[Group1] = "FRENCHY_DIGITS_LOCK", [ asciitilde      , 6               , dead_tilde ] };
@@ -16,24 +16,24 @@ xkb_symbols "ansi" {
     key <AE10> { type[Group1] = "FRENCHY_DIGITS_LOCK", [ plus            , 0               , division ] };
     key <AE11> { [ underscore      , percent ] };
     key <AE12> { [ equal           , degree ] };
-    key <AD01> { type[Group1] = "FOUR_LEVEL_SEMIALPHABETIC", [ a               , A               , ae ] };
+    key <AD01> { type[Group1] = "FOUR_LEVEL_ALPHABETIC", [ a               , A               , ae              , AE ] };
     key <AD02> { type[Group1] = "FOUR_LEVEL_SEMIALPHABETIC", [ z               , Z ] };
     key <AD03> { type[Group1] = "FOUR_LEVEL_SEMIALPHABETIC", [ e               , E               , EuroSign ] };
     key <AD04> { type[Group1] = "FOUR_LEVEL_SEMIALPHABETIC", [ r               , R               , bracketleft ] };
     key <AD05> { type[Group1] = "FOUR_LEVEL_SEMIALPHABETIC", [ t               , T               , bracketright ] };
     key <AD06> { type[Group1] = "FOUR_LEVEL_SEMIALPHABETIC", [ y               , Y ] };
-    key <AD07> { type[Group1] = "FOUR_LEVEL_SEMIALPHABETIC", [ u               , U               , ugrave ] };
+    key <AD07> { type[Group1] = "FOUR_LEVEL_ALPHABETIC", [ u               , U               , ugrave          , Ugrave ] };
     key <AD08> { type[Group1] = "FOUR_LEVEL_SEMIALPHABETIC", [ i               , I ] };
-    key <AD09> { type[Group1] = "FOUR_LEVEL_SEMIALPHABETIC", [ o               , O               , oe ] };
+    key <AD09> { type[Group1] = "FOUR_LEVEL_ALPHABETIC", [ o               , O               , oe              , OE ] };
     key <AD10> { type[Group1] = "FOUR_LEVEL_SEMIALPHABETIC", [ p               , P ] };
     key <AD11> { [ minus           , grave           , plusminus       , dead_grave ] };
     key <AD12> { [ slash           , bar             , U2019           , dead_acute ] };
     key <BKSL> { [ numbersign      , backslash ] };
     key <AC01> { type[Group1] = "FOUR_LEVEL_SEMIALPHABETIC", [ q               , Q ] };
-    key <AC02> { type[Group1] = "FOUR_LEVEL_SEMIALPHABETIC", [ s               , S               , dollar ] };
+    key <AC02> { type[Group1] = "FOUR_LEVEL_SEMIALPHABETIC", [ s               , S               , dollar          , sterling ] };
     key <AC03> { type[Group1] = "FOUR_LEVEL_SEMIALPHABETIC", [ d               , D ] };
-    key <AC04> { type[Group1] = "FOUR_LEVEL_SEMIALPHABETIC", [ f               , F               , less ] };
-    key <AC05> { type[Group1] = "FOUR_LEVEL_SEMIALPHABETIC", [ g               , G               , greater ] };
+    key <AC04> { type[Group1] = "FOUR_LEVEL_SEMIALPHABETIC", [ f               , F               , less            , U2264 ] };
+    key <AC05> { type[Group1] = "FOUR_LEVEL_SEMIALPHABETIC", [ g               , G               , greater         , U2265 ] };
     key <AC06> { type[Group1] = "FOUR_LEVEL_SEMIALPHABETIC", [ h               , H ] };
     key <AC07> { type[Group1] = "FOUR_LEVEL_SEMIALPHABETIC", [ j               , J ] };
     key <AC08> { type[Group1] = "FOUR_LEVEL_SEMIALPHABETIC", [ k               , K ] };

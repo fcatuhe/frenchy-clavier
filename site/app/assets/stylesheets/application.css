@@ -270,6 +270,12 @@ body:has(#layer-direct:checked) .q.altgr-shift,
 body:has(#layer-altgr:checked) .q.base,
 body:has(#layer-altgr:checked) .q.shift { opacity: 0.16; }
 
+.q.altgr-shift, .legend .fourth { display: none; }
+
+body:has(#layer-fourth:checked) .q.altgr-shift { display: revert; }
+
+body:has(#layer-fourth:checked) .legend .fourth { display: revert; }
+
 /* Pressed and dead-key preview, both driven by the tester */
 
 .slot[data-live] { border-color: var(--live); }

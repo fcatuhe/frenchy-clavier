@@ -7,7 +7,7 @@ Une disposition AZERTY taillée pour le français, l'anglais et le code.
 ## Pourquoi
 
 - **Français et anglais.** Bépo n'est pas adapté : il optimise le français seul, et il faut tout réapprendre.
-- **Vraiment français pour les accents.** `à è é ù ç` en accès direct, les majuscules accentuées par les touches mortes.
+- **Vraiment français pour les accents.** `à è é ù ç` en accès direct, `À È É Ù Ç` sur AltGr+Maj de leur propre touche, les autres majuscules accentuées par les touches mortes.
 - **Basculer en anglais avec les chiffres**, sans avoir besoin des accents. Maj+Verr. maj. verrouille la rangée des chiffres.
 - **Raccourcis de code**, pour VS Code comme pour Vim : `{ } [ ] < > | / \ # @ $ & ~ ^` tous atteignables d'une main.
 - **AltGr facile.** Les symboles de code sont sur la main gauche, le pouce droit tient AltGr.
@@ -23,7 +23,8 @@ Quatre niveaux par touche : base, Maj, AltGr, AltGr+Maj.
 | | |
 |---|---|
 | rangée du haut | `@ à è é ( ) ~ ◌̈ ◌̂ * + _ =`, les chiffres sur Maj |
-| accents | `à è é` en direct, `ù` sur AltGr+U, `ç` sur AltGr+C et `Ç` sur AltGr+Maj+C, les autres majuscules accentuées par les touches mortes, `◌̈ ◌̂` sur les touches 7 et 8, `◌̀` avec le tiret et `◌́` avec la barre oblique |
+| accents | `à è é` en direct, `ù` sur AltGr+U, `ç` sur AltGr+C, `À È É Ù Ç` sur AltGr+Maj de la même touche, les autres majuscules accentuées par les touches mortes, `◌̈ ◌̂` sur les touches 7 et 8, `◌̀` avec le tiret et `◌́` avec la barre oblique |
+| quatrième niveau | AltGr+Maj porte les majuscules accentuées, `Æ Œ ½ £ ≤ ≥` et les deux touches mortes. Le site ne le dessine pas par défaut, la feuille A4 le montre toujours |
 | code | `( )` en direct, `' "` sur la touche à droite de M, `` ` `` sur Maj+`-`, `/ |` à droite de P, `{ }` sur AltGr+`(` `)`, `[ ]` sur AltGr+R T, `< >` sur AltGr+F G |
 | ponctuation | `. , : ? ' / # - _ =` en direct, `\ ; ! | " · ^` sur Maj, `&` sur AltGr+É |
 | typographie | `’ « » ° ± ÷ ×` et l'espace fine insécable sur AltGr+espace |

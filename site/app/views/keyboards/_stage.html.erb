@@ -18,6 +18,8 @@
       <%= label_tag "layer-direct", "Direct et Maj" %>
       <%= tag.input type: "radio", name: "layer", id: "layer-altgr" %>
       <%= label_tag "layer-altgr", "AltGr" %>
+      <%= tag.input type: "checkbox", id: "layer-fourth" %>
+      <%= label_tag "layer-fourth", "+ AltGr Maj" %>
     </div>
   </fieldset>
 </div>
@@ -30,7 +32,7 @@
   <span><b>en bas à gauche</b> direct</span>
   <span><b>en haut à gauche</b> Maj</span>
   <span class="altgr"><b>en bas à droite</b> AltGr</span>
-  <span class="altgr"><b>en haut à droite</b> AltGr + Maj</span>
+  <span class="altgr fourth"><b>en haut à droite</b> AltGr + Maj</span>
   <span class="dead"><b>&#9676;&#769;</b> touche morte</span>
 </p>
 
