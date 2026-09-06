@@ -3,13 +3,17 @@ module Clavier
     LED = "leddigits".freeze
     DIGITS_LOCK = "FRENCHY_DIGITS_LOCK".freeze
     SHIFTLOCK = "shiftlock".freeze
-    SHIFTLOCK_OPTION = "shift:frenchy_capslock".freeze
+    DIGITLOCK = "digitlock".freeze
+    CAPS = "CAPS".freeze
+    COMPOSE = "+compose(caps)".freeze
 
     def initialize(layout) = @layout = layout
 
+    def option = "#{@layout.name}:capslock"
+
     VARIANTS = { "iso" => "ISO", "ansi" => "ANSI" }.freeze
 
-    def symbols = [ansi, iso, shiftlock].join("\n")
+    def symbols = [ansi, iso, shiftlock, digitlock].join("\n")
 
     def ansi
       [
@@ -34,6 +38,17 @@ module Clavier
         %(xkb_symbols "#{SHIFTLOCK}" {),
         "",
         acting_lines,
+        "};",
+        ""
+      ].join("\n")
+    end
+
+    def digitlock
+      [
+        "partial modifier_keys",
+        %(xkb_symbols "#{DIGITLOCK}" {),
+        "",
+        line(CAPS, @layout[CAPS]),
         "};",
         ""
       ].join("\n")
@@ -107,12 +122,17 @@ module Clavier
     end
 
     def option_rules(tables)
+      width = @layout.name.size
       tables.each_with_index.flat_map { |table, index|
         group = index.zero? ? "" : ":#{index}"
         ["#{table} option = symbols",
-         "  * #{SHIFTLOCK_OPTION} = +#{@layout.name}(#{SHIFTLOCK})#{group}", ""]
+         option_rule("*".ljust(width), "+#{@layout.name}(#{SHIFTLOCK})#{group}"),
+         option_rule("*".ljust(width), "#{COMPOSE}#{group}"),
+         option_rule(@layout.name, "+#{@layout.name}(#{DIGITLOCK})#{group}"), ""]
       }
     end
+
+    def option_rule(layout, symbols) = "  #{layout} #{option} = #{symbols}"
 
     def registry
       [

@@ -40,7 +40,9 @@ Les deux sont dans la disposition, aucune option à ajouter. Les touches Maj ver
 
 Le niveau qui verrouille répond `VoidSymbol`. Compose ignore tous les keysyms de modificateur, `Shift_L` comme `Caps_Lock` : une séquence commencée resterait ouverte derrière le verrouillage, à avaler ce qui vient ensuite. Avec `VoidSymbol`, les deux Maj verrouillent Verr. maj. et referment la séquence.
 
-Le même verrou est offert aux autres groupes du clavier par l'option `shift:frenchy_capslock`, que les règles de la disposition posent sur chacun des groupes. C'est ce que `shift:both_capslock_cancel` fait chez Omarchy, au keysym près : la sienne est `Caps_Lock`, que Compose ignore, donc le QWERTY garderait la séquence ouverte.
+Une disposition installée seule porte les trois. Dès qu'un QWERTY partage le clavier, c'est l'option `frenchy:capslock` qui les pose, groupe par groupe : les deux Maj et Compose sur tous les groupes, le verrou des chiffres sur le seul groupe frenchy, où les autres gardent le Compose d'Omarchy sur Maj + Verr. maj. C'est ce que `shift:both_capslock_cancel` fait chez Omarchy, au keysym près : la sienne est `Caps_Lock`, que Compose ignore, donc le QWERTY garderait la séquence ouverte.
+
+L'option est nécessaire parce que XKB fusionne les options après les dispositions, et toujours sur le groupe 1. `compose:caps` écrasait donc la touche Verr. maj. de frenchy, verrou des chiffres compris, dès que frenchy était la première disposition. Les règles de l'option sont lues après celles du système : elles posent la touche sur chaque groupe, et l'ordre des dispositions ne compte plus.
 
 ## Installer
 
@@ -55,17 +57,15 @@ Puis, sous Hyprland, dans `~/.config/hypr/input.lua` :
 ```lua
 hl.config({ input = {
   kb_layout = "us,frenchy",
-  kb_options = "compose:caps,shift:frenchy_capslock,grp:ctrls_toggle",
+  kb_options = "frenchy:capslock,grp:ctrls_toggle",
 } })
 ```
 
-Les deux Ctrl basculent entre frenchy-clavier et QWERTY US. Sans variante, c'est l'ISO. Sur un clavier ANSI, ajouter `kb_variant = ",ansi"` : une variante par disposition, celle du QWERTY reste vide.
+Les deux Ctrl basculent entre frenchy-clavier et QWERTY US. L'ordre des deux dispositions est libre, la première est celle du démarrage. Sans variante, c'est l'ISO. Sur un clavier ANSI, ajouter `kb_variant = ",ansi"` : une variante par disposition, celle du QWERTY reste vide.
 
-`compose:caps` est celle d'Omarchy, gardée telle quelle : elle donne Compose sur Verr. maj. au groupe QWERTY aussi. Elle n'écrase rien, elle ne touche que le niveau direct de la touche, donc Maj + Verr. maj. reste le verrou des chiffres.
+`frenchy:capslock` remplace la paire d'Omarchy, `compose:caps,shift:both_capslock_cancel`, et fait les deux : Compose sur Verr. maj. pour tous les groupes, c'est le `compose:caps` d'Omarchy repris tel quel, et Verr. maj. par les deux Maj sur tous les groupes, qui referme en plus la séquence Compose en cours et garde les touches Maj hors de la table du modificateur Lock. Le verrou des chiffres sur Maj + Verr. maj. ne va qu'au groupe frenchy.
 
-`shift:frenchy_capslock` remplace le `shift:both_capslock_cancel` d'Omarchy et vient de la disposition : même Verr. maj. par les deux Maj sur tous les groupes, mais qui referme la séquence Compose en cours et laisse les touches Maj hors de la table du modificateur Lock. Sans elle, le côté QWERTY perd les deux.
-
-`grp:ctrls_toggle` fait basculer les groupes. `kb_options` remplace la valeur d'Omarchy au lieu de s'y ajouter, d'où les trois options écrites en entier. Une disposition installée seule n'a besoin d'aucune : elle les porte.
+`grp:ctrls_toggle` fait basculer les groupes. `kb_options` remplace la valeur d'Omarchy au lieu de s'y ajouter, d'où les deux options écrites en entier. Une disposition installée seule n'a besoin d'aucune : elle les porte.
 
 ### macOS, Windows
 
@@ -117,7 +117,8 @@ Les tests ne vérifient pas des goûts, ils vérifient des faits :
 - seules les dix touches de chiffres se verrouillent ;
 - les touches Maj n'entrent dans aucune table de modificateur Lock ;
 - les deux Maj verrouillent Verr. maj. et abandonnent la séquence Compose en cours, un seul Maj déverrouille, sur les deux groupes ;
-- l'option d'Omarchy verrouille bien le QWERTY, mais y laisse la séquence ouverte, ce qui est la raison d'être de la nôtre.
+- l'option d'Omarchy verrouille bien le QWERTY, mais y laisse la séquence ouverte, ce qui est la raison d'être de la nôtre ;
+- l'option donne Compose et le verrou par les deux Maj à chaque groupe, et le verrou des chiffres au seul groupe frenchy.
 
 ## Structure
 

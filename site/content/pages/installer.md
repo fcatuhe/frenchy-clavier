@@ -33,7 +33,7 @@ Dans `~/.config/hypr/input.lua` :
 ```lua
 hl.config({ input = {
   kb_layout = "us,frenchy",
-  kb_options = "compose:caps,shift:frenchy_capslock,grp:ctrls_toggle",
+  kb_options = "frenchy:capslock,grp:ctrls_toggle",
 } })
 ```
 
@@ -44,13 +44,13 @@ Les deux Ctrl basculent entre frenchy-clavier et QWERTY US. Sans variante c'est 
 La disposition s'annonce dans le registre XKB, donc elle apparaît dans la liste des dispositions du système sous le nom **frenchy-clavier**, avec ses deux variantes ISO et ANSI. Rien de plus à faire.
 
 <details markdown="1">
-<summary>Pourquoi ces trois options</summary>
+<summary>Pourquoi ces deux options</summary>
 
-`compose:caps` est celle d'Omarchy, gardée telle quelle : elle donne Compose sur Verr. maj. au groupe QWERTY aussi. Elle n'écrase rien, elle ne touche que le niveau direct de la touche, donc Maj + Verr. maj. reste le verrou des chiffres.
+`frenchy:capslock` vient de la disposition et remplace la paire d'Omarchy, `compose:caps,shift:both_capslock_cancel`. Elle donne Compose sur Verr. maj. à tous les groupes, QWERTY compris, et le Verr. maj. par les deux Maj à tous les groupes aussi, mais qui referme la séquence Compose en cours au lieu de la laisser ouverte, et qui garde les touches Maj hors de la table du modificateur Lock. Le verrou des chiffres sur Maj + Verr. maj. ne va qu'au groupe frenchy : sur le QWERTY, Maj + Verr. maj. reste le Compose d'Omarchy.
 
-`shift:frenchy_capslock` vient de la disposition et remplace le `shift:both_capslock_cancel` d'Omarchy : même Verr. maj. par les deux Maj, posé sur tous les groupes, mais il referme la séquence Compose en cours au lieu de la laisser ouverte, et il garde les touches Maj hors de la table du modificateur Lock. Sans lui, le côté QWERTY perd les deux.
+Sans elle, l'ordre des dispositions déciderait du résultat : XKB fusionne les options après les dispositions et toujours sur le groupe 1, donc `compose:caps` écrasait la touche Verr. maj. de frenchy, verrou des chiffres compris, quand frenchy venait en premier.
 
-`grp:ctrls_toggle` fait basculer les groupes. `kb_options` remplace la valeur d'Omarchy au lieu de s'y ajouter, d'où les trois écrites en entier. Installée seule, la disposition n'a besoin d'aucune.
+`grp:ctrls_toggle` fait basculer les groupes. `kb_options` remplace la valeur d'Omarchy au lieu de s'y ajouter, d'où les deux écrites en entier. Installée seule, la disposition n'a besoin d'aucune.
 
 </details>
 

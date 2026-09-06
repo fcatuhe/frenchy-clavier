@@ -23,6 +23,8 @@ module Xkb
   extern "unsigned int xkb_state_update_key(void *, unsigned int, int)"
   extern "unsigned int xkb_state_update_mask(void *, unsigned int, unsigned int, unsigned int, unsigned int, unsigned int, unsigned int)"
   extern "unsigned int xkb_state_key_get_one_sym(void *, unsigned int)"
+  extern "int xkb_state_key_get_utf8(void *, unsigned int, char *, size_t)"
+  extern "int xkb_keysym_get_name(unsigned int, char *, size_t)"
   extern "int xkb_state_mod_name_is_active(void *, char *, int)"
   extern "void *xkb_compose_table_new_from_buffer(void *, char *, size_t, char *, int, int)"
   extern "void *xkb_compose_state_new(void *, int)"
@@ -32,7 +34,6 @@ end
 
 class Keyboard
   OMARCHY_OPTIONS = "compose:caps,shift:both_capslock_cancel".freeze
-  OPTIONS = "compose:caps,#{Clavier::Xkb::SHIFTLOCK_OPTION}".freeze
   SEQUENCE = %(<Multi_key> <a> <a> : "\u0101"\n).freeze
 
   def self.install(dir, layout)
@@ -77,6 +78,18 @@ class Keyboard
 
   def keysym(code)
     Xkb.xkb_state_key_get_one_sym(@state, keycode(code))
+  end
+
+  def character(code)
+    buffer = "\0" * 8
+    Xkb.xkb_state_key_get_utf8(@state, keycode(code), buffer, buffer.bytesize)
+    buffer.unpack1("Z*").force_encoding("UTF-8")
+  end
+
+  def keysym_name(code)
+    buffer = "\0" * 64
+    Xkb.xkb_keysym_get_name(keysym(code), buffer, buffer.bytesize)
+    buffer.unpack1("Z*")
   end
 
   def caps_locked?

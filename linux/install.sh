@@ -20,10 +20,13 @@ Hyprland, in ~/.config/hypr/input.lua:
 
   hl.config({ input = {
     kb_layout = "us,frenchy",
-    kb_options = "compose:caps,shift:frenchy_capslock,grp:ctrls_toggle",
+    kb_options = "frenchy:capslock,grp:ctrls_toggle",
   } })
 
-Both Ctrls switch layouts. No variant means ISO. On an ANSI keyboard add kb_variant = ",ansi", one per layout.
+Both Ctrls switch layouts, in either order. frenchy:capslock replaces Omarchy's compose:caps and
+shift:both_capslock_cancel, and adds the digit lock on Shift+Caps to the frenchy group.
+
+No variant means ISO. On an ANSI keyboard add kb_variant = ",ansi", one per layout.
 
 Anything else running X:
 

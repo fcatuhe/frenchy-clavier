@@ -64,20 +64,13 @@ class LayoutTest < Minitest::Test
     end
   end
 
-  def how_to_type(dir, *arguments)
-    IO.popen({ "XDG_CONFIG_HOME" => dir },
-      ["xkbcli", "how-to-type", "--layout", "us,#{@layout.name}", "--variant", ",ansi",
-       "--options", Keyboard::OMARCHY_OPTIONS, *arguments, err: File::NULL], &:read)
-  end
+  def test_the_option_hands_every_group_compose_and_frenchy_alone_the_digit_lock
+    rules = Clavier::Xkb.new(@layout).rules
 
-  def test_omarchys_own_options_leave_the_digit_lock_alone
-    Dir.mktmpdir do |dir|
-      install(dir)
-
-      assert_match(/LevelFive/, how_to_type(dir, "1"),
-        "compose:caps must leave the digit lock on Shift+Caps")
-      assert_match(/CAPS.*English \(US\)/, how_to_type(dir, "--keysym", "Multi_key"),
-        "the QWERTY group keeps the Compose that Omarchy gives it")
+    (1..Clavier::Xkb::GROUPS).each do |group|
+      assert_match(/^  \*\s+#{@layout.name}:capslock = \+compose\(caps\):#{group}$/, rules)
+      assert_match(/^  #{@layout.name} #{@layout.name}:capslock = \+#{@layout.name}\(digitlock\):#{group}$/,
+        rules, "group #{group} takes the digit lock only when frenchy sits there")
     end
   end
 
