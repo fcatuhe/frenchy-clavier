@@ -1,4 +1,4 @@
-<div class="slot <%= slot_classes(slot) %>" data-code="<%= Clavier::WebCodes[slot.code] %>">
+<div class="slot <%= key_classes(slot, key) %>" data-code="<%= Clavier::WebCodes[slot.code] %>">
   <% quadrants.each do |name, level| -%>
     <% glyph = key.glyph(level) -%>
     <% next if glyph.empty? -%>

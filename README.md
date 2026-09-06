@@ -2,7 +2,7 @@
 
 Une disposition AZERTY taillée pour le français, l'anglais et le code.
 
-**[frenchy-clavier.azade.dev](https://frenchy-clavier.azade.dev)** — la disposition sur cinq claviers réels, et un testeur qui l'applique dans le navigateur sans rien installer.
+**[frenchy-clavier.azade.dev](https://frenchy-clavier.azade.dev)** — la disposition en ISO et en ANSI, ce qui change par rapport à l'AZERTY, et un testeur qui l'applique dans le navigateur sans rien installer.
 
 ## Pourquoi
 
@@ -31,7 +31,7 @@ Quatre niveaux par touche : base, Maj, AltGr, AltGr+Maj.
 
 Le clavier complet, imprimable en A4, est dans `out/sheet.html` après un `bin/build`. Il montre les quatre niveaux de chaque touche, la couche Compose et la liste des niveaux encore libres.
 
-Le site montre la même disposition sur cinq claviers réels, avec un testeur qui l'applique dans le navigateur sans rien installer.
+Le site montre la disposition sur un clavier ISO ou ANSI, grise ce qui ne change pas par rapport à l'AZERTY, et un testeur l'applique dans le navigateur sans rien installer.
 
 ### Verr. maj.
 
@@ -109,7 +109,8 @@ fcitx5 garde lui aussi la disposition compilée à son démarrage, et comme son 
 
 Les tests ne vérifient pas des goûts, ils vérifient des faits :
 
-- chaque touche de `layout.yml` existe sur chacun des cinq claviers dessinés ;
+- chaque touche de `layout.yml` existe sur chacun des cinq claviers connus ;
+- aucune lettre ne bouge par rapport à l'AZERTY, et la liste des touches qui changent est celle qu'on annonce ;
 - chaque rangée de chaque clavier fait exactement la largeur de ce clavier ;
 - les largeurs du Framework tombent sur des millimètres entiers de son propre pas ;
 - la touche ISO supplémentaire n'existe que sur les claviers ISO ;
@@ -134,9 +135,9 @@ site/          le site, une application Rails construite en statique, voir le RE
 out/           produit par bin/build, hors dépôt
 ```
 
-## Les claviers dessinés
+## Les claviers connus
 
-La même disposition, rendue sur cinq claviers réels, chacun à ses vraies largeurs :
+`lib/clavier/boards.rb` décrit cinq claviers réels, chacun à ses vraies largeurs. Le site n'en dessine que deux, le Framework en ISO et en ANSI : un visiteur a l'une ou l'autre forme, pas un modèle. La feuille A4 prend le Framework ISO.
 
 | | forme | d'où viennent les millimètres |
 |---|---|---|
@@ -146,7 +147,7 @@ La même disposition, rendue sur cinq claviers réels, chacun à ses vraies larg
 | MacBook, clavier US | ANSI | trois touches mesurées, le reste déduit pour que les rangées ferment |
 | MacBook, clavier français | ISO | idem, plus les proportions ISO standard |
 
-Les rangées du Framework ferment à 14,74 u, celles du MacBook à 14,5 u, celles du ThinkPad à 15 u. Ce ne sont pas les mêmes claviers, et la page ne fait pas semblant du contraire. Chaque clavier affiche sa provenance sous lui.
+Les rangées du Framework ferment à 14,74 u, celles du MacBook à 14,5 u, celles du ThinkPad à 15 u. Chaque clavier porte la source de ses millimètres, et un test refuse un clavier qui n'en a pas.
 
 ## Licence
 

@@ -63,13 +63,12 @@ main > ul,
 main > ol,
 main > pre,
 main > table,
-main > details,
 main > blockquote,
 main > .highlighter-rouge,
 .hero > p,
 .prose { max-width: var(--measure); }
 
-main > table { width: auto; }
+main > table { max-width: 84ch; width: auto; }
 
 a { color: inherit; text-decoration-color: var(--edge-strong); text-underline-offset: 3px; }
 a:hover { text-decoration-color: var(--altgr); }
@@ -163,26 +162,13 @@ fieldset.switch legend {
 
 .stage { margin: 0; overflow-x: auto; padding-bottom: var(--step); }
 
-.board, .provenance { display: none; }
+.board { display: none; }
 
-body:has(#board-x1-carbon-ansi:checked) [data-board="x1-carbon-ansi"],
-body:has(#board-framework-13-ansi:checked) [data-board="framework-13-ansi"],
 body:has(#board-framework-13-iso:checked) [data-board="framework-13-iso"],
-body:has(#board-macbook-us:checked) [data-board="macbook-us"],
-body:has(#board-macbook-fr:checked) [data-board="macbook-fr"] { display: flex; }
-
-.provenances:has(.provenance) { min-height: 3.4em; }
-
-p.provenance { display: none; }
-
-body:has(#board-x1-carbon-ansi:checked) p[data-board="x1-carbon-ansi"],
-body:has(#board-framework-13-ansi:checked) p[data-board="framework-13-ansi"],
-body:has(#board-framework-13-iso:checked) p[data-board="framework-13-iso"],
-body:has(#board-macbook-us:checked) p[data-board="macbook-us"],
-body:has(#board-macbook-fr:checked) p[data-board="macbook-fr"] { display: block; }
+body:has(#board-framework-13-ansi:checked) [data-board="framework-13-ansi"] { display: flex; }
 
 @supports not selector(:has(*)) {
-  .board, p.provenance { display: flex; }
+  .board { display: flex; }
 }
 
 .board {
@@ -193,8 +179,6 @@ body:has(#board-macbook-fr:checked) p[data-board="macbook-fr"] { display: block;
 }
 
 .row { display: flex; gap: var(--gap); }
-
-.row-fn { --gap: 3px; margin-bottom: 5px; }
 
 .slot {
   align-content: stretch;
@@ -209,8 +193,6 @@ body:has(#board-macbook-fr:checked) p[data-board="macbook-fr"] { display: block;
   padding: 6px 5px 3px;
   width: calc((100% - (var(--slots) - 1) * var(--gap)) * var(--span) / var(--units));
 }
-
-.row-fn .slot { height: calc((var(--pitch) - var(--gap)) * 0.62); }
 
 .slot.fixed {
   align-items: center;
@@ -256,25 +238,24 @@ body:has(#board-macbook-fr:checked) p[data-board="macbook-fr"] { display: block;
 
 .q.shift { grid-area: 1 / 1; }
 .q.base { grid-area: 2 / 1; align-self: end; }
-.q.altgr-shift { grid-area: 1 / 2; justify-self: end; }
 .q.altgr { grid-area: 2 / 2; align-self: end; justify-self: end; }
 
-.q.altgr, .q.altgr-shift { color: var(--altgr); font-size: 0.88rem; }
+.q.altgr { color: var(--altgr); font-size: 0.88rem; }
 
 .q.dead { color: var(--dead); }
 
 .q.word { font-size: 0.5rem; letter-spacing: 0.02em; line-height: 1.2; }
 
-body:has(#layer-direct:checked) .q.altgr,
-body:has(#layer-direct:checked) .q.altgr-shift,
-body:has(#layer-altgr:checked) .q.base,
-body:has(#layer-altgr:checked) .q.shift { opacity: 0.16; }
+/* What an AZERTY typist already knows */
 
-.q.altgr-shift, .legend .fourth { display: none; }
+body:has(#diff:checked) .slot.same:not(.pressed) .q.base,
+body:has(#diff:checked) .slot.same:not(.pressed) .q.shift { opacity: 0.3; }
 
-body:has(#layer-fourth:checked) .q.altgr-shift { display: revert; }
+body:has(#diff:checked) .slot.same:not(.pressed) { border-color: var(--edge); }
 
-body:has(#layer-fourth:checked) .legend .fourth { display: revert; }
+.legend .diff { display: none; }
+
+body:has(#diff:checked) .legend .diff { display: revert; }
 
 /* Pressed and dead-key preview, both driven by the tester */
 
@@ -308,20 +289,10 @@ body:has(#layer-fourth:checked) .legend .fourth { display: revert; }
   margin-top: calc(var(--step) * 3);
 }
 
-.legend b { color: var(--ink); font-weight: 600; }
+.legend b { color: var(--ink); font-family: var(--mono); font-weight: 600; }
 .legend .altgr { color: var(--altgr); }
 .legend .dead { color: var(--dead); }
-
-.provenance {
-  border-left: 2px solid var(--edge);
-  color: var(--ink-soft);
-  font-size: 0.78rem;
-  margin-top: calc(var(--step) * 3);
-  max-width: 78ch;
-  padding-left: calc(var(--step) * 2);
-}
-
-.provenance b { color: var(--ink); font-weight: 600; }
+.legend .same { opacity: 0.3; }
 
 /* Tester */
 
@@ -342,23 +313,11 @@ body:has(#layer-fourth:checked) .legend .fourth { display: revert; }
 
 .tester textarea:focus { border-color: var(--live); outline: none; }
 
-.tester .hint { color: var(--ink-soft); font-size: 0.8rem; margin-top: var(--step); }
-
-.tester .hint b { color: var(--ink); font-weight: 600; }
-
 .tester { display: none; }
 
 .tester.live { display: block; }
 
 /* Prose blocks */
-
-.cards { display: grid; gap: calc(var(--step) * 4); grid-template-columns: repeat(auto-fit, minmax(255px, 1fr)); margin-top: calc(var(--step) * 4); }
-
-.card { border-top: 2px solid var(--ink); padding-top: calc(var(--step) * 2); }
-
-.card h3 { margin-top: 0; }
-
-.card p { color: var(--ink-soft); font-size: 0.9rem; margin: 0; }
 
 table { border-collapse: collapse; font-size: 0.9rem; margin: calc(var(--step) * 3) 0; width: 100%; }
 
@@ -366,16 +325,7 @@ th, td { border-bottom: 1px solid var(--edge); padding: 0.5em 1em 0.5em 0; text-
 
 th { color: var(--ink-soft); font-size: 0.72rem; font-weight: 500; letter-spacing: 0.07em; text-transform: uppercase; }
 
-td.keys { font-family: var(--mono); white-space: nowrap; }
-
-td.out { font-family: var(--mono); font-size: 1.05rem; }
-
-.grid-dead { display: grid; gap: calc(var(--step) * 5); grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); }
-
-.produced { display: flex; flex-wrap: wrap; font-family: var(--mono); gap: 0.35em 0.7em; margin-top: var(--step); }
-
-.produced span { color: var(--ink-soft); }
-.produced b { color: var(--ink); font-weight: 500; }
+td:first-child { font-family: var(--mono); white-space: nowrap; }
 
 pre {
   background: var(--raised);
@@ -389,12 +339,6 @@ pre {
 .highlighter-rouge pre { border-color: transparent; }
 
 .highlight { border-radius: var(--radius); }
-
-details { border-bottom: 1px solid var(--edge); padding: calc(var(--step) * 2) 0; }
-
-summary { cursor: pointer; font-weight: 600; }
-
-summary::marker { color: var(--ink-soft); }
 
 .warn { border-left: 2px solid var(--altgr); padding-left: calc(var(--step) * 2); }
 

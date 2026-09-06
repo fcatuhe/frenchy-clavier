@@ -36,14 +36,11 @@ class KeymapTest < Minitest::Test
     assert_equal([" ", " ", "\u00A0", "\u202F"], @keys.fetch("Space"))
   end
 
-  def test_a_dead_key_is_named_by_the_key_it_sits_on
-    assert_equal("8", @keymap.stroke("dead_circumflex"))
-    assert_equal("7", @keymap.stroke("dead_diaeresis"))
-    assert_equal("AltGr ~", @keymap.stroke("dead_tilde"))
-  end
+  def test_every_curated_compose_sequence_reaches_the_browser
+    compose = JSON.parse(@keymap.to_json).fetch("compose")
 
-  def test_every_curated_compose_sequence_still_exists_in_the_system_table
-    assert_equal(20, @keymap.table.size)
-    @keymap.table.each { |_, _, output| refute_empty(output) }
+    assert_equal("°", compose.fetch("oo"))
+    assert_equal("→", compose.fetch("->"))
+    assert_equal("½", compose.fetch("12"))
   end
 end

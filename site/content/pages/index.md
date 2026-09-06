@@ -16,50 +16,32 @@ Les lettres ne bougent pas. Ce qui bouge, c'est tout le reste : **les accents en
 
 <%= render "keyboards/tester" %>
 
+## Le premier jour
+
+Ce qu'il faut savoir pour taper dès l'installation. Le reste s'apprend en regardant le clavier ci-dessus.
+
+| Pour | Faites |
+|---|---|
+| `à è é` | en direct, les trois premières touches de la rangée du haut |
+| les chiffres | <kbd>Maj</kbd>. Pour un long nombre, <kbd>Maj</kbd> + <kbd>Verr. maj.</kbd> verrouille la rangée des chiffres, la même combinaison la libère |
+| `ç` `ù` | <kbd>AltGr</kbd> + <kbd>C</kbd>, <kbd>AltGr</kbd> + <kbd>U</kbd> |
+| `É À È Ù Ç` | <kbd>AltGr</kbd> + <kbd>Maj</kbd> + la touche de la minuscule |
+| `ê ë` et les autres | `^` sur la touche 8 et `¨` sur la touche 7, puis la voyelle |
+| `. , : ?` | en direct sur la rangée du bas, `;` et `!` sur <kbd>Maj</kbd> |
+| `' "` | la touche à droite de M |
+| `-` `/` et la barre verticale | les deux touches à droite de P, `` ` `` et la barre sur <kbd>Maj</kbd> |
+| `@` | la touche `²`, en haut à gauche |
+| `{ }` `[ ]` `< >` | <kbd>AltGr</kbd> + `( )`, <kbd>AltGr</kbd> + <kbd>R</kbd> <kbd>T</kbd>, <kbd>AltGr</kbd> + <kbd>F</kbd> <kbd>G</kbd> |
+| `« »` `€` | <kbd>AltGr</kbd> + <kbd>V</kbd> <kbd>B</kbd>, <kbd>AltGr</kbd> + <kbd>E</kbd> |
+| `°` `→` `½` | <kbd>Verr. maj.</kbd> est Compose : <kbd>Verr. maj.</kbd> puis `o o`, `- >`, `1 2` |
+| MAJUSCULES | les deux <kbd>Maj</kbd> ensemble, la diode s'allume, un seul <kbd>Maj</kbd> libère |
+
+Imprimez la <a href="/sheet.html">feuille A4</a> et posez-la sous l'écran : elle montre tout, Compose compris.
+
 ## Pourquoi
 
-<div class="cards" markdown="1">
+Bépo optimise le français seul et demande de tout réapprendre. Ici les lettres restent celles de l'AZERTY, donc la mémoire des doigts sert encore, et ce qui change répond à trois besoins : écrire le français avec ses accents sans détour, passer à l'anglais sans qu'un accent traîne sur les chiffres, et coder d'une main, `{ } [ ] < > | / \ # @` sous la gauche pendant que le pouce droit tient AltGr.
 
-<div class="card" markdown="1">
-### Français et anglais
-Bépo n'est pas adapté : il optimise le français seul, et il faut tout réapprendre. Ici les lettres restent où elles sont.
-</div>
+Aucune touche n'a été déplacée pour gagner un millimètre à une statistique. Les voisinages sont ceux qu'un humain retient : `à è é` se suivent, `_ - +` aussi, `« »` juste sous `< >`.
 
-<div class="card" markdown="1">
-### Vraiment français
-`à è é ù ç` en accès direct. Pas de détour par une touche morte pour écrire un mot courant.
-</div>
-
-<div class="card" markdown="1">
-### Basculer en anglais
-Maj + Verr. maj. verrouille la rangée des chiffres. Le clavier devient une rangée numérique, sans accent qui traîne.
-</div>
-
-<div class="card" markdown="1">
-### Raccourcis de code
-`{ } [ ] < > | / \ # @ $ & ~ ^` tous atteignables d'une main, pour VS Code comme pour Vim.
-</div>
-
-<div class="card" markdown="1">
-### AltGr facile
-Les signes du code sont sur la main gauche, le pouce droit tient AltGr. Jamais les deux mains pour une accolade.
-</div>
-
-<div class="card" markdown="1">
-### Moins de stats, plus d'humain
-Aucune lettre n'a été déplacée pour gagner un millimètre. Il n'y a pas de page de statistiques ici, et c'est voulu.
-</div>
-
-</div>
-
-## Ce que ça donne
-
-| | | |
-|---|---|---|
-| Rangée du haut | `@ à è é ( ) ~ ◌̈ ◌̂ * + _ =` | les chiffres passent sur Maj |
-| Accents | `à è é` | en direct, `ù` sur AltGr+U, `ç` sur AltGr+C, `À È É Ù Ç` sur AltGr+Maj de la même touche, les autres majuscules par les touches mortes |
-| Code | `( ) ' "` | `' "` à droite de M, `/ |` à droite de P, `{ }` sur AltGr+`( )`, `[ ]` sur AltGr+R T, `< >` sur AltGr+F G |
-| Ponctuation | `. , : ? ' / # - _ =` | en direct, `\ ; ! | " · ^` sur Maj, `&` sur AltGr+É |
-| Typographie | `’ « » ° ± ÷ ×` | l'espace insécable sur AltGr+espace, la fine insécable sur AltGr+Maj+espace |
-
-Les règles derrière ces choix, les touches mortes et la couche Compose sont sur <%= link_to_page "apprendre" %>. Pour poser la disposition sur votre machine, <%= link_to_page "installer" %>.
+Pour poser la disposition sur votre machine : <%= link_to_page "installer" %>.

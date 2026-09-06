@@ -1,7 +1,7 @@
 <div class="board <%= board_class(board) %>" data-board="<%= board.id %>">
   <% keys = keys_of(board) -%>
-  <% board.rows.each_with_index do |row, index| -%>
-  <div class="row n<%= row.size %><%= " row-fn" if index.zero? %>">
+  <% alpha_rows(board).each do |row| -%>
+  <div class="row n<%= row.size %>">
     <% row.each do |slot| -%>
       <% if slot.spacer -%>
     <div class="slot spacer <%= slot_classes(slot) %>"></div>

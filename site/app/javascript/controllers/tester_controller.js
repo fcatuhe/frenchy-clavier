@@ -2,7 +2,6 @@ import { Controller } from "@hotwired/stimulus"
 
 const COMPOSE_CODE = "CapsLock"
 const MAX_COMPOSE = 3
-const FLASH_MS = 110
 
 export default class extends Controller {
   static targets = ["box", "keymap"]
@@ -20,7 +19,7 @@ export default class extends Controller {
       event.preventDefault()
       this.pendingDead = null
       this.composing = event.shiftKey ? null : ""
-      this.flash(event.code)
+      this.light(event.code)
       return this.repaint()
     }
 
@@ -28,7 +27,7 @@ export default class extends Controller {
     if (level === null || level === undefined || level === "") return
 
     event.preventDefault()
-    this.flash(event.code)
+    this.light(event.code)
 
     if (this.isDead(level) && !this.pendingDead && this.composing === null) this.pendingDead = level.d
     else this.emit(this.isDead(level) ? level.g : level)
@@ -39,6 +38,7 @@ export default class extends Controller {
   reset() {
     this.pendingDead = null
     this.composing = null
+    this.light(null)
     this.repaint()
   }
 
@@ -94,15 +94,9 @@ export default class extends Controller {
     box.selectionStart = box.selectionEnd = at + text.length
   }
 
-  flash(code) {
-    this.slotsFor(code).forEach((slot) => {
-      slot.classList.add("pressed")
-      setTimeout(() => slot.classList.remove("pressed"), FLASH_MS)
-    })
-  }
-
-  slotsFor(code) {
-    return document.querySelectorAll(`[data-code="${code}"]`)
+  light(code) {
+    document.querySelectorAll(".slot.pressed").forEach((slot) => slot.classList.remove("pressed"))
+    if (code) document.querySelectorAll(`[data-code="${code}"]`).forEach((slot) => slot.classList.add("pressed"))
   }
 
   repaint() {

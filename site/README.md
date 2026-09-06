@@ -21,7 +21,7 @@ site propose au téléchargement est rendue par le générateur, pas par Rails.
 ## Où vit quoi
 
 ```
-content/pages/*.md            les trois pages, en français, frontmatter + markdown + ERB
+content/pages/*.md            les deux pages, en français, frontmatter + markdown + ERB
 app/views/keyboards/          les partiels qui dessinent un clavier, une touche, l'étage
 app/helpers/keyboards_helper  les classes CSS de géométrie, calculées depuis les claviers
 app/models/keyboard.rb        le pont vers le générateur, un dossier plus haut
@@ -34,10 +34,11 @@ app/assets/stylesheets/       le style, et le thème Rouge dans ses deux variant
 Le markdown porte la prose et rien d'autre. Tout ce qui décrit la disposition est demandé au
 générateur au moment du rendu :
 
-- les cinq claviers viennent de `lib/clavier/boards.rb`, avec leurs vraies largeurs ;
+- les deux claviers, ISO et ANSI, viennent de `lib/clavier/boards.rb`, avec leurs vraies largeurs ;
+- ce qui est grisé comme inchangé vient de `lib/clavier/azerty.rb`, comparé niveau par niveau ;
 - les quatre niveaux de chaque touche viennent de `layout.yml` ;
 - la variante ISO vient de la section `iso:` de `layout.yml`, la même que lit le pilote XKB ;
-- les touches mortes et les suites Compose viennent du fichier Compose du système ;
+- les touches mortes et les suites Compose du testeur viennent du fichier Compose du système ;
 - le testeur reçoit un JSON produit par `Clavier::Keymap`, jamais une table écrite à la main.
 
 `config/application.rb` charge le générateur depuis le dossier parent, et
@@ -56,16 +57,14 @@ armée repeint le clavier avec ce que chaque touche produirait ensuite.
 ## Sans JavaScript
 
 Tout marche sauf le testeur, qui reste caché tant que son contrôleur ne s'est pas connecté.
-Le choix du clavier et celui des niveaux sont des boutons radio et des sélecteurs CSS
-`:has()`, pas du script. Sans `:has()`, les cinq claviers s'affichent les uns sous les
-autres, ce qui reste lisible.
+Le choix ISO ou ANSI et le grisé de l'AZERTY sont des boutons radio, une case à cocher et
+des sélecteurs CSS `:has()`, pas du script. Sans `:has()`, les deux claviers s'affichent
+l'un sous l'autre, ce qui reste lisible.
 
 ## Géométrie
 
-Chaque clavier porte un champ `source` qui dit d'où viennent ses millimètres, et le site
-l'affiche sous le clavier. Le ThinkPad et le Framework sont mesurés, le MacBook ne l'est
-qu'en partie et le dit. Un test vérifie que chaque rangée de chaque clavier ferme exactement
-à la largeur de ce clavier.
+Le site dessine le Framework Laptop 13, en ISO et en ANSI, sans sa rangée de fonctions. Un
+test vérifie que chaque rangée de chaque clavier ferme exactement à la largeur de ce clavier.
 
 ## Deux écarts avec rails-static
 

@@ -4,22 +4,16 @@
     <div class="options">
       <% boards.each_with_index do |board, index| %>
         <%= tag.input type: "radio", name: "board", id: "board-#{board.id}", checked: index.zero? %>
-        <%= label_tag "board-#{board.id}", safe_join([ board.name, tag.span(board_shape(board), class: "sub") ]) %>
+        <%= label_tag "board-#{board.id}", board_shape(board) %>
       <% end %>
     </div>
   </fieldset>
 
   <fieldset class="switch">
-    <legend>Niveaux</legend>
+    <legend>Affichage</legend>
     <div class="options">
-      <%= tag.input type: "radio", name: "layer", id: "layer-all", checked: true %>
-      <%= label_tag "layer-all", "Tous" %>
-      <%= tag.input type: "radio", name: "layer", id: "layer-direct" %>
-      <%= label_tag "layer-direct", "Direct et Maj" %>
-      <%= tag.input type: "radio", name: "layer", id: "layer-altgr" %>
-      <%= label_tag "layer-altgr", "AltGr" %>
-      <%= tag.input type: "checkbox", id: "layer-fourth" %>
-      <%= label_tag "layer-fourth", "+ AltGr Maj" %>
+      <%= tag.input type: "checkbox", id: "diff", checked: true %>
+      <%= label_tag "diff", "Griser ce qui ne change pas" %>
     </div>
   </fieldset>
 </div>
@@ -29,17 +23,7 @@
 </figure>
 
 <p class="legend">
-  <span><b>en bas à gauche</b> direct</span>
-  <span><b>en haut à gauche</b> Maj</span>
-  <span class="altgr"><b>en bas à droite</b> AltGr</span>
-  <span class="altgr fourth"><b>en haut à droite</b> AltGr + Maj</span>
-  <span class="dead"><b>&#9676;&#769;</b> touche morte</span>
+  <span><b class="altgr">é</b> AltGr</span>
+  <span><b class="dead">&#9676;&#769;</b> touche morte</span>
+  <span class="diff"><b class="same">a</b> comme sur l'AZERTY</span>
 </p>
-
-<div class="provenances">
-  <% boards.each do |board| %>
-    <p class="provenance" data-board="<%= board.id %>">
-      <b>Géométrie</b> &mdash; <%= board.source %>.<%= " #{board.note}" if board.note %>
-    </p>
-  <% end %>
-</div>
