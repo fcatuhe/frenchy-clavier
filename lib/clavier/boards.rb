@@ -22,11 +22,11 @@ module Clavier
                      "le reste déduit pour que chaque rangée ferme à 14,5 u".freeze
     MACBOOK_NOTE = "Pas d'AltGr sur un Mac : c'est Option qui tient le troisième niveau.".freeze
 
-    def self.macbook_bottom_row(third)
+    def self.macbook_bottom_row(third, fourth)
       [
-        fixed("fn"), fixed("control"), fixed(third), fixed("command", 1.25),
+        fixed("fn"), fixed("control"), fixed(third), fixed(fourth, 1.25),
         key("SPCE", 5.0),
-        fixed("command", 1.25), fixed(third),
+        fixed(fourth, 1.25), fixed(third),
         fixed("\u25C0"), cluster(1.0, [["\u25B2"], ["\u25BC"]]), fixed("\u25B6")
       ]
     end
@@ -41,7 +41,7 @@ module Clavier
     ].freeze
 
     FRAMEWORK_BOTTOM_ROW = [
-      fixed("Ctrl", framework(24)), fixed("Fn"), fixed("Super"), fixed("Alt"),
+      fixed("Fn", framework(24)), fixed("Ctrl"), fixed("Super"), fixed("Alt"),
       key("SPCE", framework(95)),
       fixed("AltGr"), fixed("Ctrl"),
       cluster(framework(66), [[nil, "\u2191", nil], ["\u2190", "\u2193", "\u2192"]])
@@ -63,7 +63,7 @@ module Clavier
         spacer(0.075), *%w[Home End Ins].map { fixed(it, 0.825) }, fixed("Del", 1.1625)
       ],
       bottom_row: [
-        fixed("Ctrl"), fixed("Fn", 1.15), fixed("Super"), fixed("Alt"),
+        fixed("Fn"), fixed("Ctrl", 1.15), fixed("Super"), fixed("Alt"),
         key("SPCE", 5.0),
         fixed("AltGr"), fixed("PrtSc"), fixed("Ctrl"),
         cluster(2.85, [["PgUp", "\u2191", "PgDn"], ["\u2190", "\u2193", "\u2192"]])
@@ -112,7 +112,7 @@ module Clavier
       widths: { backspace: 1.5, backspace_label: "delete", tab: 1.5, bksl: 1.0,
                 caps: 1.75, enter: 1.75, enter_label: "return", lfsh: 2.25, rtsh: 2.25 },
       function_row: MACBOOK_FUNCTION_ROW,
-      bottom_row: macbook_bottom_row("option")
+      bottom_row: macbook_bottom_row("option", "command")
     )
 
     define Board.new(
@@ -123,11 +123,11 @@ module Clavier
       source: "#{MACBOOK_SOURCE} ; l'ISO reprend les proportions ISO standard ramenées à 14,5 u",
       units: MACBOOK_UNITS,
       note: MACBOOK_NOTE,
-      widths: { backspace: 1.5, backspace_label: "delete", tab: 1.5,
-                caps: 1.5, enter_label: "return", enter_top: 1.0, enter_bottom: 1.0,
+      widths: { backspace: 1.5, backspace_label: "\u232B", tab: 1.5, tab_label: "\u21E5",
+                caps: 1.5, enter_label: "\u23CE", enter_top: 1.0, enter_bottom: 1.0,
                 lfsh: 1.25, rtsh: 2.25 },
       function_row: MACBOOK_FUNCTION_ROW,
-      bottom_row: macbook_bottom_row("alt")
+      bottom_row: macbook_bottom_row("alt", "cmd")
     )
   end
 end

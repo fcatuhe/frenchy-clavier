@@ -28,7 +28,7 @@ module Clavier
 
     def self.ansi(w)
       [
-        [fixed("Tab", w.fetch(:tab)), *keys(*UPPER), key("BKSL", w.fetch(:bksl))],
+        [fixed(w.fetch(:tab_label, "Tab"), w.fetch(:tab)), *keys(*UPPER), key("BKSL", w.fetch(:bksl))],
         [key("CAPS", w.fetch(:caps)), *keys(*HOME), fixed(w.fetch(:enter_label), w.fetch(:enter))],
         [key("LFSH", w.fetch(:lfsh)), *keys(*LOWER), key("RTSH", w.fetch(:rtsh))]
       ]
@@ -36,7 +36,7 @@ module Clavier
 
     def self.iso(w)
       [
-        [fixed("Tab", w.fetch(:tab)), *keys(*UPPER), joined(w.fetch(:enter_label), w.fetch(:enter_top), :below)],
+        [fixed(w.fetch(:tab_label, "Tab"), w.fetch(:tab)), *keys(*UPPER), joined(w.fetch(:enter_label), w.fetch(:enter_top), :below)],
         [key("CAPS", w.fetch(:caps)), *keys(*HOME), key("BKSL"), joined(nil, w.fetch(:enter_bottom), :above)],
         [key("LFSH", w.fetch(:lfsh)), key("LSGT"), *keys(*LOWER), key("RTSH", w.fetch(:rtsh))]
       ]

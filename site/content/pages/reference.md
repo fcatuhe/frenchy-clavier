@@ -22,7 +22,7 @@ Le clavier français standard, tel que Linux le sert sous le nom `fr`. C'est lui
 
 ## AZERTY Mac, MacBook clavier français
 
-Le français d'Apple, qui n'est pas celui du PC : `@ #` en haut à gauche, `§` et `!` sur la rangée des chiffres, `` ` £ `` à côté de Retour, `= +` en bas à droite. La troisième couche est celle d'Option.
+Le français d'Apple, qui n'est pas celui du PC : `@ #` en haut à gauche, `§` et `!` sur la rangée des chiffres, `` ` £ `` à côté de ⏎, `= +` en bas à droite. Les touches portent les symboles d'Apple, et la troisième couche est celle d'Option (alt), avec ce qu'elle donne vraiment sur un Mac, `‡` sur Q compris.
 
 <figure class="reference">
   <%= render "keyboards/board", board: Keyboard.macbook_fr, keys: Keyboard.azerty_mac, diff: false %>
@@ -30,7 +30,7 @@ Le français d'Apple, qui n'est pas celui du PC : `@ #` en haut à gauche, `§` 
 
 ## QWERTY US, ThinkPad X1 Carbon Gen 6
 
-Le clavier américain, ce que frenchy-clavier garde à portée des deux Ctrl pour basculer. Ctrl et Fn sont dans l'ordre que le BIOS du ThinkPad permet d'inverser.
+Le clavier américain, ce que frenchy-clavier garde à portée des deux Ctrl pour basculer.
 
 <figure class="reference">
   <%= render "keyboards/board", board: Keyboard.thinkpad, keys: Keyboard.qwerty_us, diff: false %>

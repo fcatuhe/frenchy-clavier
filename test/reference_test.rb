@@ -37,12 +37,34 @@ class ReferenceTest < Minitest::Test
     assert_empty(macbook.codes - Clavier::Reference.keys(Clavier::Reference::AZERTY_MAC).keys)
   end
 
-  def test_the_mac_azerty_is_the_one_xkeyboard_config_calls_fr_mac
+  def test_the_mac_azerty_is_apple_s_french_not_the_pc_one
     mac = Clavier::Reference::AZERTY_MAC
 
     assert_equal(["@", "#"], mac.fetch("TLDE").first(2))
-    assert_equal(["<dead_grave>", "£", "@"], mac.fetch("BKSL"))
+    assert_equal(["§", "6"], mac.fetch("AE06").first(2))
+    assert_equal(["`", "£", "@"], mac.fetch("BKSL"))
     assert_equal(["=", "+"], mac.fetch("AB10").first(2))
+    assert_equal("‡", mac.fetch("AC01")[2], "Option+Q is the double dagger on a Mac, xkeyboard-config gets it wrong")
+  end
+
+  def test_the_mac_board_wears_apple_s_caps
+    keys = Clavier::Reference.keys(Clavier::Reference::AZERTY_MAC)
+    labels = Clavier::Boards["macbook-fr"].rows.flatten.filter_map(&:label)
+
+    assert_equal("\u21EA", keys.fetch("CAPS").glyph(0))
+    assert_equal("\u21E7", keys.fetch("LFSH").glyph(0))
+    assert_includes(labels, "\u232B")
+    assert_includes(labels, "\u23CE")
+    assert_includes(labels, "cmd")
+    refute_includes(labels, "command")
+  end
+
+  def test_fn_sits_left_of_ctrl_on_every_pc_board
+    Clavier::Boards.all.reject { it.hardware == "Apple" }.each do |board|
+      labels = board.rows.last.filter_map(&:label)
+
+      assert_equal(%w[Fn Ctrl], labels.first(2), board.id)
+    end
   end
 
   def test_a_reference_key_draws_like_a_layout_key
