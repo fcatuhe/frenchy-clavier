@@ -78,6 +78,12 @@ module Clavier
 
       def dead?(index) = @levels[index].start_with?("<dead_")
 
+      def cased?(level) = case_pair?(level, level + 1)
+
+      def two_levels? = xkb_type == "FOUR_LEVEL" && @levels[2].empty? && @levels[3].empty?
+
+      def one_level? = xkb_type == "ONE_LEVEL"
+
       def blank? = @levels.all?(&:empty?)
 
       def lockable_digit! = @lockable = @levels[1].match?(/\A[0-9]\z/)

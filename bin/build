@@ -19,6 +19,14 @@ written.each do |path, content|
   puts target
 end
 
+compose = Clavier::Compose.load
+
+Clavier::Keylayout::IDS.each_key do |variant|
+  target = File.join(root, "macos", "#{layout.name}-#{variant}.keylayout")
+  File.write(target, Clavier::Keylayout.new(layout, variant: variant, compose: compose).to_s)
+  puts target
+end
+
 printed = Clavier::Sheet.new(layout, compose_path: File.join(root, "compose.yml")).to_s
 
 SHEETS = [ %w[out sheet.html], %w[site public sheet.html] ].freeze
