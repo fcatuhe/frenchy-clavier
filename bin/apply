@@ -1,5 +1,4 @@
 #!/usr/bin/env ruby
-require "fileutils"
 require "json"
 require_relative "../lib/clavier"
 
@@ -7,15 +6,7 @@ root = File.expand_path("..", __dir__)
 layout = Clavier::Layout.load(File.join(root, "layout.yml"))
 
 system(File.join(root, "bin", "build"), out: File::NULL) or abort("build failed")
-
-target = File.expand_path("~/.config/xkb")
-FileUtils.mkdir_p(target)
-FileUtils.cp_r(File.join(root, "linux", "xkb", "."), target)
-
-check = %W[xkbcli compile-keymap --layout #{layout.name}]
-abort("xkbcli rejected the keymap, nothing applied") unless system(*check, out: File::NULL)
-
-puts "installed #{target}"
+system(File.join(root, "linux", "install.sh")) or abort("install failed, nothing applied")
 
 devices = IO.popen(%w[hyprctl devices -j], err: File::NULL, &:read)
 exit if devices.empty?
@@ -30,8 +21,8 @@ warn <<~STALE
   does not reach a Lua input block, so reload alone will not pick this up.
   Change one value in ~/.config/hypr/input.lua, reload, change it back:
 
-    sed -i 's/kb_variant = ",ansi"/kb_variant = ",iso"/' ~/.config/hypr/input.lua
+    sed -i 's/kb_variant = "ansi,"/kb_variant = "iso,"/' ~/.config/hypr/input.lua
     hyprctl reload
-    sed -i 's/kb_variant = ",iso"/kb_variant = ",ansi"/' ~/.config/hypr/input.lua
+    sed -i 's/kb_variant = "iso,"/kb_variant = "ansi,"/' ~/.config/hypr/input.lua
     hyprctl reload
 STALE
