@@ -28,11 +28,21 @@ class ReferenceTest < Minitest::Test
     refute(Clavier::Reference.same_as_azerty?("BKSL", iso["BKSL"]))
   end
 
-  def test_both_reference_layouts_fill_every_key_of_their_hardware
-    ansi = Clavier::Boards["framework-13-ansi"]
+  def test_every_reference_layout_fills_every_key_of_its_hardware
+    thinkpad = Clavier::Boards["x1-carbon-ansi"]
+    macbook = Clavier::Boards["macbook-fr"]
 
     assert_empty(@iso.codes - Clavier::Reference.keys(Clavier::Reference::AZERTY).keys)
-    assert_empty(ansi.codes - Clavier::Reference.keys(Clavier::Reference::QWERTY_US).keys)
+    assert_empty(thinkpad.codes - Clavier::Reference.keys(Clavier::Reference::QWERTY_US).keys)
+    assert_empty(macbook.codes - Clavier::Reference.keys(Clavier::Reference::AZERTY_MAC).keys)
+  end
+
+  def test_the_mac_azerty_is_the_one_xkeyboard_config_calls_fr_mac
+    mac = Clavier::Reference::AZERTY_MAC
+
+    assert_equal(["@", "#"], mac.fetch("TLDE").first(2))
+    assert_equal(["<dead_grave>", "£", "@"], mac.fetch("BKSL"))
+    assert_equal(["=", "+"], mac.fetch("AB10").first(2))
   end
 
   def test_a_reference_key_draws_like_a_layout_key

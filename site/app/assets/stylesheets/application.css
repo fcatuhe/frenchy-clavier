@@ -246,6 +246,9 @@ body:has(#board-framework-13-ansi:checked) .stage [data-board="framework-13-ansi
 
 .q.altgr, .q.altgr-shift { color: var(--altgr); font-size: 0.88rem; }
 
+body:has(#mode-digits:checked) .slot.lockable .q.shift { grid-area: 2 / 1; align-self: end; }
+body:has(#mode-digits:checked) .slot.lockable .q.base { grid-area: 1 / 1; align-self: start; }
+
 .q.altgr-shift, .legend .fourth { display: none; }
 
 body:has(#fourth:checked) .q.altgr-shift,
@@ -299,6 +302,10 @@ body:has(#diff:checked) .legend .diff { display: revert; }
 }
 
 .legend b { color: var(--ink); font-family: var(--mono); font-weight: 600; }
+
+.mode-note { color: var(--ink-soft); font-size: 0.88rem; margin-top: calc(var(--step) * 3); max-width: var(--measure); }
+
+.mode-note b { color: var(--ink); font-weight: 600; }
 .legend .altgr { color: var(--altgr); }
 .legend .dead { color: var(--dead); }
 .legend .same { opacity: 0.3; }

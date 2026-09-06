@@ -20,6 +20,12 @@ class KeymapTest < Minitest::Test
     assert_equal(["#", "\\"], @keys.fetch("IntlBackslash").first(2))
   end
 
+  def test_the_browser_knows_which_keys_num_lock_turns_around
+    digits = JSON.parse(@keymap.to_json).fetch("digits")
+
+    assert_equal(%w[Digit1 Digit2 Digit3 Digit4 Digit5 Digit6 Digit7 Digit8 Digit9 Digit0], digits)
+  end
+
   def test_a_free_level_is_null_and_a_modifier_is_never_typed
     assert_nil(@keys.fetch("KeyW")[2])
     assert_equal([nil] * 4, @keys.fetch("CapsLock"))

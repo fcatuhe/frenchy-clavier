@@ -10,6 +10,16 @@
   </fieldset>
 
   <fieldset class="switch">
+    <legend>Verr. num.</legend>
+    <div class="options">
+      <%= tag.input type: "radio", name: "mode", id: "mode-accents", checked: true, data: { tester_target: "accents", action: "tester#repaint" } %>
+      <%= label_tag "mode-accents", safe_join([ "Français", tag.span("allumé, accents en direct", class: "sub") ]) %>
+      <%= tag.input type: "radio", name: "mode", id: "mode-digits", data: { tester_target: "digits", action: "tester#repaint" } %>
+      <%= label_tag "mode-digits", safe_join([ "Anglais et code", tag.span("éteint, chiffres en direct", class: "sub") ]) %>
+    </div>
+  </fieldset>
+
+  <fieldset class="switch">
     <legend>Affichage</legend>
     <div class="options">
       <%= tag.input type: "checkbox", id: "diff", checked: true %>
@@ -31,4 +41,10 @@
   <span class="fourth"><b class="altgr">É</b> AltGr + Maj, en haut à droite</span>
   <span><b class="dead">&#9676;&#769;</b> touche morte</span>
   <span class="diff"><b class="same">a</b> comme sur l'AZERTY</span>
+</p>
+
+<p class="mode-note">
+  <b>Verr. num. choisit la langue.</b> Allumé, la rangée du haut porte les accents et les chiffres sont sur Maj.
+  Éteint, les chiffres passent en direct et les accents sur Maj, rien d'autre ne bouge.
+  <kbd>Maj</kbd> + <kbd>Verr. maj.</kbd> bascule, comme la touche Verr. num. d'un clavier externe.
 </p>

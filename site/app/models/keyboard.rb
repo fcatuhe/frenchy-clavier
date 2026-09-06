@@ -6,6 +6,10 @@ class Keyboard
 
     def all = [ iso, ansi ]
 
+    def thinkpad = Clavier::Boards["x1-carbon-ansi"]
+
+    def macbook_fr = Clavier::Boards["macbook-fr"]
+
     def layout = @layout ||= Clavier::Layout.load(root.join("layout.yml"))
 
     def keymap = @keymap ||= Clavier::Keymap.new(layout, compose_path: root.join("compose.yml"))
@@ -13,6 +17,8 @@ class Keyboard
     def azerty = Clavier::Reference.keys(Clavier::Reference::AZERTY)
 
     def qwerty_us = Clavier::Reference.keys(Clavier::Reference::QWERTY_US)
+
+    def azerty_mac = Clavier::Reference.keys(Clavier::Reference::AZERTY_MAC)
 
     private
 

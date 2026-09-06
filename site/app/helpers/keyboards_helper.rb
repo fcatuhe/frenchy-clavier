@@ -18,15 +18,18 @@ module KeyboardsHelper
   end
 
   def key_classes(slot, key, diff)
-    [ slot_classes(slot), ("same" if diff && Clavier::Reference.same_as_azerty?(slot.code, key)) ].compact.join(" ")
+    [ slot_classes(slot),
+      ("lockable" if key.lockable?),
+      ("same" if diff && Clavier::Reference.same_as_azerty?(slot.code, key)) ].compact.join(" ")
   end
 
   def geometry_css
-    widths = boards.flat_map { |board| board.rows.flatten.map(&:width) }.uniq.sort
-    slots = boards.flat_map { |board| board.rows.map(&:size) }.uniq.sort
+    drawn = Clavier::Boards.all
+    widths = drawn.flat_map { |board| board.rows.flatten.map(&:width) }.uniq.sort
+    slots = drawn.flat_map { |board| board.rows.map(&:size) }.uniq.sort
 
     [
-      boards.map { ".#{board_class(it)} { --units: #{format('%.4f', it.units)}; }" },
+      drawn.map { ".#{board_class(it)} { --units: #{format('%.4f', it.units)}; }" },
       widths.map { ".#{unit_class(it)} { --span: #{format('%.4f', it)}; }" },
       slots.map { ".n#{it} { --slots: #{it}; }" }
     ].flatten.join("\n").html_safe

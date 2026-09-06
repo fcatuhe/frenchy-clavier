@@ -1,24 +1,34 @@
 import { Controller } from "@hotwired/stimulus"
 
 const COMPOSE_CODE = "CapsLock"
+const NUM_LOCK_CODE = "NumLock"
 const MAX_COMPOSE = 3
 
 export default class extends Controller {
-  static targets = ["box", "keymap"]
+  static targets = ["box", "keymap", "panel", "accents", "digits"]
 
   connect() {
     this.keymap = JSON.parse(this.keymapTarget.textContent)
-    this.element.classList.add("live")
+    this.digitKeys = new Set(this.keymap.digits)
+    this.panelTarget.classList.add("live")
     this.reset()
   }
 
   press(event) {
     if (event.metaKey || (event.ctrlKey && !event.altKey)) return
 
+    if (event.code === NUM_LOCK_CODE || (event.code === COMPOSE_CODE && event.shiftKey)) {
+      event.preventDefault()
+      this.pendingDead = null
+      this.composing = null
+      this.light(event.code)
+      return this.turnDigits()
+    }
+
     if (event.code === COMPOSE_CODE) {
       event.preventDefault()
       this.pendingDead = null
-      this.composing = event.shiftKey ? null : ""
+      this.composing = ""
       this.light(event.code)
       return this.repaint()
     }
@@ -42,6 +52,12 @@ export default class extends Controller {
     this.repaint()
   }
 
+  turnDigits() {
+    if (this.digitsTarget.checked) this.accentsTarget.checked = true
+    else this.digitsTarget.checked = true
+    this.repaint()
+  }
+
   levelOf(event) {
     const altgr = event.getModifierState("AltGraph") || (event.ctrlKey && event.altKey)
     return (altgr ? 2 : 0) + (event.shiftKey ? 1 : 0)
@@ -49,7 +65,9 @@ export default class extends Controller {
 
   levelAt(code, level) {
     const key = this.keymap.keys[code]
-    return key ? key[level] : null
+    if (!key) return null
+    if (level < 2 && this.digitsTarget.checked && this.digitKeys.has(code)) return key[level ^ 1]
+    return key[level]
   }
 
   isDead(level) {
@@ -95,14 +113,14 @@ export default class extends Controller {
   }
 
   light(code) {
-    document.querySelectorAll(".slot.pressed").forEach((slot) => slot.classList.remove("pressed"))
-    if (code) document.querySelectorAll(`[data-code="${code}"]`).forEach((slot) => slot.classList.add("pressed"))
+    this.element.querySelectorAll(".slot.pressed").forEach((slot) => slot.classList.remove("pressed"))
+    if (code) this.element.querySelectorAll(`[data-code="${code}"]`).forEach((slot) => slot.classList.add("pressed"))
   }
 
   repaint() {
     const armed = this.pendingDead || this.composing !== null
 
-    document.querySelectorAll("[data-code]").forEach((slot) => {
+    this.element.querySelectorAll("[data-code]").forEach((slot) => {
       const code = slot.dataset.code
       const yields = armed && (this.wouldProduce(this.levelAt(code, 0)) || this.wouldProduce(this.levelAt(code, 1)))
 

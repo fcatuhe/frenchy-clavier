@@ -15,7 +15,7 @@ module Clavier
 
     attr_reader :layout, :compose
 
-    def to_json(*) = JSON.generate(keys: keys, dead: dead_tables, deadSpacing: spacing, compose: sequences)
+    def to_json(*) = JSON.generate(keys: keys, digits: digits, dead: dead_tables, deadSpacing: spacing, compose: sequences)
 
     def dead_keys
       @dead_keys ||= layout.each_key.flat_map { |_, key|
@@ -26,6 +26,8 @@ module Clavier
     def spacing = dead_keys.to_h { [it, compose.dead(it)[" "] || ""] }
 
     private
+
+    def digits = layout.each_key.filter_map { |code, key| WebCodes[code] if key.lockable? }
 
     def dead_tables = dead_keys.to_h { [it, compose.dead(it)] }
 

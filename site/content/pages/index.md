@@ -8,13 +8,14 @@ position: 0
 
 # Une disposition AZERTY taillée pour le français, l'anglais et le code.
 
-Les lettres ne bougent pas. Ce qui bouge, c'est tout le reste : **les accents en accès direct**, les chiffres sur Maj et les signes du code sous la main gauche.
+Les lettres ne bougent pas. Ce qui bouge, c'est tout le reste : **les accents en accès direct**, les signes du code sous la main gauche, et Verr. num. qui rend les chiffres à la rangée du haut pour l'anglais et le code.
 
 </section>
 
+<div data-controller="tester" markdown="0">
 <%= render "keyboards/stage" %>
-
 <%= render "keyboards/tester" %>
+</div>
 
 ## Le premier jour
 
@@ -23,7 +24,7 @@ Ce qu'il faut savoir pour taper dès l'installation. Le reste s'apprend en regar
 | Pour | Faites |
 |---|---|
 | `à è é` | en direct, les trois premières touches de la rangée du haut |
-| les chiffres | <kbd>Maj</kbd>. Pour un long nombre, <kbd>Maj</kbd> + <kbd>Verr. maj.</kbd> verrouille la rangée des chiffres, la même combinaison la libère |
+| les chiffres | <kbd>Maj</kbd>. Pour l'anglais, le code ou un long nombre, <kbd>Maj</kbd> + <kbd>Verr. maj.</kbd> éteint Verr. num. : les chiffres en direct, les accents sur <kbd>Maj</kbd>. La même combinaison revient au français |
 | `ç` `ù` | <kbd>AltGr</kbd> + <kbd>C</kbd>, <kbd>AltGr</kbd> + <kbd>U</kbd> |
 | `É À È Ù Ç` | <kbd>AltGr</kbd> + <kbd>Maj</kbd> + la touche de la minuscule |
 | `ê ë` et les autres | `^` sur la touche 8 et `¨` sur la touche 7, puis la voyelle |

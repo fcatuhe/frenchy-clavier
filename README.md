@@ -31,7 +31,7 @@ Quatre niveaux par touche : base, Maj, AltGr, AltGr+Maj.
 
 Le clavier complet, imprimable en A4, est dans `out/imprimer.html` après un `bin/build`. Il montre les quatre niveaux de chaque touche, la couche Compose et la liste des niveaux encore libres.
 
-Le site montre la disposition sur un clavier ISO ou ANSI, grise ce qui ne change pas par rapport à l'AZERTY, dessine l'AZERTY et le QWERTY US pour comparer, et un testeur l'applique dans le navigateur sans rien installer.
+Le site montre la disposition sur un clavier ISO ou ANSI, grise ce qui ne change pas par rapport à l'AZERTY, dessine l'AZERTY, l'AZERTY Mac et le QWERTY US pour comparer, et un testeur l'applique dans le navigateur sans rien installer.
 
 ### Verr. maj.
 
@@ -170,11 +170,11 @@ out/           produit par bin/build, hors dépôt
 
 ## Les claviers connus
 
-`lib/clavier/boards.rb` décrit cinq claviers réels, chacun à ses vraies largeurs. Le site n'en dessine que deux, le Framework en ISO et en ANSI : un visiteur a l'une ou l'autre forme, pas un modèle. La feuille A4 prend le Framework ISO.
+`lib/clavier/boards.rb` décrit cinq claviers réels, chacun à ses vraies largeurs. Le site dessine frenchy-clavier sur le Framework, en ISO et en ANSI : un visiteur a l'une ou l'autre forme, pas un modèle. La page Référence dessine l'AZERTY sur le Framework ISO, l'AZERTY Mac sur le MacBook français et le QWERTY US sur le ThinkPad, Ctrl et Fn inversés comme son BIOS le permet. La feuille A4 prend le Framework ISO.
 
 | | forme | d'où viennent les millimètres |
 |---|---|---|
-| ThinkPad X1 Carbon Gen 6 | ANSI | millimètres Lenovo, via `pfaion/x1carbon-xkb-geometry` |
+| ThinkPad X1 Carbon Gen 6 | ANSI | millimètres Lenovo, via `pfaion/x1carbon-xkb-geometry`, Ctrl et Fn inversés |
 | Framework Laptop 13 | ANSI | le fichier CAD que Framework publie, boîtes englobantes des touches |
 | Framework Laptop 13 | ISO | idem, l'ISO déduite : Framework ne publie pas ce modèle |
 | MacBook, clavier US | ANSI | trois touches mesurées, le reste déduit pour que les rangées ferment |

@@ -90,6 +90,8 @@ module Clavier
 
       def lockable_digit! = @lockable = @levels[1].match?(/\A[0-9]\z/)
 
+      def lockable? = @lockable == true
+
       def xkb_type
         return @type if @type
         return Xkb::DIGITS_LOCK if @lockable

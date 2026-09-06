@@ -35,7 +35,7 @@ Le markdown porte la prose et rien d'autre. Tout ce qui décrit la disposition e
 générateur au moment du rendu :
 
 - les deux claviers, ISO et ANSI, viennent de `lib/clavier/boards.rb`, avec leurs vraies largeurs ;
-- l'AZERTY et le QWERTY US de la page Référence viennent de `lib/clavier/reference.rb`, et c'est le même AZERTY, comparé niveau par niveau, qui dit ce que l'accueil grise ;
+- l'AZERTY, l'AZERTY Mac et le QWERTY US de la page Référence viennent de `lib/clavier/reference.rb`, et c'est le même AZERTY, comparé niveau par niveau, qui dit ce que l'accueil grise ;
 - les quatre niveaux de chaque touche viennent de `layout.yml` ;
 - la variante ISO vient de la section `iso:` de `layout.yml`, la même que lit le pilote XKB ;
 - les touches mortes et les suites Compose du testeur viennent du fichier Compose du système ;
@@ -63,7 +63,8 @@ l'un sous l'autre, ce qui reste lisible.
 
 ## Géométrie
 
-Le site dessine le Framework Laptop 13, en ISO et en ANSI, sans sa rangée de fonctions. Un
+Le site dessine frenchy-clavier sur le Framework Laptop 13, en ISO et en ANSI, et la page
+Référence prend le MacBook français et le ThinkPad, tous sans leur rangée de fonctions. Un
 test vérifie que chaque rangée de chaque clavier ferme exactement à la largeur de ce clavier.
 
 ## Deux écarts avec rails-static
