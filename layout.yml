@@ -60,7 +60,7 @@ keys:
   AB09: [":", "·", "", ""]
   AB10: ["?", "!", "", ""]
 
-  SPCE: ["<space>", "<space>", "<U202F>", "<nobreakspace>"]
+  SPCE: ["<space>", "<space>", "<nobreakspace>", "<U202F>"]
 
   CAPS: ["<Multi_key>", "<ISO_Level5_Lock>", "", ""]
 

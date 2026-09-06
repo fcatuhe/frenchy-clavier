@@ -60,6 +60,6 @@ Aucune lettre n'a été déplacée pour gagner un millimètre. Il n'y a pas de p
 | Accents | `à è é` | en direct, `ù` sur AltGr+U, `ç` sur AltGr+C, `À È É Ù Ç` sur AltGr+Maj de la même touche, les autres majuscules par les touches mortes |
 | Code | `( ) ' "` | `' "` à droite de M, `/ |` à droite de P, `{ }` sur AltGr+`( )`, `[ ]` sur AltGr+R T, `< >` sur AltGr+F G |
 | Ponctuation | `. , : ? ' / # - _ =` | en direct, `\ ; ! | " · ^` sur Maj, `&` sur AltGr+É |
-| Typographie | `’ « » ° ± ÷ ×` | et l'espace fine insécable sur AltGr+espace |
+| Typographie | `’ « » ° ± ÷ ×` | l'espace insécable sur AltGr+espace, la fine insécable sur AltGr+Maj+espace |
 
 Les règles derrière ces choix, les touches mortes et la couche Compose sont sur <%= link_to_page "apprendre" %>. Pour poser la disposition sur votre machine, <%= link_to_page "installer" %>.

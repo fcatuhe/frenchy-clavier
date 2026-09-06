@@ -27,7 +27,7 @@ Quatre niveaux par touche : base, Maj, AltGr, AltGr+Maj.
 | quatrième niveau | AltGr+Maj porte les majuscules accentuées, `Æ Œ ½ £ ≤ ≥` et les deux touches mortes. Le site ne le dessine pas par défaut, la feuille A4 le montre toujours |
 | code | `( )` en direct, `' "` sur la touche à droite de M, `` ` `` sur Maj+`-`, `/ |` à droite de P, `{ }` sur AltGr+`(` `)`, `[ ]` sur AltGr+R T, `< >` sur AltGr+F G |
 | ponctuation | `. , : ? ' / # - _ =` en direct, `\ ; ! | " · ^` sur Maj, `&` sur AltGr+É |
-| typographie | `’ « » ° ± ÷ ×` et l'espace fine insécable sur AltGr+espace |
+| typographie | `’ « » ° ± ÷ ×`, l'espace insécable sur AltGr+espace et la fine insécable sur AltGr+Maj+espace |
 
 Le clavier complet, imprimable en A4, est dans `out/sheet.html` après un `bin/build`. Il montre les quatre niveaux de chaque touche, la couche Compose et la liste des niveaux encore libres.
 

@@ -33,7 +33,7 @@ class KeymapTest < Minitest::Test
   end
 
   def test_the_spaces_survive_being_named_keysyms
-    assert_equal([" ", " ", "\u202F", "\u00A0"], @keys.fetch("Space"))
+    assert_equal([" ", " ", "\u00A0", "\u202F"], @keys.fetch("Space"))
   end
 
   def test_a_dead_key_is_named_by_the_key_it_sits_on
