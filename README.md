@@ -35,15 +35,15 @@ Le site montre la disposition sur un clavier ISO ou ANSI, grise ce qui ne change
 
 ### Verr. maj.
 
-Verr. maj. est la touche Compose. Maj+Verr. maj. verrouille la rangée des chiffres sur son niveau Maj, pour taper un long nombre sans tenir Maj. Le vrai Verr. maj. est les deux Maj ensemble.
+Verr. maj. est la touche Compose, celle d'Omarchy. Maj + Verr. maj. éteint Verr. num., et la rangée des chiffres passe sur son niveau Maj : les chiffres en direct, les accents à un Maj. Le vrai Verr. maj. reste les deux Maj ensemble, comme chez Omarchy.
 
-Les deux sont dans la disposition, aucune option à ajouter. Les touches Maj verrouillent par une action `LockMods` et non par le keysym `Caps_Lock`, sinon elles entreraient dans la table du modificateur Lock, qui appartient à la touche et pas au groupe : la moindre autre disposition partageant le clavier hériterait du verrouillage. La diode de Verr. maj. ne s'allume que pour le vrai Verr. maj.
+Le verrou des chiffres est Verr. num. lui-même, pas un verrou de plus. Verr. num. allumé, le pavé numérique tape des chiffres et la rangée du haut porte les accents ; éteint, le pavé rend ses flèches et la rangée du haut prend les chiffres. Un seul état, une seule diode, et Hyprland la rapporte déjà : `numLock` dans `hyprctl devices -j`, de quoi écrire `fc#` dans la barre sans rien sonder. C'est le procédé de `level5(level5_lock)`, celui des dispositions Neo, qu'on reprend tel quel.
 
-Le niveau qui verrouille répond `VoidSymbol`. Compose ignore tous les keysyms de modificateur, `Shift_L` comme `Caps_Lock` : une séquence commencée resterait ouverte derrière le verrouillage, à avaler ce qui vient ensuite. Avec `VoidSymbol`, les deux Maj verrouillent Verr. maj. et referment la séquence.
+Ce que ça coûte : la disposition dépend d'un état que le système possède. Omarchy démarre sur `numlock_by_default = true`, donc la session s'ouvre sur les accents. Une session qui démarre Verr. num. éteint s'ouvre sur les chiffres, et Maj + Verr. maj. remet les accents. La touche Verr. num. d'un clavier externe fait la même bascule que Maj + Verr. maj.
 
-Une disposition installée seule porte les trois. Dès qu'un QWERTY partage le clavier, c'est l'option `frenchy:capslock` qui les pose, groupe par groupe : les deux Maj et Compose sur tous les groupes, le verrou des chiffres sur le seul groupe frenchy, où les autres gardent le Compose d'Omarchy sur Maj + Verr. maj. C'est ce que `shift:both_capslock_cancel` fait chez Omarchy, au keysym près : la sienne est `Caps_Lock`, que Compose ignore, donc le QWERTY garderait la séquence ouverte.
+Une disposition installée seule porte tout : Compose, le Verr. maj. par les deux Maj et le verrou des chiffres. Ses touches Maj verrouillent par une action `LockMods` et répondent `VoidSymbol`, ce que Compose ne peut pas ignorer, donc les deux Maj referment la séquence en cours. Sous Omarchy c'est `shift:both_capslock_cancel` qui gouverne, avec le keysym `Caps_Lock` : même verrouillage, mais une séquence Compose commencée reste ouverte derrière.
 
-L'option est nécessaire parce que XKB fusionne les options après les dispositions, et toujours sur le groupe 1. `compose:caps` écrasait donc la touche Verr. maj. de frenchy, verrou des chiffres compris, dès que frenchy était la première disposition. Les règles de l'option sont lues après celles du système : elles posent la touche sur chaque groupe, et l'ordre des dispositions ne compte plus.
+Il reste une option à nous, `frenchy:digitlock`, et une seule raison de l'avoir : XKB fusionne les options après les dispositions et toujours sur le groupe 1, donc `compose:caps` écrase la touche Verr. maj. de frenchy, verrou des chiffres compris, dès que frenchy est la première disposition. L'option la repose sur chaque groupe, après le système, et l'ordre des dispositions ne compte plus.
 
 ## Installer
 
@@ -53,24 +53,51 @@ L'option est nécessaire parce que XKB fusionne les options après les dispositi
 linux/install.sh
 ```
 
+Les fichiers vont dans `~/.config/xkb`, jamais dans `/usr/share`. `rules/evdev` reprend les règles du système par `! include %S/evdev` avant d'ajouter les siennes. Un fichier déjà là qui ne parle pas de frenchy est à quelqu'un d'autre : l'installeur le met de côté en `.bak.<date>` et le dit.
+
 Puis, sous Hyprland, dans `~/.config/hypr/input.lua` :
 
 ```lua
 hl.config({ input = {
-  kb_layout = "us,frenchy",
-  kb_options = "frenchy:capslock,grp:ctrls_toggle",
+  kb_layout = "frenchy,us",
+  kb_options = "compose:caps,shift:both_capslock_cancel,grp:ctrls_toggle,frenchy:digitlock",
 } })
 ```
 
-Les deux Ctrl basculent entre frenchy-clavier et QWERTY US. L'ordre des deux dispositions est libre, la première est celle du démarrage. Sans variante, c'est l'ISO. Sur un clavier ANSI, ajouter `kb_variant = ",ansi"` : une variante par disposition, celle du QWERTY reste vide.
+Les trois premières sont celles d'Omarchy, mot pour mot : Compose sur Verr. maj., Verr. maj. par les deux Maj, et une bascule de groupe. `kb_options` remplace la valeur d'Omarchy au lieu de s'y ajouter, d'où la liste écrite en entier. Une disposition installée seule n'a besoin d'aucune : elle les porte.
 
-`frenchy:capslock` remplace la paire d'Omarchy, `compose:caps,shift:both_capslock_cancel`, et fait les deux : Compose sur Verr. maj. pour tous les groupes, c'est le `compose:caps` d'Omarchy repris tel quel, et Verr. maj. par les deux Maj sur tous les groupes, qui referme en plus la séquence Compose en cours et garde les touches Maj hors de la table du modificateur Lock. Le verrou des chiffres sur Maj + Verr. maj. ne va qu'au groupe frenchy.
+Sans variante, c'est l'ISO. Sur un clavier ANSI, ajouter `kb_variant = "ansi,"` : une variante par disposition, celle du QWERTY reste vide.
 
-`grp:ctrls_toggle` fait basculer les groupes. `kb_options` remplace la valeur d'Omarchy au lieu de s'y ajouter, d'où les deux options écrites en entier. Une disposition installée seule n'a besoin d'aucune : elle les porte.
+`grp:ctrls_toggle` bascule les groupes par les deux Ctrl. L'exemple d'Omarchy bascule par les deux Alt, et `grp:alts_toggle` prend la touche Alt de droite pour ça : sur le groupe frenchy, AltGr ne répond plus et tout le troisième niveau disparaît. Un test le vérifie.
 
-### macOS, Windows
+`frenchy:digitlock` n'ajoute que le verrou des chiffres sur Maj + Verr. maj.
 
-Pas encore. Voir `macos/` et `windows/`.
+### frenchy en premier
+
+L'ordre des deux dispositions n'est pas libre sous Omarchy, et frenchy va devant :
+
+- Hyprland résout les raccourcis écrits en lettres, `SUPER + W` et les siens, sur la première disposition et non sur celle qui est active. Omarchy le dit dans son `input.lua` et ne place le QWERTY devant que pour les dispositions non latines. frenchy devant, ces raccourcis suivent les lettres de l'AZERTY, celles qu'on tape.
+- `omarchy system lock` fait `hyprctl switchxkblayout all 0` : chaque verrouillage d'écran ramène le clavier sur la première disposition. Devant, frenchy est celle qui tape le mot de passe.
+
+Les chiffres, eux, ne changent rien : Omarchy attache ses bureaux à `code:10` à `code:19`, des positions et non des keysyms, donc les chiffres sur Maj ne leur coûtent rien.
+
+### Ce qui reste en QWERTY
+
+La console et l'invite de déverrouillage du disque lisent `XKBLAYOUT` dans `/etc/vconsole.conf`, qu'on ne touche pas : la phrase de passe se tape dans la disposition de l'installation, pas dans frenchy.
+
+### macOS
+
+```bash
+macos/install.sh
+```
+
+Deux fichiers, un par matériel : ISO pour un MacBook français, ANSI pour un MacBook US. Ils vont dans `~/Library/Keyboard Layouts`, la disposition s'ajoute dans Réglages Système > Clavier > Sources de saisie après une reconnexion.
+
+Option (⌥) joue AltGr. Verr. maj. reste Verr. maj. : ni Compose, ni verrou des chiffres, ni Verr. maj. par les deux Maj, un `.keylayout` ne sait rien faire dire à une touche modificatrice. Voir `macos/README.md`.
+
+### Windows
+
+Pas encore. Voir `windows/`.
 
 ## Modifier la disposition
 
@@ -82,7 +109,7 @@ Pas encore. Voir `macos/` et `windows/`.
 ```
 
 ```bash
-bin/build              # linux/xkb/ et la feuille A4
+bin/build              # linux/xkb/, macos/*.keylayout et la feuille A4
 bin/apply              # installe et bascule Hyprland dessus, à chaud
 bin/test               # les tests
 site/bin/static-build  # le site, dans site/build/
@@ -97,9 +124,9 @@ Hyprland compile la disposition une fois, au démarrage de la session, et ne la 
 `bin/apply` compare le nom que Hyprland annonce à celui de la disposition installée, et le dit quand la session est sur autre chose. Il ne voit pas une session restée sur une version précédente des mêmes fichiers : le nom n'a pas changé. Pour forcer la recompilation, il faut faire changer une valeur, puis la remettre :
 
 ```bash
-sed -i 's/kb_variant = ",ansi"/kb_variant = ",iso"/' ~/.config/hypr/input.lua
+sed -i 's/kb_variant = "ansi,"/kb_variant = "iso,"/' ~/.config/hypr/input.lua
 hyprctl reload
-sed -i 's/kb_variant = ",iso"/kb_variant = ",ansi"/' ~/.config/hypr/input.lua
+sed -i 's/kb_variant = "iso,"/kb_variant = "ansi,"/' ~/.config/hypr/input.lua
 hyprctl reload
 ```
 
@@ -115,12 +142,18 @@ Les tests ne vérifient pas des goûts, ils vérifient des faits :
 - les largeurs du Framework tombent sur des millimètres entiers de son propre pas ;
 - la touche ISO supplémentaire n'existe que sur les claviers ISO ;
 - les 94 caractères ASCII imprimables sont tous atteignables ;
-- les fichiers produits compilent, et le verrou des chiffres a son propre indicateur ;
-- seules les dix touches de chiffres se verrouillent ;
-- les touches Maj n'entrent dans aucune table de modificateur Lock ;
-- les deux Maj verrouillent Verr. maj. et abandonnent la séquence Compose en cours, un seul Maj déverrouille, sur les deux groupes ;
-- l'option d'Omarchy verrouille bien le QWERTY, mais y laisse la séquence ouverte, ce qui est la raison d'être de la nôtre ;
-- l'option donne Compose et le verrou par les deux Maj à chaque groupe, et le verrou des chiffres au seul groupe frenchy.
+- les fichiers produits compilent, et le verrou des chiffres est bien celui de Verr. num. ;
+- seules les dix touches de chiffres se verrouillent, et Maj rend l'accent d'une rangée verrouillée ;
+- la diode de Verr. num. s'éteint quand les chiffres sont verrouillés, c'est tout l'indicateur ;
+- installée seule, la disposition porte Compose, le Verr. maj. par les deux Maj et le verrou des chiffres ;
+- ses touches Maj n'entrent dans aucune table de modificateur Lock et referment la séquence Compose en cours ;
+- l'option d'Omarchy verrouille bien Verr. maj., mais laisse la séquence ouverte : c'est ce qu'on accepte en la reprenant ;
+- notre option ne porte que le verrou des chiffres, et atteint le groupe frenchy où qu'il soit ;
+- `grp:alts_toggle` prend l'AltGr du groupe frenchy, `grp:ctrls_toggle` le laisse ;
+- l'option apparaît dans le registre, là où `xkbcli list` et les sélecteurs de disposition vont la chercher ;
+- aucun nom de disposition ne porte de virgule, celle qu'un indicateur de barre couperait dans l'événement `activelayout` de Hyprland ;
+- les deux `.keylayout` atteignent chaque caractère de la disposition, sans donner deux sens à un code de touche, et chaque état de touche morte sait se terminer ;
+- l'ISO d'Apple reçoit `@` et `#` sur les codes que son matériel envoie vraiment.
 
 ## Structure
 
@@ -128,8 +161,8 @@ Les tests ne vérifient pas des goûts, ils vérifient des faits :
 layout.yml     la disposition, source unique
 compose.yml    les séquences Compose montrées sur la feuille et sur le site
 lib/           le générateur
-linux/         les fichiers XKB produits, et l'installeur
-macos/         vide, voir le README
+linux/         les fichiers XKB produits (symboles, types, règles), et l'installeur
+macos/         les .keylayout produits, et l'installeur, voir le README
 windows/       vide, voir le README
 site/          le site, une application Rails construite en statique, voir le README
 out/           produit par bin/build, hors dépôt
