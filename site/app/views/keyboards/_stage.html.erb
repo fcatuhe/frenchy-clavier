@@ -14,16 +14,21 @@
     <div class="options">
       <%= tag.input type: "checkbox", id: "diff", checked: true %>
       <%= label_tag "diff", "Griser ce qui ne change pas" %>
+      <%= tag.input type: "checkbox", id: "fourth" %>
+      <%= label_tag "fourth", "AltGr + Maj" %>
     </div>
   </fieldset>
 </div>
 
 <figure class="stage">
-  <%= render partial: "keyboards/board", collection: boards, as: :board %>
+  <% boards.each do |board| %>
+    <%= render "keyboards/board", board: board, keys: keys_of(board), diff: true %>
+  <% end %>
 </figure>
 
 <p class="legend">
   <span><b class="altgr">é</b> AltGr</span>
+  <span class="fourth"><b class="altgr">É</b> AltGr + Maj, en haut à droite</span>
   <span><b class="dead">&#9676;&#769;</b> touche morte</span>
   <span class="diff"><b class="same">a</b> comme sur l'AZERTY</span>
 </p>

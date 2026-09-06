@@ -1,7 +1,7 @@
 ---
 title: Installer
 description: Poser frenchy-clavier sur Linux, et revenir en arrière.
-position: 1
+position: 2
 ---
 
 <section class="hero" markdown="1">

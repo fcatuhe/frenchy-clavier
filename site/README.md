@@ -15,13 +15,13 @@ bin/dev              # http://localhost:3000
 bin/static-build     # site/build
 ```
 
-`bin/static-build` appelle d'abord `../bin/build`, parce que la feuille A4 imprimable que le
-site propose au téléchargement est rendue par le générateur, pas par Rails.
+`bin/static-build` appelle d'abord `../bin/build`, parce que la page à imprimer,
+`public/imprimer.html` servie sur `/imprimer`, est rendue par le générateur, pas par Rails.
 
 ## Où vit quoi
 
 ```
-content/pages/*.md            les deux pages, en français, frontmatter + markdown + ERB
+content/pages/*.md            les trois pages, en français, frontmatter + markdown + ERB
 app/views/keyboards/          les partiels qui dessinent un clavier, une touche, l'étage
 app/helpers/keyboards_helper  les classes CSS de géométrie, calculées depuis les claviers
 app/models/keyboard.rb        le pont vers le générateur, un dossier plus haut
@@ -35,7 +35,7 @@ Le markdown porte la prose et rien d'autre. Tout ce qui décrit la disposition e
 générateur au moment du rendu :
 
 - les deux claviers, ISO et ANSI, viennent de `lib/clavier/boards.rb`, avec leurs vraies largeurs ;
-- ce qui est grisé comme inchangé vient de `lib/clavier/azerty.rb`, comparé niveau par niveau ;
+- l'AZERTY et le QWERTY US de la page Référence viennent de `lib/clavier/reference.rb`, et c'est le même AZERTY, comparé niveau par niveau, qui dit ce que l'accueil grise ;
 - les quatre niveaux de chaque touche viennent de `layout.yml` ;
 - la variante ISO vient de la section `iso:` de `layout.yml`, la même que lit le pilote XKB ;
 - les touches mortes et les suites Compose du testeur viennent du fichier Compose du système ;

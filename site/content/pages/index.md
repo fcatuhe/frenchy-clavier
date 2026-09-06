@@ -36,7 +36,7 @@ Ce qu'il faut savoir pour taper dès l'installation. Le reste s'apprend en regar
 | `°` `→` `½` | <kbd>Verr. maj.</kbd> est Compose : <kbd>Verr. maj.</kbd> puis `o o`, `- >`, `1 2` |
 | MAJUSCULES | les deux <kbd>Maj</kbd> ensemble, la diode s'allume, un seul <kbd>Maj</kbd> libère |
 
-Imprimez la <a href="/sheet.html">feuille A4</a> et posez-la sous l'écran : elle montre tout, Compose compris.
+<a href="/imprimer">Imprimez le clavier</a> sur une feuille A4 et posez-la sous l'écran : elle montre tout, Compose compris.
 
 ## Pourquoi
 

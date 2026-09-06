@@ -1,5 +1,5 @@
 module KeyboardsHelper
-  QUADRANTS = [ [ "base", 0 ], [ "shift", 1 ], [ "altgr", 2 ] ].freeze
+  QUADRANTS = [ [ "base", 0 ], [ "shift", 1 ], [ "altgr", 2 ], [ "altgr-shift", 3 ] ].freeze
 
   def boards = Keyboard.all
 
@@ -17,8 +17,8 @@ module KeyboardsHelper
     [ unit_class(slot.width), ("join-#{slot.join}" if slot.join) ].compact.join(" ")
   end
 
-  def key_classes(slot, key)
-    [ slot_classes(slot), ("same" if Clavier::Azerty.same?(slot.code, key)) ].compact.join(" ")
+  def key_classes(slot, key, diff)
+    [ slot_classes(slot), ("same" if diff && Clavier::Reference.same_as_azerty?(slot.code, key)) ].compact.join(" ")
   end
 
   def geometry_css

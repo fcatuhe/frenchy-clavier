@@ -29,9 +29,9 @@ Quatre niveaux par touche : base, Maj, AltGr, AltGr+Maj.
 | ponctuation | `. , : ? ' / # - _ =` en direct, `\ ; ! | " · ^` sur Maj, `&` sur AltGr+É |
 | typographie | `’ « » ° ± ÷ ×`, l'espace insécable sur AltGr+espace et la fine insécable sur AltGr+Maj+espace |
 
-Le clavier complet, imprimable en A4, est dans `out/sheet.html` après un `bin/build`. Il montre les quatre niveaux de chaque touche, la couche Compose et la liste des niveaux encore libres.
+Le clavier complet, imprimable en A4, est dans `out/imprimer.html` après un `bin/build`. Il montre les quatre niveaux de chaque touche, la couche Compose et la liste des niveaux encore libres.
 
-Le site montre la disposition sur un clavier ISO ou ANSI, grise ce qui ne change pas par rapport à l'AZERTY, et un testeur l'applique dans le navigateur sans rien installer.
+Le site montre la disposition sur un clavier ISO ou ANSI, grise ce qui ne change pas par rapport à l'AZERTY, dessine l'AZERTY et le QWERTY US pour comparer, et un testeur l'applique dans le navigateur sans rien installer.
 
 ### Verr. maj.
 

@@ -28,7 +28,7 @@ end
 
 printed = Clavier::Sheet.new(layout, compose_path: File.join(root, "compose.yml")).to_s
 
-SHEETS = [ %w[out sheet.html], %w[site public sheet.html] ].freeze
+SHEETS = [ %w[out imprimer.html], %w[site public imprimer.html] ].freeze
 
 SHEETS.each do |parts|
   sheet = File.join(root, *parts)

@@ -1,5 +1,4 @@
 <div class="board <%= board_class(board) %>" data-board="<%= board.id %>">
-  <% keys = keys_of(board) -%>
   <% alpha_rows(board).each do |row| -%>
   <div class="row n<%= row.size %>">
     <% row.each do |slot| -%>
@@ -14,7 +13,7 @@
       <% elsif slot.code.nil? -%>
     <div class="slot fixed <%= slot_classes(slot) %>"><%= slot.label %></div>
       <% else -%>
-    <%= render "keyboards/key", slot: slot, key: keys[slot.code] %>
+    <%= render "keyboards/key", slot: slot, key: keys.fetch(slot.code), diff: diff %>
       <% end -%>
     <% end -%>
   </div>

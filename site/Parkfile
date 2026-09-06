@@ -6,6 +6,9 @@ Parklife.application.configure do |config|
   # Serve trailing slash-less URLs from GitHub Pages.
   config.nested_index = false
 
+  # Canonical URLs and the sitemap need the real host, CI's --base overrides it.
+  config.base = "https://frenchy-clavier.azade.dev"
+
   # See configuration options here:
   # https://github.com/benpickles/parklife#configuration
 end

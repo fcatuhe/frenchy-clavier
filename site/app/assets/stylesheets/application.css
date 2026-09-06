@@ -160,18 +160,21 @@ fieldset.switch legend {
 
 /* Boards */
 
-.stage { margin: 0; overflow-x: auto; padding-bottom: var(--step); }
+.stage, .reference { margin: 0; overflow-x: auto; padding-bottom: var(--step); }
 
-.board { display: none; }
+.reference { margin-bottom: calc(var(--step) * 6); }
 
-body:has(#board-framework-13-iso:checked) [data-board="framework-13-iso"],
-body:has(#board-framework-13-ansi:checked) [data-board="framework-13-ansi"] { display: flex; }
+.stage .board { display: none; }
+
+body:has(#board-framework-13-iso:checked) .stage [data-board="framework-13-iso"],
+body:has(#board-framework-13-ansi:checked) .stage [data-board="framework-13-ansi"] { display: flex; }
 
 @supports not selector(:has(*)) {
-  .board { display: flex; }
+  .stage .board { display: flex; }
 }
 
 .board {
+  display: flex;
   flex-direction: column;
   gap: var(--gap);
   min-width: calc(var(--units) * var(--pitch));
@@ -238,9 +241,15 @@ body:has(#board-framework-13-ansi:checked) [data-board="framework-13-ansi"] { di
 
 .q.shift { grid-area: 1 / 1; }
 .q.base { grid-area: 2 / 1; align-self: end; }
+.q.altgr-shift { grid-area: 1 / 2; justify-self: end; }
 .q.altgr { grid-area: 2 / 2; align-self: end; justify-self: end; }
 
-.q.altgr { color: var(--altgr); font-size: 0.88rem; }
+.q.altgr, .q.altgr-shift { color: var(--altgr); font-size: 0.88rem; }
+
+.q.altgr-shift, .legend .fourth { display: none; }
+
+body:has(#fourth:checked) .q.altgr-shift,
+body:has(#fourth:checked) .legend .fourth { display: revert; }
 
 .q.dead { color: var(--dead); }
 
