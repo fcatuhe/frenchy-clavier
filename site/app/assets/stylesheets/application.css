@@ -194,7 +194,7 @@ body:has(#board-framework-13-ansi:checked) .stage [data-board="framework-13-ansi
   grid-template-rows: 1fr 1fr;
   height: calc(var(--pitch) - var(--gap));
   padding: 6px 5px 3px;
-  width: calc((100% - (var(--slots) - 1) * var(--gap)) * var(--span) / var(--units));
+  width: calc(var(--span) * var(--pitch) - var(--gap));
 }
 
 .slot.fixed {

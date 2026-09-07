@@ -8,6 +8,11 @@ class BoardTest < Minitest::Test
 
   def boards = Clavier::Boards.all
 
+  def left_edge(row, name, nth = 1)
+    index = row.each_index.select { row[it].code == name || row[it].label == name }[nth - 1]
+    row.first(index).sum(&:width).round(4)
+  end
+
   def test_there_is_a_board_for_every_machine_the_readme_claims
     assert_equal(%w[x1-carbon-ansi framework-13-ansi framework-13-iso macbook-us macbook-fr],
       boards.map(&:id))
@@ -46,6 +51,15 @@ class BoardTest < Minitest::Test
     assert_equal("Entrée", @layout.on(iso)["BKSL"].glyph(0))
     assert_equal("#", @layout.on(iso)["LSGT"].glyph(0))
     assert_equal("#", @layout["BKSL"].glyph(0))
+  end
+
+  def test_the_thinkpad_bottom_row_lines_up_with_the_row_above
+    board = Clavier::Boards["x1-carbon-ansi"]
+    lower, bottom = board.rows[4], board.rows[5]
+
+    assert_equal(left_edge(lower, "AB01"), left_edge(bottom, "Super"), "Super under Z")
+    assert_equal(left_edge(lower, "AB08"), left_edge(bottom, "Alt", 2), "right Alt under the comma")
+    assert_equal(left_edge(lower, "RTSH"), bottom.sum(&:width) - bottom.last.width, "arrows under right Shift")
   end
 
   def test_every_board_says_where_its_millimetres_came_from

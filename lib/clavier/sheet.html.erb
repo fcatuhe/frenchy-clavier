@@ -49,7 +49,7 @@
   .row-fn { --gap: calc(var(--pitch) / 40); margin-bottom: calc(var(--pitch) / 20); }
 
   .slot {
-    width: calc((100% - (var(--slots) - 1) * var(--gap)) * var(--span) / var(--units));
+    width: calc(var(--span) * var(--pitch) - var(--gap));
     flex: none;
     height: calc(var(--pitch) - var(--gap));
     border: 1px solid var(--edge-strong);
@@ -161,8 +161,6 @@
   }
 
   <%= unit_classes %>
-
-  <%= slot_count_classes %>
 </style>
 </head>
 <body>
@@ -173,7 +171,7 @@
 
 <div class="board">
 <% rows.each_with_index do |row, row_index| -%>
-  <div class="row n<%= row.size %><%= " row-fn" if row_index.zero? %>">
+  <div class="row<%= " row-fn" if row_index.zero? %>">
   <% row.each do |slot| -%>
     <% if slot.spacer -%>
     <div class="slot spacer <%= unit_class(slot.width) %>"></div>
@@ -208,7 +206,7 @@
 
 <div class="board compose">
 <% rows.each_with_index do |row, row_index| -%>
-  <div class="row n<%= row.size %><%= " row-fn" if row_index.zero? %>">
+  <div class="row<%= " row-fn" if row_index.zero? %>">
   <% row.each do |slot| -%>
     <% if slot.code.nil? -%>
     <div class="slot spacer <%= unit_class(slot.width) %>"></div>

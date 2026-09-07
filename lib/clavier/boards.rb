@@ -65,7 +65,7 @@ module Clavier
       bottom_row: [
         fixed("Fn"), fixed("Ctrl", 1.15), fixed("Super"), fixed("Alt"),
         key("SPCE", 5.0),
-        fixed("AltGr"), fixed("PrtSc"), fixed("Ctrl"),
+        fixed("Alt"), fixed("PrtSc"), fixed("Ctrl"),
         cluster(2.85, [["PgUp", "\u2191", "PgDn"], ["\u2190", "\u2193", "\u2192"]])
       ]
     )

@@ -43,7 +43,7 @@ module Clavier
       "AB05" => ["b", "B"], "AB06" => ["n", "N"], "AB07" => ["m", "M"],
       "AB08" => [",", "<"], "AB09" => [".", ">"], "AB10" => ["/", "?"],
 
-      "CAPS" => ["<Caps_Lock>"]
+      "CAPS" => ["CapsLock"], "LFSH" => ["Shift"], "RTSH" => ["Shift"]
     }.freeze
 
     AZERTY_MAC = {

@@ -1,6 +1,6 @@
 <div class="board <%= board_class(board) %>" data-board="<%= board.id %>">
   <% alpha_rows(board).each do |row| -%>
-  <div class="row n<%= row.size %>">
+  <div class="row">
     <% row.each do |slot| -%>
       <% if slot.spacer -%>
     <div class="slot spacer <%= slot_classes(slot) %>"></div>

@@ -26,12 +26,10 @@ module KeyboardsHelper
   def geometry_css
     drawn = Clavier::Boards.all
     widths = drawn.flat_map { |board| board.rows.flatten.map(&:width) }.uniq.sort
-    slots = drawn.flat_map { |board| board.rows.map(&:size) }.uniq.sort
 
     [
       drawn.map { ".#{board_class(it)} { --units: #{format('%.4f', it.units)}; }" },
-      widths.map { ".#{unit_class(it)} { --span: #{format('%.4f', it)}; }" },
-      slots.map { ".n#{it} { --slots: #{it}; }" }
+      widths.map { ".#{unit_class(it)} { --span: #{format('%.4f', it)}; }" }
     ].flatten.join("\n").html_safe
   end
 
