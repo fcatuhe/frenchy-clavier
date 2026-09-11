@@ -81,6 +81,16 @@ L'ordre des deux dispositions n'est pas libre sous Omarchy, et frenchy va devant
 
 Les chiffres, eux, ne changent rien : Omarchy attache ses bureaux à `code:10` à `code:19`, des positions et non des keysyms, donc les chiffres sur Maj ne leur coûtent rien.
 
+### L'indicateur dans la barre
+
+Hyprland rapporte le verrou, mais ne l'annonce pas : `numLock` est dans `hyprctl devices -j`, aucun événement ne dit qu'il vient de changer. Une barre qui veut suivre la bascule sans interroger Hyprland en boucle fait lever l'événement par la touche elle-même, dans `~/.config/hypr/bindings.lua` :
+
+```lua
+hl.bind("Multi_key", hl.dsp.event("digitlock"), { non_consuming = true, release = true, ignore_mods = true })
+```
+
+`Multi_key` est ce que donne Verr. maj. sans modificateur, et c'est là-dessus que Hyprland résout ses raccourcis. Les trois options comptent : `non_consuming`, sans quoi la touche n'atteint plus le verrou qu'elle est là pour bouger ; `release`, parce que XKB ne fixe le verrou qu'une fois la touche relâchée, et qu'une lecture faite à l'appui rend toujours la même valeur ; `ignore_mods`, parce que Maj est lâchée la première et que Hyprland exige sinon au relâchement les modificateurs de l'appui. L'événement part avant que Hyprland ne passe la touche à XKB, donc l'indicateur attend quelques dizaines de millisecondes avant de lire `numLock`.
+
 ### Ce qui reste en QWERTY
 
 La console et l'invite de déverrouillage du disque lisent `XKBLAYOUT` dans `/etc/vconsole.conf`, qu'on ne touche pas : la phrase de passe se tape dans la disposition de l'installation, pas dans frenchy.
