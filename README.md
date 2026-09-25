@@ -41,6 +41,8 @@ Le verrou des chiffres est Verr. num. lui-même, pas un verrou de plus. Verr. nu
 
 Ce que ça coûte : la disposition dépend d'un état que le système possède. Omarchy démarre sur `numlock_by_default = true`, donc la session s'ouvre sur les accents. Une session qui démarre Verr. num. éteint s'ouvre sur les chiffres, et Maj + Verr. maj. remet les accents. La touche Verr. num. d'un clavier externe fait la même bascule que Maj + Verr. maj.
 
+C'est donc Hyprland qui choisit l'état d'ouverture, pas la disposition : `numlock_by_default = false` dans la section `input` ouvre la session sur les chiffres, `true` sur les accents. Le réglage est lu à la création du clavier, il vaut à la session suivante et pour tous les claviers, pavé numérique compris.
+
 Une disposition installée seule porte tout : Compose, le Verr. maj. par les deux Maj et le verrou des chiffres. Ses touches Maj verrouillent par une action `LockMods` et répondent `VoidSymbol`, ce que Compose ne peut pas ignorer, donc les deux Maj referment la séquence en cours. Sous Omarchy c'est `shift:both_capslock_cancel` qui gouverne, avec le keysym `Caps_Lock` : même verrouillage, mais une séquence Compose commencée reste ouverte derrière.
 
 Il reste une option à nous, `frenchy:digitlock`, et une seule raison de l'avoir : XKB fusionne les options après les dispositions et toujours sur le groupe 1, donc `compose:caps` écrase la touche Verr. maj. de frenchy, verrou des chiffres compris, dès que frenchy est la première disposition. L'option la repose sur chaque groupe, après le système, et l'ordre des dispositions ne compte plus.
