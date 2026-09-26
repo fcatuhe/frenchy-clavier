@@ -8,6 +8,13 @@ layout = Clavier::Layout.load(File.join(root, "layout.yml"))
 system(File.join(root, "bin", "build"), out: File::NULL) or abort("build failed")
 system(File.join(root, "linux", "install.sh")) or abort("install failed, nothing applied")
 
+FCITX_RESTART = "omarchy-restart-xcompose"
+
+# INFO: fc 26sep26 fcitx5 forwards every key through a virtual keyboard holding the keymap it started with
+if ENV.fetch("PATH").split(File::PATH_SEPARATOR).any? { File.executable?(File.join(it, FCITX_RESTART)) }
+  system(FCITX_RESTART) or abort("#{FCITX_RESTART} failed, fcitx5 still types the old keymap")
+end
+
 devices = IO.popen(%w[hyprctl devices -j], err: File::NULL, &:read)
 exit if devices.empty?
 
@@ -25,4 +32,5 @@ warn <<~STALE
     hyprctl reload
     sed -i 's/kb_variant = "iso,"/kb_variant = "ansi,"/' ~/.config/hypr/input.lua
     hyprctl reload
+    #{FCITX_RESTART}
 STALE

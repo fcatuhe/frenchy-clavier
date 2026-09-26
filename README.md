@@ -142,7 +142,7 @@ sed -i 's/kb_variant = "iso,"/kb_variant = "ansi,"/' ~/.config/hypr/input.lua
 hyprctl reload
 ```
 
-fcitx5 garde lui aussi la disposition compilée à son démarrage, et comme son clavier virtuel est le clavier principal de la session, c'est celle-là que reçoivent les applications : `omarchy-restart-xcompose` après le `hyprctl reload`, sinon la session répond encore à l'ancienne. `xkbcli dump-keymap-wayland` montre ce qu'elle sert vraiment.
+fcitx5 garde lui aussi la disposition compilée à son démarrage, et comme son clavier virtuel est le clavier principal de la session, c'est celle-là que reçoivent les applications. `bin/apply` lance `omarchy-restart-xcompose` après l'installation. Après la recompilation forcée ci-dessus, il faut le relancer, sinon la session répond encore à l'ancienne. `xkbcli dump-keymap-wayland` montre ce qu'elle sert vraiment.
 
 ## Ce qui tient la disposition honnête
 
