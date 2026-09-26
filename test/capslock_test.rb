@@ -122,7 +122,7 @@ class CapslockTest < Minitest::Test
 
       assert_equal("À", board.character("AE01"), "#{where}: an accent is a letter")
       assert_equal("'", board.character("AC11"), "#{where}: the lock stops at the letters")
-      assert_equal(",", board.character("AB09"), "#{where}: the lock stops at the letters")
+      assert_equal(",", board.character("AB07"), "#{where}: the lock stops at the letters")
     end
   end
 

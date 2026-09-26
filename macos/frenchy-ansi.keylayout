@@ -77,8 +77,8 @@
             <key code="43" action="period"/>
             <key code="44" output=":"/>
             <key code="45" action="n"/>
-            <key code="46" output="?"/>
-            <key code="47" output=","/>
+            <key code="46" output=","/>
+            <key code="47" output="?"/>
             <key code="48" output="&#x0009;"/>
             <key code="49" output=" "/>
             <key code="50" output="@"/>
@@ -175,8 +175,8 @@
             <key code="43" output="•"/>
             <key code="44" output=";"/>
             <key code="45" action="N"/>
-            <key code="46" output="!"/>
-            <key code="47" output="·"/>
+            <key code="46" output="·"/>
+            <key code="47" output="!"/>
             <key code="48" output="&#x0009;"/>
             <key code="49" output=" "/>
             <key code="50" output="²"/>
@@ -258,8 +258,8 @@
             <key code="42" output="#"/>
             <key code="43" action="period"/>
             <key code="44" output=":"/>
-            <key code="46" output="?"/>
-            <key code="47" output=","/>
+            <key code="46" output=","/>
+            <key code="47" output="?"/>
             <key code="48" output="&#x0009;"/>
             <key code="49" output=" "/>
             <key code="50" output="³"/>
@@ -330,8 +330,8 @@
             <key code="42" output="\"/>
             <key code="43" output="•"/>
             <key code="44" output=";"/>
-            <key code="46" output="!"/>
-            <key code="47" output="·"/>
+            <key code="46" output="·"/>
+            <key code="47" output="!"/>
             <key code="48" output="&#x0009;"/>
             <key code="49" output=" "/>
             <key code="50" output="½"/>
@@ -428,8 +428,8 @@
             <key code="43" action="period"/>
             <key code="44" output=":"/>
             <key code="45" action="N"/>
-            <key code="46" output="?"/>
-            <key code="47" output=","/>
+            <key code="46" output=","/>
+            <key code="47" output="?"/>
             <key code="48" output="&#x0009;"/>
             <key code="49" output=" "/>
             <key code="50" output="@"/>
@@ -526,8 +526,8 @@
             <key code="43" output="•"/>
             <key code="44" output=";"/>
             <key code="45" action="n"/>
-            <key code="46" output="!"/>
-            <key code="47" output="·"/>
+            <key code="46" output="·"/>
+            <key code="47" output="!"/>
             <key code="48" output="&#x0009;"/>
             <key code="49" output=" "/>
             <key code="50" output="²"/>
@@ -609,8 +609,8 @@
             <key code="42" output="#"/>
             <key code="43" action="period"/>
             <key code="44" output=":"/>
-            <key code="46" output="?"/>
-            <key code="47" output=","/>
+            <key code="46" output=","/>
+            <key code="47" output="?"/>
             <key code="48" output="&#x0009;"/>
             <key code="49" output=" "/>
             <key code="50" output="³"/>
@@ -681,8 +681,8 @@
             <key code="42" output="\"/>
             <key code="43" output="•"/>
             <key code="44" output=";"/>
-            <key code="46" output="!"/>
-            <key code="47" output="·"/>
+            <key code="46" output="·"/>
+            <key code="47" output="!"/>
             <key code="48" output="&#x0009;"/>
             <key code="49" output=" "/>
             <key code="50" output="½"/>
