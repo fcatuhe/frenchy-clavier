@@ -71,10 +71,22 @@ module Clavier
     }.freeze
 
     MODIFIERS = {
-      "SPCE" => ["<space>"], "LFSH" => ["<Shift_L>"], "RTSH" => ["<Shift_R>"]
+      "SPCE" => ["<space>", "<space>"], "LFSH" => ["<Shift_L>"], "RTSH" => ["<Shift_R>"]
     }.freeze
 
-    def self.same_as_azerty?(code, key) = !AZERTY.key?(code) || AZERTY.fetch(code).first(2) == key.levels.first(2)
+    AZERTY_KEYS = MODIFIERS.merge(AZERTY).freeze
+
+    def self.same_as_azerty?(code, key, digits: false)
+      key.levels.each_index.all? { |level| key.levels[level].empty? || typed_as_on_azerty?(code, key, level, digits:) }
+    end
+
+    def self.typed_as_on_azerty?(code, key, level, digits: false)
+      char = key.levels[level]
+      !char.empty? && AZERTY_KEYS.fetch(code, [])[typed_level(key, level, digits)] == char
+    end
+
+    def self.typed_level(key, level, digits) = digits && key.lockable? && level < 2 ? 1 - level : level
+    private_class_method :typed_level
 
     def self.keys(table) = MODIFIERS.merge(table).transform_values { Layout::Key.new(it) }
   end

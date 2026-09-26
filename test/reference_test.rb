@@ -11,14 +11,34 @@ class ReferenceTest < Minitest::Test
     letters = @layout.each_key.select { |_, key| key.levels[0].match?(/\A[a-z]\z/) }
 
     assert_equal(26, letters.size)
-    letters.each { |code, key| assert(Clavier::Reference.same_as_azerty?(code, key), "#{code} moved #{key.levels[0]}") }
+    letters.each { |code, key| assert(Clavier::Reference.typed_as_on_azerty?(code, key, 0), "#{code} moved #{key.levels[0]}") }
   end
 
-  def test_the_digit_row_and_the_punctuation_row_are_what_changes
-    changed = @layout.each_key.reject { |code, key| Clavier::Reference.same_as_azerty?(code, key) }.map(&:first)
+  def test_the_digit_row_the_punctuation_row_and_the_locks_are_what_changes_without_altgr
+    changed = @layout.each_key.reject { |code, key| [0, 1].all? { Clavier::Reference.typed_as_on_azerty?(code, key, it) } }.map(&:first)
 
     assert_equal(%w[TLDE AE01 AE02 AE03 AE04 AE05 AE06 AE07 AE08 AE09 AE10 AE11 AE12
-                    AD11 AD12 BKSL AC11 AB07 AB08 AB09 AB10 CAPS], changed)
+                    AD11 AD12 BKSL AC11 AB07 AB08 AB09 AB10 CAPS LFSH RTSH], changed)
+  end
+
+  def test_the_keys_nothing_changes_on
+    unchanged = @layout.each_key.select { |code, key| Clavier::Reference.same_as_azerty?(code, key) }.map(&:first)
+
+    assert_equal(%w[AD02 AD03 AD06 AD08 AD10 AC01 AC03 AC06 AC07 AC08 AC09 AB01 AB02 AB06], unchanged)
+  end
+
+  # The comma kept its AZERTY key when its Shift level changed, and the page showed it as new.
+  def test_a_glyph_left_where_azerty_has_it_is_unchanged_whatever_its_neighbours
+    assert(Clavier::Reference.typed_as_on_azerty?("AB07", @layout["AB07"], 0))
+    refute(Clavier::Reference.typed_as_on_azerty?("AB07", @layout["AB07"], 1))
+    assert(Clavier::Reference.typed_as_on_azerty?("AD03", @layout["AD03"], 2), "€ is AltGr+E on AZERTY too")
+    refute(Clavier::Reference.typed_as_on_azerty?("AD01", @layout["AD01"], 2), "AZERTY prints no æ")
+  end
+
+  def test_a_digit_is_where_azerty_has_it_only_while_the_digit_lock_is_on
+    assert(Clavier::Reference.typed_as_on_azerty?("AE01", @layout["AE01"], 1))
+    refute(Clavier::Reference.typed_as_on_azerty?("AE01", @layout["AE01"], 1, digits: true))
+    assert(Clavier::Reference.typed_as_on_azerty?("AD03", @layout["AD03"], 0, digits: true), "the lock leaves the letters alone")
   end
 
   def test_the_iso_keys_change_too
@@ -76,8 +96,10 @@ class ReferenceTest < Minitest::Test
     assert_equal("", keys.fetch("AE02").glyph(3))
   end
 
-  def test_a_key_azerty_does_not_print_on_counts_as_unchanged
-    assert(Clavier::Reference.same_as_azerty?("LFSH", @layout["LFSH"]))
-    assert(Clavier::Reference.same_as_azerty?("SPCE", @layout["SPCE"]))
+  def test_a_modifier_azerty_does_not_print_is_compared_to_what_it_types
+    assert(Clavier::Reference.typed_as_on_azerty?("LFSH", @layout["LFSH"], 0))
+    refute(Clavier::Reference.typed_as_on_azerty?("LFSH", @layout["LFSH"], 1), "Maj + Maj locks the capitals, AZERTY's does not")
+    assert(Clavier::Reference.typed_as_on_azerty?("SPCE", @layout["SPCE"], 1))
+    refute(Clavier::Reference.typed_as_on_azerty?("SPCE", @layout["SPCE"], 2), "AltGr + Espace is the new nbsp")
   end
 end

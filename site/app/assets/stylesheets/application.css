@@ -260,10 +260,11 @@ body:has(#fourth:checked) .legend .fourth { display: revert; }
 
 /* What an AZERTY typist already knows */
 
-body:has(#diff:checked) .slot.same:not(.pressed) .q.base,
-body:has(#diff:checked) .slot.same:not(.pressed) .q.shift { opacity: 0.3; }
+body:has(#diff:checked):has(#mode-accents:checked) .slot:not(.pressed, [data-live]) .q.same,
+body:has(#diff:checked):has(#mode-digits:checked) .slot:not(.pressed, [data-live]) .q.same-digits { opacity: 0.3; }
 
-body:has(#diff:checked) .slot.same:not(.pressed) { border-color: var(--edge); }
+body:has(#diff:checked):has(#mode-accents:checked) .slot.same:not(.pressed, [data-live]),
+body:has(#diff:checked):has(#mode-digits:checked) .slot.same-digits:not(.pressed, [data-live]) { border-color: var(--edge); }
 
 .legend .diff { display: none; }
 
