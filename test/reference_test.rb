@@ -27,10 +27,10 @@ class ReferenceTest < Minitest::Test
     assert_equal(%w[AD02 AD03 AD06 AD08 AD10 AC01 AC03 AC06 AC07 AC08 AC09 AB01 AB02 AB06], unchanged)
   end
 
-  # The comma kept its AZERTY key when its Shift level changed, and the page showed it as new.
+  # A glyph kept its AZERTY key when its Shift level changed, and the page showed it as new.
   def test_a_glyph_left_where_azerty_has_it_is_unchanged_whatever_its_neighbours
-    assert(Clavier::Reference.typed_as_on_azerty?("AB07", @layout["AB07"], 0))
-    refute(Clavier::Reference.typed_as_on_azerty?("AB07", @layout["AB07"], 1))
+    assert(Clavier::Reference.typed_as_on_azerty?("AE12", @layout["AE12"], 0))
+    refute(Clavier::Reference.typed_as_on_azerty?("AE12", @layout["AE12"], 1))
     assert(Clavier::Reference.typed_as_on_azerty?("AD03", @layout["AD03"], 2), "€ is AltGr+E on AZERTY too")
     refute(Clavier::Reference.typed_as_on_azerty?("AD01", @layout["AD01"], 2), "AZERTY prints no æ")
   end
