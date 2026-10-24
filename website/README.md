@@ -9,10 +9,10 @@ pour le markdown, Rouge pour la coloration, Parklife pour la sortie, Importmap, 
 Stimulus pour le navigateur.
 
 ```bash
-cd site
+cd website
 bin/setup            # les gems
 bin/dev              # http://localhost:3000
-bin/static-build     # site/build
+bin/static-build     # website/build
 ```
 
 `bin/static-build` appelle d'abord `../bin/build`, parce que la page à imprimer,

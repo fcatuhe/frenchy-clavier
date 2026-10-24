@@ -124,7 +124,7 @@ Pas encore. Voir `windows/`.
 bin/build              # linux/xkb/, macos/*.keylayout et la feuille A4
 bin/apply              # installe et bascule Hyprland dessus, à chaud
 bin/test               # les tests
-site/bin/static-build  # le site, dans site/build/
+website/bin/static-build  # le site, dans website/build/
 ```
 
 `bin/apply` n'écrit rien dans la configuration Hyprland. `hyprctl reload` revient en arrière.
@@ -176,7 +176,7 @@ lib/           le générateur
 linux/         les fichiers XKB produits (symboles, types, règles), et l'installeur
 macos/         les .keylayout produits, et l'installeur, voir le README
 windows/       vide, voir le README
-site/          le site, une application Rails construite en statique, voir le README
+website/       le site, une application Rails construite en statique, voir le README
 out/           produit par bin/build, hors dépôt
 ```
 
