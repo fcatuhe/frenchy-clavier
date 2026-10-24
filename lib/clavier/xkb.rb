@@ -2,7 +2,6 @@ module Clavier
   class Xkb
     DIGITS = "digits".freeze
     DIGITS_LOCK = "FRENCHY_DIGITS_LOCK".freeze
-    SHIFTLOCK = "shiftlock".freeze
     DIGITLOCK = "digitlock".freeze
     CAPS = "CAPS".freeze
     LEVEL5_LOCK = "+level5(level5_lock)".freeze
@@ -14,9 +13,9 @@ module Clavier
     VARIANTS = { "iso" => "ISO", "ansi" => "ANSI" }.freeze
 
     OPTION_DESCRIPTION =
-      "Digit row on the Num Lock state, locked by Shift + Caps Lock".freeze
+      "Digit row on the Num Lock state, locked by AltGr + Caps Lock".freeze
 
-    def symbols = [ansi, iso, shiftlock, digitlock].join("\n")
+    def symbols = [ansi, iso, digitlock].join("\n")
 
     def ansi
       [
@@ -27,20 +26,8 @@ module Clavier
         "",
         key_lines,
         "",
-        %(    include "#{@layout.name}(#{SHIFTLOCK})"),
         %(    include "level3(ralt_switch)"),
         %(    include "keypad(oss)"),
-        "};",
-        ""
-      ].join("\n")
-    end
-
-    def shiftlock
-      [
-        "partial modifier_keys",
-        %(xkb_symbols "#{SHIFTLOCK}" {),
-        "",
-        acting_lines,
         "};",
         ""
       ].join("\n")
@@ -102,10 +89,9 @@ module Clavier
     def rules
       tables = ["! layout"] + (1..GROUPS).map { "! layout[#{it}]" }
 
-      lines = ["! include %S/evdev", ""] +
-        sections.flat_map { |section, included|
-          tables.flat_map { ["#{it} = #{section}", "  #{@layout.name} = #{included}", ""] }
-        } + option_rules(tables)
+      lines = sections.flat_map { |section, included|
+        tables.flat_map { ["#{it} = #{section}", "  #{@layout.name} = #{included}", ""] }
+      } + option_rules(tables)
 
       lines.join("\n")
     end
@@ -168,13 +154,7 @@ module Clavier
     private
 
     def key_lines
-      plain = @layout.each_key.reject { |_, key| key.blank? || key.actions }
-      plain.map { |code, key| line(code, key) }.join("\n")
-    end
-
-    def acting_lines
-      acting = @layout.each_key.select { |_, key| key.actions }
-      acting.map { |code, key| acting_line(code, key) }.join("\n")
+      @layout.each_key.reject { |_, key| key.blank? }.map { |code, key| line(code, key) }.join("\n")
     end
 
     def line(code, key, verb: "key")

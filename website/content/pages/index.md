@@ -24,7 +24,7 @@ Ce qu'il faut savoir pour taper dès l'installation. Le reste s'apprend en regar
 | Pour | Faites |
 |---|---|
 | `à è é` | en direct, les trois premières touches de la rangée du haut |
-| les chiffres | <kbd>Maj</kbd>. Pour l'anglais, le code ou un long nombre, <kbd>Maj</kbd> + <kbd>Verr. maj.</kbd> éteint Verr. num. : les chiffres en direct, les accents sur <kbd>Maj</kbd>. La même combinaison revient au français |
+| les chiffres | <kbd>Maj</kbd>. Pour l'anglais, le code ou un long nombre, <kbd>AltGr</kbd> + <kbd>Verr. maj.</kbd> éteint Verr. num. : les chiffres en direct, les accents sur <kbd>Maj</kbd>. La même combinaison revient au français |
 | `ç` `ù` | <kbd>AltGr</kbd> + <kbd>C</kbd>, <kbd>AltGr</kbd> + <kbd>U</kbd> |
 | `É À È Ù Ç` | <kbd>AltGr</kbd> + <kbd>Maj</kbd> + la touche de la minuscule |
 | `ê ë` et les autres | `^` sur la touche 8 et `¨` sur la touche 7, puis la voyelle |
@@ -34,8 +34,8 @@ Ce qu'il faut savoir pour taper dès l'installation. Le reste s'apprend en regar
 | `@` | la touche `²`, en haut à gauche |
 | `{ }` `[ ]` `< >` | <kbd>AltGr</kbd> + `( )`, <kbd>AltGr</kbd> + <kbd>R</kbd> <kbd>T</kbd>, <kbd>AltGr</kbd> + <kbd>F</kbd> <kbd>G</kbd> |
 | `« »` `€` | <kbd>AltGr</kbd> + <kbd>V</kbd> <kbd>B</kbd>, <kbd>AltGr</kbd> + <kbd>E</kbd> |
-| `°` `→` `½` | <kbd>Verr. maj.</kbd> est Compose : <kbd>Verr. maj.</kbd> puis `o o`, `- >`, `1 2` |
-| MAJUSCULES | les deux <kbd>Maj</kbd> ensemble, la diode s'allume, un seul <kbd>Maj</kbd> libère |
+| `°` `→` `½` | <kbd>Maj</kbd> + <kbd>Verr. maj.</kbd> est Compose : <kbd>Maj</kbd> + <kbd>Verr. maj.</kbd> puis `o o`, `- >`, `1 2` |
+| MAJUSCULES | <kbd>Verr. maj.</kbd>, comme partout |
 
 <a href="/imprimer">Imprimez le clavier</a> sur une feuille A4 et posez-la sous l'écran : elle montre tout, Compose compris.
 

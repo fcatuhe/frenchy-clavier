@@ -51,9 +51,10 @@ xkb_symbols "ansi" {
     key <AB09> { [ comma           , periodcentered ] };
     key <AB10> { [ colon           , semicolon ] };
     key <SPCE> { [ space           , space           , nobreakspace    , U202F ] };
-    key <CAPS> { type[Group1] = "TWO_LEVEL", [ Multi_key       , ISO_Level5_Lock ] };
+    key <CAPS> { type[Group1] = "FOUR_LEVEL", symbols[Group1] = [ Caps_Lock, Multi_key, ISO_Level5_Lock ], actions[Group1] = [ LockMods(modifiers=Lock), NoAction(), LockMods(modifiers=NumLock) ] };
+    key <LFSH> { [ Shift_L ] };
+    key <RTSH> { [ Shift_R ] };
 
-    include "frenchy(shiftlock)"
     include "level3(ralt_switch)"
     include "keypad(oss)"
 };
@@ -70,14 +71,7 @@ xkb_symbols "iso" {
 };
 
 partial modifier_keys
-xkb_symbols "shiftlock" {
-
-    key <LFSH> { type[Group1] = "ALPHABETIC", symbols[Group1] = [ Shift_L, VoidSymbol ], actions[Group1] = [ SetMods(modifiers=Shift,clearLocks), LockMods(modifiers=Lock) ] };
-    key <RTSH> { type[Group1] = "ALPHABETIC", symbols[Group1] = [ Shift_R, VoidSymbol ], actions[Group1] = [ SetMods(modifiers=Shift,clearLocks), LockMods(modifiers=Lock) ] };
-};
-
-partial modifier_keys
 xkb_symbols "digitlock" {
 
-    key <CAPS> { type[Group1] = "TWO_LEVEL", [ Multi_key       , ISO_Level5_Lock ] };
+    key <CAPS> { type[Group1] = "FOUR_LEVEL", symbols[Group1] = [ Caps_Lock, Multi_key, ISO_Level5_Lock ], actions[Group1] = [ LockMods(modifiers=Lock), NoAction(), LockMods(modifiers=NumLock) ] };
 };

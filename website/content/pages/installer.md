@@ -33,7 +33,7 @@ Dans `~/.config/hypr/input.lua` :
 ```lua
 hl.config({ input = {
   kb_layout = "frenchy,us",
-  kb_options = "compose:caps,shift:both_capslock_cancel,grp:ctrls_toggle,frenchy:digitlock",
+  kb_options = "omarchy:shift_caps_compose,grp:ctrls_toggle,frenchy:digitlock",
 } })
 ```
 
@@ -41,11 +41,11 @@ Les deux Ctrl basculent entre frenchy-clavier et QWERTY US. Sans variante c'est 
 
 Gardez frenchy devant. Hyprland résout les raccourcis écrits en lettres sur la première disposition, jamais sur celle qui est active, et sous Omarchy le verrouillage de l'écran ramène le clavier sur elle.
 
-Les trois premières options sont celles d'Omarchy : Compose sur Verr. maj., Verr. maj. par les deux Maj, et la bascule de groupe, ici sur les deux Ctrl pour laisser l'AltGr tranquille. `frenchy:digitlock` n'ajoute que le verrou des chiffres, sur Maj + Verr. maj. Le pourquoi est dans le [README](https://github.com/fcatuhe/frenchy-clavier#verr-maj).
+La première option est celle d'Omarchy : Verr. maj. verrouille les majuscules, et Maj + Verr. maj. est Compose. La deuxième bascule les groupes, ici sur les deux Ctrl pour laisser l'AltGr tranquille. `frenchy:digitlock` ajoute le verrou des chiffres sur AltGr + Verr. maj. Avant Omarchy 4.5, l'option d'Omarchy n'existe pas encore : libxkbcommon le signale et l'ignore, et `frenchy:digitlock` pose la même touche. Le pourquoi est dans le [README](https://github.com/fcatuhe/frenchy-clavier#verr-maj).
 
 ### GNOME, KDE, X11
 
-La disposition apparaît dans la liste des dispositions du système sous le nom **frenchy-clavier**, en ISO et en ANSI. Choisissez-la comme n'importe quelle autre.
+La disposition apparaît dans la liste des dispositions du système sous le nom **frenchy-clavier**, en ISO et en ANSI. Choisissez-la comme n'importe quelle autre : seule, elle porte Verr. maj., Compose sur Maj + Verr. maj. et le verrou des chiffres sur AltGr + Verr. maj. Il faut libxkbcommon 1.13 ou plus récent, ce que l'installeur vérifie quand `xkbcli` est là.
 
 ## Revenir en arrière
 
@@ -53,7 +53,7 @@ Remettez `kb_layout` comme il était, ou retirez la disposition dans les réglag
 
 ```bash
 rm -f ~/.config/xkb/{symbols,types,compat}/frenchy
-rm -f ~/.config/xkb/rules/evdev ~/.config/xkb/rules/evdev.xml
+rm -f ~/.config/xkb/rules/evdev.post ~/.config/xkb/rules/evdev.xml
 ```
 
 ## macOS
@@ -68,7 +68,7 @@ macos/install.sh
 
 Fermer la session, la réouvrir, puis ajouter la disposition dans Réglages Système > Clavier > Sources de saisie > Modifier > +, à la rubrique Autres.
 
-Option (⌥) joue AltGr, et les touches mortes répondent comme sous Linux. Verr. maj. reste Verr. maj. : un fichier de disposition macOS ne sait rien faire dire à une touche modificatrice, donc ni Compose, ni Verr. maj. par les deux Maj. Le verrou des chiffres non plus, puisqu'il repose sur Num Lock, que macOS ne montre pas aux dispositions : les accents restent en direct et les chiffres sur Maj.
+Option (⌥) joue AltGr, et les touches mortes répondent comme sous Linux. Verr. maj. verrouille les majuscules, comme sous Linux. Un fichier de disposition macOS ne sait rien faire dire à une touche modificatrice, donc Maj + Verr. maj. n'ouvre pas Compose. Le verrou des chiffres non plus, puisqu'il repose sur Num Lock, que macOS ne montre pas aux dispositions : les accents restent en direct et les chiffres sur Maj.
 
 Pour la retirer, la supprimer de la liste des sources de saisie puis :
 

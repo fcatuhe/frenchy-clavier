@@ -68,7 +68,7 @@ class LayoutTest < Minitest::Test
   def test_the_option_carries_the_digit_lock_alone_and_reaches_every_group
     rules = Clavier::Xkb.new(@layout).rules
 
-    refute_match(/compose\(caps\)|shiftlock/, rules, "Compose and Caps Lock are Omarchy's own options")
+    refute_match(/^! include/, rules, "a .post file adds to the rules found first, Omarchy's or the system's")
 
     (1..Clavier::Xkb::GROUPS).each do |group|
       assert_match(/^  \* #{@layout.name}:digitlock = \+#{@layout.name}\(digitlock\):#{group}$/, rules,
@@ -76,15 +76,15 @@ class LayoutTest < Minitest::Test
     end
   end
 
-  def test_the_shift_keys_lock_without_joining_the_lock_modifier_map
+  # Xwayland gives a key in the Lock map Lock on every group, so a Shift key there stops shifting X11 apps.
+  def test_only_the_caps_key_joins_the_lock_modifier_map
     Dir.mktmpdir do |dir|
       install(dir)
 
       keymap = IO.popen({ "XDG_CONFIG_HOME" => dir },
-        ["xkbcli", "compile-keymap", "--layout", "us,#{@layout.name}", "--options", "caps:none", err: File::NULL], &:read)
+        ["xkbcli", "compile-keymap", "--layout", "us,#{@layout.name}", err: File::NULL], &:read)
 
-      refute_match(/modifier_map Lock/, keymap, "a Lock modmap follows the key across every group")
-      assert_match(/LockMods\(modifiers=Lock\)/, keymap)
+      assert_match(/^\s*modifier_map Lock \{ <CAPS> \};$/, keymap)
     end
   end
 

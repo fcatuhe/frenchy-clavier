@@ -3,7 +3,7 @@ title: frenchy-clavier (AZERTY)
 short: fc
 subtitle: ThinkPad X1 Carbon Gen 6 - ANSI
 
-# Shift + Caps turns Num Lock off, which hands the digit row its Shift level. Caps alone stays Compose.
+# AltGr + Caps turns Num Lock off, which hands the digit row its Shift level.
 digits_lock: true
 
 # Levels, in order: base, shift, altgr, altgr+shift.
@@ -62,22 +62,14 @@ keys:
 
   SPCE: ["<space>", "<space>", "<nobreakspace>", "<U202F>"]
 
-  CAPS: ["<Multi_key>", "<ISO_Level5_Lock>", "", ""]
+  CAPS: ["<Caps_Lock>", "<Multi_key>", "<ISO_Level5_Lock>", ""]
 
-  LFSH: ["<Shift_L>", "<VoidSymbol>", "", ""]
-  RTSH: ["<Shift_R>", "<VoidSymbol>", "", ""]
+  LFSH: ["<Shift_L>", "", "", ""]
+  RTSH: ["<Shift_R>", "", "", ""]
 
-# Locking by action, not by the Caps_Lock keysym, keeps the Shift keys out of
-# the Lock modifier map. VoidSymbol on that level is what Compose cannot ignore.
+# Explicit actions, so Shift + Caps composes without locking Caps.
 actions:
-  LFSH: ["SetMods(modifiers=Shift,clearLocks)", "LockMods(modifiers=Lock)"]
-  RTSH: ["SetMods(modifiers=Shift,clearLocks)", "LockMods(modifiers=Lock)"]
-
-# Keys that must not answer to AltGr, or holding it would swallow the modifier.
-types:
-  CAPS: TWO_LEVEL
-  LFSH: ALPHABETIC
-  RTSH: ALPHABETIC
+  CAPS: ["LockMods(modifiers=Lock)", "NoAction()", "LockMods(modifiers=NumLock)"]
 
 # ISO hardware has one key ANSI does not, and Enter reaches up a row. The key
 # left of Enter becomes a second Enter, and the backslash moves left of Maj.

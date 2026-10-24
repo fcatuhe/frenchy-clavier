@@ -17,7 +17,6 @@ module Xkb
 
   extern "void *xkb_context_new(int)"
   extern "int xkb_context_include_path_append(void *, char *)"
-  extern "int xkb_context_include_path_append_default(void *)"
   extern "void *xkb_keymap_new_from_names(void *, void *, int)"
   extern "unsigned int xkb_keymap_key_by_name(void *, char *)"
   extern "void *xkb_state_new(void *)"
@@ -35,7 +34,9 @@ module Xkb
 end
 
 class Keyboard
-  OMARCHY_OPTIONS = "compose:caps,shift:both_capslock_cancel".freeze
+  OMARCHY_OPTIONS = "omarchy:shift_caps_compose".freeze
+  OMARCHY_XKB = File.expand_path("omarchy/xkb", __dir__)
+  SYSTEM_XKB = ENV.fetch("XKB_CONFIG_ROOT", "/usr/share/X11/xkb")
   GROUP_TOGGLE = "grp:ctrls_toggle".freeze
   DIGITS_UNLOCKED = Xkb::MOD2
   SEQUENCE = %(<Multi_key> <a> <a> : "\u0101"\n).freeze
@@ -43,7 +44,7 @@ class Keyboard
   def self.install(dir, layout)
     xkb = Clavier::Xkb.new(layout)
     { "symbols/#{layout.name}" => xkb.symbols, "types/#{layout.name}" => xkb.types,
-      "rules/evdev" => xkb.rules, "rules/evdev.xml" => xkb.registry }.each do |path, content|
+      "rules/evdev.post" => xkb.rules, "rules/evdev.xml" => xkb.registry }.each do |path, content|
       target = File.join(dir, "xkb", path)
       FileUtils.mkdir_p(File.dirname(target))
       File.write(target, content)
@@ -51,10 +52,9 @@ class Keyboard
     dir
   end
 
-  def initialize(dir, layout:, variant:, options:, group: 0)
+  def initialize(dir, layout:, variant:, options:, group: 0, omarchy: true)
     @context = Xkb.xkb_context_new(Xkb::NO_DEFAULT_INCLUDES)
-    Xkb.xkb_context_include_path_append(@context, File.join(dir, "xkb"))
-    Xkb.xkb_context_include_path_append_default(@context)
+    [File.join(dir, "xkb"), (OMARCHY_XKB if omarchy), SYSTEM_XKB].compact.each { Xkb.xkb_context_include_path_append(@context, it) }
     @keymap = Xkb.xkb_keymap_new_from_names(@context, names(layout, variant, options), 0)
     raise "the layout does not compile" if @keymap.null?
 

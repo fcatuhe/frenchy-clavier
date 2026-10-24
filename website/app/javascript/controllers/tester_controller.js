@@ -1,6 +1,6 @@
 import { Controller } from "@hotwired/stimulus"
 
-const COMPOSE_CODE = "CapsLock"
+const CAPS_CODE = "CapsLock"
 const NUM_LOCK_CODE = "NumLock"
 const MAX_COMPOSE = 3
 
@@ -17,20 +17,12 @@ export default class extends Controller {
   press(event) {
     if (event.metaKey || (event.ctrlKey && !event.altKey)) return
 
-    if (event.code === NUM_LOCK_CODE || (event.code === COMPOSE_CODE && event.shiftKey)) {
+    if (event.code === NUM_LOCK_CODE || event.code === CAPS_CODE) {
       event.preventDefault()
       this.pendingDead = null
       this.composing = null
       this.light(event.code)
-      return this.turnDigits()
-    }
-
-    if (event.code === COMPOSE_CODE) {
-      event.preventDefault()
-      this.pendingDead = null
-      this.composing = ""
-      this.light(event.code)
-      return this.repaint()
+      return this.lock(event.code === NUM_LOCK_CODE ? 2 : this.levelOf(event))
     }
 
     const level = this.levelAt(event.code, this.levelOf(event))
@@ -48,7 +40,15 @@ export default class extends Controller {
   reset() {
     this.pendingDead = null
     this.composing = null
+    this.capsLocked = false
     this.light(null)
+    this.repaint()
+  }
+
+  lock(level) {
+    if (level === 0) this.capsLocked = !this.capsLocked
+    if (level === 1) this.composing = ""
+    if (level === 2) return this.turnDigits()
     this.repaint()
   }
 
@@ -66,8 +66,19 @@ export default class extends Controller {
   levelAt(code, level) {
     const key = this.keymap.keys[code]
     if (!key) return null
-    if (level < 2 && this.digitsTarget.checked && this.digitKeys.has(code)) return key[level ^ 1]
-    return key[level]
+    if (level < 2 && this.digitsTarget.checked && this.digitKeys.has(code)) return this.capitalised(key[level ^ 1])
+    if (this.capsLocked && this.casePair(key[level & 2], key[level | 1])) return key[level ^ 1]
+    return this.capitalised(key[level])
+  }
+
+  casePair(lower, upper) {
+    return typeof lower === "string" && lower !== upper && lower.toUpperCase() === upper
+  }
+
+  capitalised(level) {
+    if (!this.capsLocked || typeof level !== "string") return level
+    const upper = level.toUpperCase()
+    return upper.length === level.length ? upper : level
   }
 
   isDead(level) {

@@ -1,5 +1,3 @@
-! include %S/evdev
-
 ! layout = types
   frenchy = +frenchy(digits)
 

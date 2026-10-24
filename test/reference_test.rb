@@ -15,16 +15,16 @@ class ReferenceTest < Minitest::Test
   end
 
   def test_the_digit_row_the_punctuation_row_and_the_locks_are_what_changes_without_altgr
-    changed = @layout.each_key.reject { |code, key| [0, 1].all? { Clavier::Reference.typed_as_on_azerty?(code, key, it) } }.map(&:first)
+    changed = @layout.each_key.reject { |code, key| [0, 1].all? { key.levels[it].empty? || Clavier::Reference.typed_as_on_azerty?(code, key, it) } }.map(&:first)
 
     assert_equal(%w[TLDE AE01 AE02 AE03 AE04 AE05 AE06 AE07 AE08 AE09 AE10 AE11 AE12
-                    AD11 AD12 BKSL AC11 AB07 AB08 AB09 AB10 CAPS LFSH RTSH], changed)
+                    AD11 AD12 BKSL AC11 AB07 AB08 AB09 AB10 CAPS], changed)
   end
 
   def test_the_keys_nothing_changes_on
     unchanged = @layout.each_key.select { |code, key| Clavier::Reference.same_as_azerty?(code, key) }.map(&:first)
 
-    assert_equal(%w[AD02 AD03 AD06 AD08 AD10 AC01 AC03 AC06 AC07 AC08 AC09 AB01 AB02 AB06], unchanged)
+    assert_equal(%w[AD02 AD03 AD06 AD08 AD10 AC01 AC03 AC06 AC07 AC08 AC09 AB01 AB02 AB06 LFSH RTSH], unchanged)
   end
 
   # A glyph kept its AZERTY key when its Shift level changed, and the page showed it as new.
@@ -97,8 +97,8 @@ class ReferenceTest < Minitest::Test
   end
 
   def test_a_modifier_azerty_does_not_print_is_compared_to_what_it_types
-    assert(Clavier::Reference.typed_as_on_azerty?("LFSH", @layout["LFSH"], 0))
-    refute(Clavier::Reference.typed_as_on_azerty?("LFSH", @layout["LFSH"], 1), "Maj + Maj locks the capitals, AZERTY's does not")
+    assert(Clavier::Reference.typed_as_on_azerty?("CAPS", @layout["CAPS"], 0))
+    refute(Clavier::Reference.typed_as_on_azerty?("CAPS", @layout["CAPS"], 1), "Maj + Verr. maj. is Compose, AZERTY's is not")
     assert(Clavier::Reference.typed_as_on_azerty?("SPCE", @layout["SPCE"], 1))
     refute(Clavier::Reference.typed_as_on_azerty?("SPCE", @layout["SPCE"], 2), "AltGr + Espace is the new nbsp")
   end
