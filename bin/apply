@@ -10,27 +10,30 @@ system(File.join(root, "linux", "install.sh")) or abort("install failed, nothing
 
 FCITX_RESTART = "omarchy-restart-xcompose"
 
+def on_path?(command) = ENV.fetch("PATH").split(File::PATH_SEPARATOR).any? { File.executable?(File.join(it, command)) }
+
+exit unless on_path?("hyprctl")
+
+options = IO.popen(%w[hyprctl getoption input:kb_options], err: File::NULL, &:read)[/^str: (.*)$/, 1]
+exit if options.nil?
+abort("kb_options #{options.inspect} is not a plain option list, recompile by hand") unless options.match?(/\A[\w:,.-]*\z/)
+
+# INFO: fc 24oct26 Hyprland recompiles the keymap only when an input value changes, so we change one and put it back
+[options.empty? ? "grp:ctrls_toggle" : "", options].each do |value|
+  system("hyprctl", "eval", "hl.config({ input = { kb_options = #{value.dump} } })", out: File::NULL) or
+    abort("hyprctl eval failed, Hyprland may still run kb_options = #{value.dump}: run hyprctl reload")
+end
+
 # INFO: fc 26sep26 fcitx5 forwards every key through a virtual keyboard holding the keymap it started with
-if ENV.fetch("PATH").split(File::PATH_SEPARATOR).any? { File.executable?(File.join(it, FCITX_RESTART)) }
+if on_path?(FCITX_RESTART)
   system(FCITX_RESTART) or abort("#{FCITX_RESTART} failed, fcitx5 still types the old keymap")
 end
 
-devices = IO.popen(%w[hyprctl devices -j], err: File::NULL, &:read)
-exit if devices.empty?
-
-running = JSON.parse(devices).fetch("keyboards", []).filter_map { it["active_keymap"] }.uniq
+devices = JSON.parse(IO.popen(%w[hyprctl devices -j], err: File::NULL, &:read))
+running = devices.fetch("keyboards", []).filter_map { it["active_keymap"] }.uniq
 exit if running.any? { it.start_with?(layout.title) }
 
-warn <<~STALE
-  Hyprland is still on the keymap it compiled at login: #{running.join(', ')}
-
-  It recompiles only when an input value actually changes, and hyprctl keyword
-  does not reach a Lua input block, so reload alone will not pick this up.
-  Change one value in ~/.config/hypr/input.lua, reload, change it back:
-
-    sed -i 's/kb_variant = "ansi,"/kb_variant = "iso,"/' ~/.config/hypr/input.lua
-    hyprctl reload
-    sed -i 's/kb_variant = "iso,"/kb_variant = "ansi,"/' ~/.config/hypr/input.lua
-    hyprctl reload
-    #{FCITX_RESTART}
-STALE
+warn <<~ELSEWHERE
+  Hyprland recompiled, but runs #{running.join(', ')}: ~/.config/hypr/input.lua does not
+  select #{layout.name}. The Linux section of the README has the block to add.
+ELSEWHERE

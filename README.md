@@ -122,27 +122,26 @@ Pas encore. Voir `windows/`.
 
 ```bash
 bin/build              # linux/xkb/, macos/*.keylayout et la feuille A4
-bin/apply              # installe et bascule Hyprland dessus, à chaud
+bin/apply              # installe, et fait recompiler Hyprland et fcitx5 à chaud
 bin/test               # les tests
 website/bin/static-build  # le site, dans website/build/
 ```
 
-`bin/apply` n'écrit rien dans la configuration Hyprland. `hyprctl reload` revient en arrière.
+`bin/apply` n'écrit rien dans la configuration Hyprland : c'est `input.lua` qui choisit frenchy, et `bin/apply` le signale quand la session tourne sur autre chose.
 
 ### Hyprland ne recompile pas tout seul
 
 Hyprland compile la disposition une fois, au démarrage de la session, et ne la recompile que si une valeur de la section `input` change vraiment. Réinstaller les fichiers XKB ne suffit donc pas : `hyprctl reload` relit la configuration, n'y voit aucun changement, et garde l'ancienne disposition. `hyprctl keyword` n'aide pas non plus, il n'atteint pas un bloc `input` écrit en Lua.
 
-`bin/apply` compare le nom que Hyprland annonce à celui de la disposition installée, et le dit quand la session est sur autre chose. Il ne voit pas une session restée sur une version précédente des mêmes fichiers : le nom n'a pas changé. Pour forcer la recompilation, il faut faire changer une valeur, puis la remettre :
+`hyprctl eval` l'atteint : il exécute du Lua dans la session, sans toucher aux fichiers. `bin/apply` lit `kb_options`, le change, puis le remet, ce qui force la recompilation sans écrire dans `input.lua`. À la main, avec la valeur que donne `hyprctl getoption input:kb_options` :
 
 ```bash
-sed -i 's/kb_variant = "ansi,"/kb_variant = "iso,"/' ~/.config/hypr/input.lua
-hyprctl reload
-sed -i 's/kb_variant = "iso,"/kb_variant = "ansi,"/' ~/.config/hypr/input.lua
-hyprctl reload
+hyprctl eval 'hl.config({ input = { kb_options = "" } })'
+hyprctl eval 'hl.config({ input = { kb_options = "omarchy:shift_caps_compose,grp:ctrls_toggle,frenchy:digitlock" } })'
+omarchy-restart-xcompose
 ```
 
-fcitx5 garde lui aussi la disposition compilée à son démarrage, et comme son clavier virtuel est le clavier principal de la session, c'est celle-là que reçoivent les applications. `bin/apply` lance `omarchy-restart-xcompose` après l'installation. Après la recompilation forcée ci-dessus, il faut le relancer, sinon la session répond encore à l'ancienne. `xkbcli dump-keymap-wayland` montre ce qu'elle sert vraiment.
+fcitx5 garde lui aussi la disposition compilée à son démarrage, et comme son clavier virtuel est le clavier principal de la session, c'est celle-là que reçoivent les applications. `bin/apply` lance donc `omarchy-restart-xcompose` après la recompilation. `xkbcli dump-keymap-wayland` montre ce que la session sert vraiment.
 
 ## Ce qui tient la disposition honnête
 
